@@ -1,0 +1,45 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "webpack --config=config/webpack.config.babel.js",
+    "build:production": "NODE_ENV=production webpack --config=config/webpack.config.babel.js",
+    "build:watch": "yarn build -- --watch",
+    "lint": "eslint -c=config/eslintrc.json --ignore-path=.gitignore .",
+    "start": "electron build/main-process.js"
+  },
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-module-resolver": "^2.7.1",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babili-webpack-plugin": "^0.1.1",
+    "electron": "1.6.10",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-import-resolver-babel-module": "^3.0.0",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-react": "^7.0.1",
+    "html-webpack-plugin": "^2.28.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "stateful-react-container-webpack-plugin": "^0.2.1",
+    "webpack": "^2.6.1"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "8"
+          }
+        }
+      ],
+      "stage-2"
+    ]
+  }
+}
