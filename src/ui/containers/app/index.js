@@ -23,7 +23,17 @@ class App extends Component {
 
   constructor (props) {
     super(props);
+    this.state = {
+      isTitleBarVisible: !this.windowIsFullscreen(),
+    };
     setCustomProperties({ ...props.config.theme });
+  }
+
+  componentDidMount () {
+    // Determine whether the titlebar should be shown or hidden on resize.
+    window.addEventListener('resize', () => {
+      this.showOrHideTitleBar(new Date().getTime());
+    });
   }
 
   componentWillReceiveProps (nextProps) {
@@ -32,10 +42,28 @@ class App extends Component {
     }
   }
 
+  windowIsFullscreen = () => {
+    return window.innerHeight === window.screen.height;
+  };
+
+  showOrHideTitleBar = (start) => {
+    const now = new Date().getTime();
+    if (now - start > 150) {
+      return;
+    }
+
+    const isTitleBarVisible = !this.windowIsFullscreen();
+    if (isTitleBarVisible !== this.state.isTitleBarVisible) {
+      this.setState({ isTitleBarVisible });
+    }
+
+    window.requestAnimationFrame(this.showOrHideTitleBar.bind(this, start));
+  };
+
   render () {
     return (
       <div className={styles.root}>
-        <TitleBar label="Wings" />
+        {this.state.isTitleBarVisible && <TitleBar label="Wings" />}
         <div>
           {_.isEmpty(this.props.views) ? (
             'Pass a filename as an argument to render it here'
