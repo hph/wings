@@ -1,0 +1,16 @@
+window:
+  width: 800
+  height: 600
+  minWidth: 320
+  minHeight: 320
+editor:
+  shiftWidth: 2
+  theme:
+    fontFamily: "Monaco, 'Andale Mono', 'Lucida Console', Courier, monospace"
+    fontSize: '14px'
+    lineHeight: '1.5em'
+    primaryColor: '#93a1a1'
+    secondaryColor: '#586e75'
+    primaryBackgroundColor: '#002b36'
+    secondaryBackgroundColor: '#073642'
+    cursorColor: '#d33682'

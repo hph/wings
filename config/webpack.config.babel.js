@@ -1,8 +1,10 @@
 import webpack from 'webpack';
 import { resolve } from 'path';
 import HtmlPlugin from 'html-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 import BabiliPlugin from 'babili-webpack-plugin';
 import StatefulReactContainerPlugin from 'stateful-react-container-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 
 function devProd (inDevelopment, inProduction) {
@@ -34,25 +36,15 @@ const commonConfig = {
                 },
               },
             ],
-            'stage-2',
+            'stage-0',
             'react',
-          ],
-          plugins: [
-            [
-              'module-resolver',
-              {
-                root: [
-                  './src',
-                ],
-              },
-            ],
           ],
         },
       },
     ],
   },
   resolve: {
-    extensions: ['.js', '.json'],
+    extensions: ['.css', '.js', '.json'],
   },
   plugins: [
     new webpack.EnvironmentPlugin({
@@ -75,8 +67,39 @@ const uiConfig = {
   entry: {
     ui: './ui/',
   },
+  module: {
+    ...commonConfig.module,
+    rules: [
+      ...commonConfig.module.rules,
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              query: {
+                camelCase: 'dashes',
+                importLoaders: 1,
+                minimize: false,
+                modules: true,
+                getLocalIdent: (context, localIdentName, localName) => {
+                  const path = context.context;
+                  return `${path.slice(path.lastIndexOf('/') + 1)}-${localName}`;
+                },
+              },
+            },
+          ],
+        }),
+      },
+    ],
+  },
   plugins: [
     ...commonConfig.plugins,
+    new ExtractTextPlugin({
+      filename: 'styles.css',
+      allChunks: true,
+    }),
     new HtmlPlugin({
       title: 'Wings',
     }),
@@ -95,6 +118,12 @@ const mainProcessConfig = {
     __dirname: false,
     __filename: false,
   },
+  plugins: [
+    ...commonConfig.plugins,
+    new CopyPlugin([
+      { from: './main-process/default-config.yaml' },
+    ]),
+  ],
 };
 
 
