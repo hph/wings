@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import setCustomProperties from 'dynamic-css-properties';
 
-import { TitleBar } from 'ui/components';
-import styles from './styles.css';
+import { TitleBar, View } from 'ui/components';
+import './styles.css';
 
 class App extends Component {
 
@@ -62,15 +62,13 @@ class App extends Component {
 
   render () {
     return (
-      <div className={styles.root}>
+      <div>
         {this.state.isTitleBarVisible && <TitleBar label="Wings" />}
         <div>
           {_.isEmpty(this.props.views) ? (
             'Pass a filename as an argument to render it here'
           ) : (
-            _.map(this.props.views[0].lines, (line, index) => (
-              <div key={index}>{line}</div>
-            ))
+            <View {...this.props.views[0]} />
           )}
         </div>
       </div>

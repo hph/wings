@@ -1,0 +1,14 @@
+.root {
+  display: flex;
+  cursor: default;
+  user-select: none;
+  line-height: var(--line-height);
+  white-space: nowrap;
+}
+
+.number {
+  padding: 0 .5em; 
+  color: var(--secondary-color);
+  background-color: var(--secondary-background-color);
+  white-space: pre;
+}

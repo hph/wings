@@ -3,15 +3,12 @@ body {
   margin: 0;
   font-family: var(--font-family);
   font-size: var(--font-size);
+  -webkit-font-smoothing: antialiased;
   background-color: var(--primary-background-color);
   color: var(--primary-color);
-  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar {
   display: none;
-}
-
-.root {
-  white-space: pre;
 }
