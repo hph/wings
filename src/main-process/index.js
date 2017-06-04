@@ -9,6 +9,7 @@ function createWindow (mainWindow, config) {
   mainWindow = new BrowserWindow({ // eslint-disable-line no-param-reassign
     ...config.window,
     backgroundColor: config.editor.theme.primaryBackgroundColor,
+    titleBarStyle: 'hidden',
     show: false,
   });
 

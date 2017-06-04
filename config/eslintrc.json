@@ -30,6 +30,7 @@
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": [1, { "extensions": ["js"] }],
     "react/no-did-mount-set-state": 0,
+    "react/prefer-stateless-function": 0,
     "space-before-function-paren": [2, "always"]
   }
 }

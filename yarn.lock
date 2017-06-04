@@ -1830,6 +1830,10 @@ domutils@1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
+dynamic-css-properties@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/dynamic-css-properties/-/dynamic-css-properties-0.1.2.tgz#0e27b1ff9c8f6032cf3b8bdf75dcbd794bf41fae"
+
 ecc-jsbn@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"

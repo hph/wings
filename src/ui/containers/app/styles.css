@@ -1,5 +1,17 @@
+html,
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  background-color: var(--primary-background-color);
+  color: var(--primary-color);
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
 .root {
-  font-family: monospace;
-  color: hotpink;
   white-space: pre;
 }
