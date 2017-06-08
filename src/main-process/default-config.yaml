@@ -14,3 +14,4 @@ editor:
     primaryBackgroundColor: '#002b36'
     secondaryBackgroundColor: '#073642'
     cursorColor: '#d33682'
+    titleBarHeight: '23px'
