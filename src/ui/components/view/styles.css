@@ -1,14 +1,21 @@
 .root {
   display: flex;
+  flex-direction: row;
   cursor: default;
   user-select: none;
   line-height: var(--line-height);
-  white-space: nowrap;
 }
 
-.number {
-  padding: 0 .5em; 
+.numbers {
+  padding: 0 5px;
   color: var(--secondary-color);
   background-color: var(--secondary-background-color);
+  text-align: right;
+}
+
+.text {
+  flex: 1;
+  position: relative;
+  text-align: left;
   white-space: pre;
 }

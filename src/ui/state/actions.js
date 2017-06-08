@@ -10,3 +10,11 @@ export function createView (filename, text) {
     text,
   };
 }
+
+export function updateView (id, options) {
+  return {
+    type: types.UPDATE_VIEW,
+    id,
+    ...options,
+  };
+}

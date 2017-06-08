@@ -37,6 +37,15 @@ function viewsReducer (state = defaults.views, action) {
       })];
     }
 
+    case types.UPDATE_VIEW: {
+      return _.map(state, (view) => {
+        if (view.id === action.id) {
+          return _.defaults({ ...values }, view);
+        }
+        return view;
+      });
+    }
+
     default: return state;
   }
 }

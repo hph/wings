@@ -1,0 +1,26 @@
+.root {
+  position: absolute;
+  color: var(--primary-background-color);
+  background-color: var(--cursor-color);
+  height: var(--line-height);
+  line-height: var(--line-height);
+  cursor: default;
+  user-select: none;
+}
+
+.insert-mode {
+  width: 1px;
+  opacity: 1;
+  animation: pulsate 1.2s ease-in-out infinite;
+}
+
+@keyframes pulsate {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}

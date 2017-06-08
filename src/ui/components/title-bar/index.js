@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './styles.css';
+import css from './styles.css';
 
 class TitleBar extends Component {
   static propTypes = {
@@ -9,7 +9,7 @@ class TitleBar extends Component {
   };
 
   render () {
-    return <div className={styles.root}>{this.props.label}</div>;
+    return <div className={css.root}>{this.props.label}</div>;
   }
 }
 

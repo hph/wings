@@ -61,16 +61,15 @@ class App extends Component {
   };
 
   render () {
+    const { config, views } = this.props;
     return (
       <div>
         {this.state.isTitleBarVisible && <TitleBar label="Wings" />}
-        <div>
-          {_.isEmpty(this.props.views) ? (
-            'Pass a filename as an argument to render it here'
-          ) : (
-            <View {...this.props.views[0]} />
-          )}
-        </div>
+        {_.isEmpty(views) ? (
+          'Pass a filename as an argument to render it here'
+        ) : (
+          <View config={config} view={views[0]} />
+        )}
       </div>
     );
   }

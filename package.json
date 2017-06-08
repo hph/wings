@@ -17,6 +17,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babili-webpack-plugin": "^0.1.1",
     "bluebird": "^3.5.0",
+    "classnames": "^2.2.5",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.4",
     "dynamic-css-properties": "^0.1.2",
