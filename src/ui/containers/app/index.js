@@ -11,6 +11,7 @@ class App extends Component {
 
   static propTypes = {
     config: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
     views: PropTypes.array.isRequired,
   };
 
@@ -61,14 +62,14 @@ class App extends Component {
   };
 
   render () {
-    const { config, views } = this.props;
+    const { config, dispatch, views } = this.props;
     return (
       <div>
         {this.state.isTitleBarVisible && <TitleBar label="Wings" />}
         {_.isEmpty(views) ? (
           'Pass a filename as an argument to render it here'
         ) : (
-          <View config={config} view={views[0]} />
+          <View config={config} dispatch={dispatch} view={views[0]} />
         )}
       </div>
     );

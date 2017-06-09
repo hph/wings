@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
+import { actions } from 'ui/state';
 import { Cursor } from 'ui/components';
 import css from './styles.css';
 
@@ -11,7 +12,17 @@ const cx = classnames.bind(css);
 class View extends Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
     view: PropTypes.object.isRequired,
+  };
+
+  onTextClick = (event) => {
+    const { clientX, clientY, currentTarget } = event;
+    const { config, dispatch, view } = this.props;
+    dispatch(actions.updateView(view.id, {
+      column: _.floor((clientX - currentTarget.offsetLeft) / config.charWidth),
+      row: _.floor((clientY - currentTarget.offsetTop) / config.charHeight),
+    }));
   };
 
   render () {
@@ -28,7 +39,7 @@ class View extends Component {
             <div key={index}>{number}</div>
           ))}
         </div>
-        <div className={css.text}>
+        <div className={css.text} onClick={this.onTextClick}>
           {_.map(view.lines, (line, index) => (
             <div key={index}>{line}</div>
           ))}
