@@ -4,7 +4,7 @@ export default function createUserInputMiddleware () {
   return ({ getState, dispatch }) => {
     const input = document.createElement('input');
     input.style.position = 'absolute';
-    input.style.top = '0';
+    input.style.top = '-1000px';
     input.style.left = '0';
     input.style.opacity = '0';
     document.body.appendChild(input);

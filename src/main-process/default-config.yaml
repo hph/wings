@@ -6,6 +6,7 @@ window:
 editor:
   shiftWidth: 2
   showLineNumbers: true
+  relativeLineNumbers: true
   theme:
     fontFamily: "'SF Mono', Monaco, 'Andale Mono', 'Lucida Console', Courier, monospace"
     fontSize: '14px'

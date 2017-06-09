@@ -17,11 +17,15 @@ class View extends Component {
   render () {
     const { config, view } = this.props;
     const numbersClasses = cx('numbers', { hidden: !config.showLineNumbers });
+    let numbers = _.range(1, view.lines.length);
+    if (config.relativeLineNumbers) {
+      numbers = _.map(numbers, number => Math.abs(number - 1 - view.row));
+    }
     return (
       <div className={css.root}>
         <div className={numbersClasses}>
-          {_.map(view.lines, (line, index) => (
-            <div key={index}>{index + 1}</div>
+          {_.map(numbers, (number, index) => (
+            <div key={index}>{number}</div>
           ))}
         </div>
         <div className={css.text}>
