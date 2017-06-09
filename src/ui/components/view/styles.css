@@ -13,6 +13,10 @@
   text-align: right;
 }
 
+.numbers.hidden {
+  display: none;
+}
+
 .text {
   flex: 1;
   position: relative;

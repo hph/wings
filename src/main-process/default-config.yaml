@@ -5,6 +5,7 @@ window:
   minHeight: 320
 editor:
   shiftWidth: 2
+  showLineNumbers: true
   theme:
     fontFamily: "Monaco, 'Andale Mono', 'Lucida Console', Courier, monospace"
     fontSize: '14px'
