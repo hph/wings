@@ -3,6 +3,7 @@ body {
   margin: 0;
   font-family: var(--font-family);
   font-size: var(--font-size);
+  line-height: var(--line-height);
   -webkit-font-smoothing: antialiased;
   background-color: var(--primary-background-color);
   color: var(--primary-color);

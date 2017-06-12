@@ -3,7 +3,6 @@
   flex-direction: row;
   cursor: default;
   user-select: none;
-  line-height: var(--line-height);
 }
 
 .numbers {
@@ -22,4 +21,10 @@
   position: relative;
   text-align: left;
   white-space: pre;
+}
+
+/* Ensure that empty lines also have a height */
+.numbers div,
+.text div {
+  height: var(--line-height);
 }
