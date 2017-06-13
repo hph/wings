@@ -13,42 +13,48 @@ function createWindow (mainWindow, config) {
     show: false,
   });
 
-  ipcMain.on('request-init', () => {
-    mainWindow.webContents.send('init', {
-      filename: process.argv[2],
-      config: _.omit(config, 'window'),
-    });
-  });
-
-  mainWindow.on('closed', () => {
-    mainWindow = null; // eslint-disable-line no-param-reassign
-  });
-
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true,
+    hash: JSON.stringify({
+      config: config.editor,
+      filename: process.argv[2],
+    }),
   }));
 
-  // Ensure that the app is opened even if there's an error.
-  if (process.env.NODE_ENV === 'development') {
+  const show = _.once(() => {
     mainWindow.show();
-    mainWindow.webContents.openDevTools({ detach: true });
-  } else {
-    // "root-mounted" may not be fired at all, for instance if there's an
-    // error. This case needs to be handled.
-    ipcMain.on('root-mounted', mainWindow.show);
-  }
+    if (process.env.NODE_ENV === 'development') {
+      mainWindow.webContents.openDevTools({ detach: true });
+    }
+  });
+
+  let readyCount = 0;
+  const maybeShow = () => {
+    readyCount += 1;
+    if (readyCount >= 2) {
+      show();
+    }
+  };
+
+  // Show the app once the window is ready and the app has been mounted
+  // or after 1 second, whichever comes first.
+  mainWindow.once('ready-to-show', maybeShow);
+  ipcMain.once('root-mounted', maybeShow);
+  setTimeout(show, 1000);
+
+  mainWindow.once('closed', () => {
+    mainWindow = null; // eslint-disable-line no-param-reassign
+  });
 }
 
 getConfig().then((config) => {
   let mainWindow;
-
   if (app.isReady()) {
     createWindow(mainWindow, config);
   } else {
-    app.on('ready', createWindow.bind(null, mainWindow, config));
+    app.once('ready', createWindow.bind(null, mainWindow, config));
   }
-
-  app.on('window-all-closed', app.quit);
+  app.once('window-all-closed', app.quit);
 });
