@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 import { readFile } from 'fs';
 
 import { Root } from 'ui/containers';
-import computeFontDimensions from 'ui/utils';
+import { computeFontDimensions } from 'ui/utils';
 
 const { config, filename } = JSON.parse(window.location.hash.slice(1));
 const { width, height } = computeFontDimensions(config);

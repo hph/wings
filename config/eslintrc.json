@@ -31,6 +31,7 @@
     "react/jsx-filename-extension": [1, { "extensions": ["js"] }],
     "react/no-did-mount-set-state": 0,
     "react/prefer-stateless-function": 0,
-    "space-before-function-paren": [2, "always"]
+    "space-before-function-paren": [2, "always"],
+    "template-curly-spacing": [2, "always"]
   }
 }

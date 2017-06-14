@@ -60,6 +60,7 @@ getConfig()
     app.once('window-all-closed', app.quit);
   })
   .catch(({ reason }) => {
+    // eslint-disable-next-line no-console
     console.log(`Invalid config file (reason: ${ reason })`);
     process.exit(1);
   });

@@ -9,11 +9,53 @@ editor:
   relativeLineNumbers: true
   theme:
     fontFamily: "'SF Mono', Monaco, 'Andale Mono', 'Lucida Console', Courier, monospace"
-    fontSize: '14px'
-    lineHeight: '1.5em'
+    fontSize: 14px
+    lineHeight: 1.5em
     primaryColor: '#93a1a1'
     secondaryColor: '#586e75'
     primaryBackgroundColor: '#002b36'
     secondaryBackgroundColor: '#073642'
     cursorColor: '#d33682'
-    titleBarHeight: '23px'
+    titleBarHeight: 23px
+  keys:
+    ex:
+      Escape: exitMode
+    insert:
+      Backspace: remove
+      Enter: splitLines
+      Escape: exitMode
+      Tab: indent
+    normal:
+      :: enterExMode
+      i: enterInsertMode
+      I:
+        - enterInsertMode
+        - moveToFirstNonWhitespace
+      a:
+        - enterInsertMode
+        - moveRightMaybeAfterEnd
+      A:
+        - enterInsertMode
+        - moveAfterEnd
+      o:
+        - enterInsertMode
+        - newLineBelow
+      O:
+        - enterInsertMode
+        - newLineAbove
+      J: joinLineBelow
+      x: removeAt
+      D:
+        - removeFromCursor
+        - maybeMoveLeft
+      C:
+        - enterInsertMode
+        - removeFromCursor
+      W: nextWord
+      0: moveToStart
+      ^: moveToFirstNonWhitespace
+      $: moveToEnd
+      h: moveLeft
+      j: moveDown
+      k: moveUp
+      l: moveRight

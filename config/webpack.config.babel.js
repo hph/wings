@@ -89,7 +89,7 @@ const uiConfig = {
                 modules: true,
                 getLocalIdent: (context, localIdentName, localName) => {
                   const path = context.context;
-                  return `${path.slice(path.lastIndexOf('/') + 1)}-${localName}`;
+                  return `${ path.slice(path.lastIndexOf('/') + 1) }-${ localName }`;
                 },
               },
             },

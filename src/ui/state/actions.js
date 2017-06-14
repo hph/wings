@@ -18,3 +18,10 @@ export function updateView (id, options) {
     ...options,
   };
 }
+
+export function updateConfig (options) {
+  return {
+    type: types.UPDATE_CONFIG,
+    ...options,
+  };
+}
