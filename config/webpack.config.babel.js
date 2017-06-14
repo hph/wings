@@ -5,7 +5,7 @@ import CopyPlugin from 'copy-webpack-plugin';
 import BabiliPlugin from 'babili-webpack-plugin';
 import StatefulReactContainerPlugin from 'stateful-react-container-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 
 function devProd (inDevelopment, inProduction) {
   return process.env.NODE_ENV === 'production'
@@ -39,6 +39,9 @@ const commonConfig = {
             'stage-0',
             'react',
           ],
+          plugins: [
+            'lodash',
+          ],
         },
       },
     ],
@@ -50,6 +53,7 @@ const commonConfig = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
     }),
+    new LodashModuleReplacementPlugin(),
     ...devProd([
       new webpack.NamedModulesPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
