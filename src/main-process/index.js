@@ -49,12 +49,17 @@ function createWindow (mainWindow, config) {
   });
 }
 
-getConfig().then((config) => {
-  let mainWindow;
-  if (app.isReady()) {
-    createWindow(mainWindow, config);
-  } else {
-    app.once('ready', createWindow.bind(null, mainWindow, config));
-  }
-  app.once('window-all-closed', app.quit);
-});
+getConfig()
+  .then((config) => {
+    let mainWindow;
+    if (app.isReady()) {
+      createWindow(mainWindow, config);
+    } else {
+      app.once('ready', createWindow.bind(null, mainWindow, config));
+    }
+    app.once('window-all-closed', app.quit);
+  })
+  .catch(({ reason }) => {
+    console.log(`Invalid config file (reason: ${ reason })`);
+    process.exit(1);
+  });
