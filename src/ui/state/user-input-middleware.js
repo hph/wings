@@ -31,7 +31,7 @@ export default function createUserInputMiddleware () {
       enterInsertMode: 'insert',
     };
 
-    function delegate ({ value, replaceLast }) {
+    function delegate ({ value, replaceLast, fixed }) {
       const state = getState();
       const view = state.views[0]; // Temporary while we only have one view.
       const payload = {
@@ -48,7 +48,7 @@ export default function createUserInputMiddleware () {
           dispatch(updateConfig({ mode: configHandlers[handler] }));
         } else if (handler) {
           dispatch(updateView(view.id, commands[handler](payload)));
-        } else if (state.config.mode === 'insert') {
+        } else if (state.config.mode === 'insert' && !fixed) {
           const command = replaceLast ? commands.replace : commands.insert;
           dispatch(updateView(view.id, command(payload)));
         }
