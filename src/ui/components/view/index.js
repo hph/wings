@@ -39,7 +39,7 @@ class View extends Component {
             <div key={index}>{number}</div>
           ))}
         </div>
-        <div className={css.text} onClick={this.onTextClick}>
+        <div className={css.text} onMouseDown={this.onTextClick}>
           {_.map(view.lines, (line, index) => (
             <div key={index}>{line}</div>
           ))}
