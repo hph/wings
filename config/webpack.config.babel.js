@@ -6,6 +6,7 @@ import BabiliPlugin from 'babili-webpack-plugin';
 import StatefulReactContainerPlugin from 'stateful-react-container-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
+import IncludeAssetsPlugin from 'html-webpack-include-assets-plugin';
 
 function devProd (inDevelopment, inProduction) {
   return process.env.NODE_ENV === 'production'
@@ -72,6 +73,11 @@ const uiConfig = {
   entry: {
     ui: './ui/',
   },
+  // Babili issue workaround, see https://git.io/vQUI1
+  externals: devProd({}, {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  }),
   module: {
     ...commonConfig.module,
     rules: [
@@ -111,6 +117,20 @@ const uiConfig = {
     new StatefulReactContainerPlugin({
       noState: true,
     }),
+    // Babili issue workaround, see https://git.io/vQUI1
+    ...devProd([], [
+      new CopyPlugin([
+        { from: '../node_modules/react/dist/react.min.js' },
+        { from: '../node_modules/react-dom/dist/react-dom.min.js' },
+      ]),
+      new IncludeAssetsPlugin({
+        assets: [
+          'react.min.js',
+          'react-dom.min.js',
+        ],
+        append: false,
+      }),
+    ]),
   ],
 };
 
