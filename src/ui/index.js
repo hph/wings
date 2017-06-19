@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { readFile } from 'fs';
 
-import { Root } from 'ui/containers';
+import { Root } from 'ui/components';
 import { computeFontDimensions } from 'ui/utils';
 
 const { config, filename } = JSON.parse(window.location.hash.slice(1));

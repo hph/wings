@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { ipcRenderer } from 'electron';
 
-import { App } from 'ui/containers';
+import { App } from 'ui/components';
 import { DevTools, actions, createStore } from 'ui/state';
 
 class Root extends Component {
