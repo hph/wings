@@ -1,5 +1,6 @@
 .root {
   display: flex;
+  height: 100%;
   flex-direction: row;
   cursor: default;
   user-select: none;

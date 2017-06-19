@@ -17,18 +17,25 @@ class View extends Component {
   };
 
   onTextClick = (event) => {
-    const { clientX, clientY, currentTarget } = event;
+    const { clientX, clientY, currentTarget, target } = event;
     const { config, dispatch, view } = this.props;
+
+    const clickX = _.floor(_.max([0, clientX - currentTarget.offsetLeft]) / config.charWidth);
+    const clickY = _.floor(_.max([0, clientY - currentTarget.offsetTop]) / config.charHeight);
+    const numLines = _.max([0, view.lines.length - 1]);
+    const row = currentTarget === target ? numLines : _.min([numLines, clickY]);
+    const column = _.min([_.max([0, view.lines[row].length - 1]), clickX]);
+
     dispatch(actions.updateView(view.id, {
-      column: _.floor((clientX - currentTarget.offsetLeft) / config.charWidth),
-      row: _.floor((clientY - currentTarget.offsetTop) / config.charHeight),
+      column,
+      row,
     }));
   };
 
   render () {
     const { config, view } = this.props;
     const numbersClasses = cx('numbers', { hidden: !config.showLineNumbers });
-    let numbers = _.range(1, view.lines.length);
+    let numbers = _.range(1, view.lines.length + 1);
     if (config.relativeLineNumbers) {
       numbers = _.map(numbers, number => Math.abs(number - 1 - view.row));
     }

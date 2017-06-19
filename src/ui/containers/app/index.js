@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import setCustomProperties from 'dynamic-css-properties';
 
 import { TitleBar, View } from 'ui/components';
-import './styles.css';
+import css from './styles.css';
 
 class App extends Component {
 
@@ -64,7 +64,7 @@ class App extends Component {
   render () {
     const { config, dispatch, views } = this.props;
     return (
-      <div>
+      <div className={css.root}>
         {this.state.isTitleBarVisible && <TitleBar label="Wings" />}
         {_.isEmpty(views) ? (
           'Pass a filename as an argument to render it here'
