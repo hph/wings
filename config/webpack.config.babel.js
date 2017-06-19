@@ -53,6 +53,7 @@ const commonConfig = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new LodashModuleReplacementPlugin(),
     ...devProd([
       new webpack.NamedModulesPlugin(),
@@ -118,10 +119,7 @@ const mainProcessConfig = {
   entry: {
     'main-process': './main-process/',
   },
-  node: {
-    __dirname: false,
-    __filename: false,
-  },
+  node: false,
   plugins: [
     ...commonConfig.plugins,
     new CopyPlugin([
