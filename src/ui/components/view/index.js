@@ -24,7 +24,8 @@ class View extends Component {
     const clickY = _.floor(_.max([0, clientY - currentTarget.offsetTop]) / config.charHeight);
     const numLines = _.max([0, view.lines.length - 1]);
     const row = currentTarget === target ? numLines : _.min([numLines, clickY]);
-    const column = _.min([_.max([0, view.lines[row].length - 1]), clickX]);
+    const offset = config.mode === 'insert' ? 0 : 1;
+    const column = _.min([_.max([0, view.lines[row].length - offset]), clickX]);
 
     dispatch(actions.updateView(view.id, {
       column,
