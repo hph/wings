@@ -25,12 +25,6 @@ export default function createUserInputMiddleware () {
   input.addEventListener('blur', input.focus);
 
   return ({ getState, dispatch }) => {
-    const configHandlers = {
-      exitMode: 'normal',
-      enterExMode: 'ex',
-      enterInsertMode: 'insert',
-    };
-
     function delegate ({ value, replaceLast, fixed }) {
       const state = getState();
       const view = state.views[0]; // Temporary while we only have one view.
@@ -42,10 +36,19 @@ export default function createUserInputMiddleware () {
       };
       const modeHandlers = state.config.keys[state.config.mode];
       const handlers = _.castArray(modeHandlers[value]);
-
+      const configHandlers = {
+        exitMode: 'normal',
+        enterExMode: 'ex',
+        enterInsertMode: 'insert',
+      };
       _.forEach(handlers, (handler) => {
         if (_.has(configHandlers, handler)) {
-          dispatch(updateConfig({ mode: configHandlers[handler] }));
+          const newMode = configHandlers[handler];
+          dispatch(updateConfig({ mode: newMode }));
+          if (state.config.mode === 'insert' && newMode === 'normal') {
+            const column = _.max([0, view.column - 1]);
+            dispatch(updateView(view.id, { column }));
+          }
         } else if (handler) {
           dispatch(updateView(view.id, commands[handler](payload)));
         } else if (state.config.mode === 'insert' && !fixed) {
