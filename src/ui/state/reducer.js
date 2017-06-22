@@ -4,11 +4,7 @@ import { combineReducers } from 'redux';
 import * as types from 'ui/state/types';
 
 const defaults = {
-  config: {
-    mode: 'normal',
-    cursorWidth: 0,
-    cursorHeight: 0,
-  },
+  config: {},
   views: [],
 };
 
@@ -34,6 +30,10 @@ function viewsReducer (state = defaults.views, action) {
         lines: _.isEmpty(lines) ? [''] : lines,
         column: 0,
         row: 0,
+        firstVisibleRow: 0,
+        firstVisibleColumn: 0,
+        width: window.screen.width,
+        height: window.screen.height,
       })];
     }
 

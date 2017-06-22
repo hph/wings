@@ -18,8 +18,8 @@ class Cursor extends Component {
 
     const classes = cx('root', { insertMode: config.mode === 'insert' });
     const styles = {
-      left: (view.column * config.charWidth),
-      top: view.row * config.charHeight,
+      left: view.column * config.charWidth,
+      top: (view.row - view.firstVisibleRow) * config.charHeight,
     };
 
     return (

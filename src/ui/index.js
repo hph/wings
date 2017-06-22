@@ -11,10 +11,11 @@ const { width, height } = computeFontDimensions(config);
 const initialState = {
   filename,
   config: {
+    ...config,
     charWidth: width,
     charHeight: _.ceil(height),
     mode: 'normal',
-    ...config,
+    isTitleBarVisible: true,
   },
 };
 

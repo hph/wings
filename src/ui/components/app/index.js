@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import setCustomProperties from 'dynamic-css-properties';
 
 import { TitleBar, View } from 'ui/components';
+import { updateConfig } from 'ui/state/actions';
 import css from './styles.css';
 
 class App extends Component {
@@ -24,9 +25,6 @@ class App extends Component {
 
   constructor (props) {
     super(props);
-    this.state = {
-      isTitleBarVisible: !this.windowIsFullscreen(),
-    };
     setCustomProperties({ ...props.config.theme });
   }
 
@@ -54,8 +52,8 @@ class App extends Component {
     }
 
     const isTitleBarVisible = !this.windowIsFullscreen();
-    if (isTitleBarVisible !== this.state.isTitleBarVisible) {
-      this.setState({ isTitleBarVisible });
+    if (isTitleBarVisible !== this.props.config.isTitleBarVisible) {
+      this.props.dispatch(updateConfig({ isTitleBarVisible }));
     }
 
     window.requestAnimationFrame(this.showOrHideTitleBar.bind(this, start));
@@ -65,7 +63,7 @@ class App extends Component {
     const { config, dispatch, views } = this.props;
     return (
       <div className={css.root}>
-        {this.state.isTitleBarVisible && <TitleBar label="Wings" />}
+        {config.isTitleBarVisible && <TitleBar label="Wings" />}
         {_.isEmpty(views) ? (
           'Pass a filename as an argument to render it here'
         ) : (

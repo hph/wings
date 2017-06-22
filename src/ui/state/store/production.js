@@ -1,8 +1,15 @@
 import { applyMiddleware, createStore } from 'redux';
 
-import { reducer, createUserInputMiddleware } from 'ui/state';
+import {
+  createUserInputMiddleware,
+  createCursorPositionMiddleware,
+  reducer,
+} from 'ui/state';
 
 export default function configureStore (initialState) {
-  const enhancer = applyMiddleware(createUserInputMiddleware());
+  const enhancer = applyMiddleware(
+    createUserInputMiddleware(),
+    createCursorPositionMiddleware(),
+  );
   return createStore(reducer, initialState, enhancer);
 }
