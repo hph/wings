@@ -59,3 +59,5 @@ editor:
       j: moveDown
       k: moveUp
       l: moveRight
+      g: goToFirstLine
+      G: goToLastLine

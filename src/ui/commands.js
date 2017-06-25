@@ -211,6 +211,20 @@ export function newLineBelow ({ row, lines }) {
   };
 }
 
+export function goToFirstLine ({ lines }) {
+  return {
+    column: 0,
+    row: 0,
+  };
+}
+
+export function goToLastLine ({ lines }) {
+  return {
+    column: 0,
+    row: lines.length - 1,
+  };
+}
+
 export function nextWord ({ column, row, lines }) {
   const getNext = (col, offset, newLine = false) => {
     if (!_.isString(lines[row + offset])) {
