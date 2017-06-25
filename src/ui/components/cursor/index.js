@@ -7,14 +7,15 @@ import css from './styles.css';
 const cx = classnames.bind(css);
 
 function Cursor ({ config, view }) {
-  const classes = cx('root', { insertMode: config.mode === 'insert' });
+  const insertMode = config.mode === 'insert';
+  const classes = cx('root', { insertMode });
   const styles = {
     left: view.column * config.charWidth,
     top: (view.row - view.firstVisibleRow) * config.charHeight,
   };
   return (
     <div className={classes} style={styles}>
-      {view.lines[view.row][view.column]}
+      {!insertMode && view.lines[view.row][view.column]}
     </div>
   );
 }
