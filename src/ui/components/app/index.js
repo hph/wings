@@ -25,7 +25,7 @@ class App extends Component {
 
   constructor (props) {
     super(props);
-    setCustomProperties({ ...props.config.theme });
+    this.setCustomProperties(props.config);
   }
 
   componentDidMount () {
@@ -37,8 +37,15 @@ class App extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.config.theme !== this.props.config.theme) {
-      setCustomProperties({ ...nextProps.config.theme });
+      this.setCustomProperties(nextProps.config);
     }
+  }
+
+  setCustomProperties (config) {
+    setCustomProperties({
+      ...config.theme,
+      charWidth: `${ config.charWidth }px`,
+    });
   }
 
   windowIsFullscreen = () => {
