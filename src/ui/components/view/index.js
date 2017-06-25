@@ -54,7 +54,10 @@ class View extends Component {
 
   render () {
     const { config, view } = this.props;
-    const numbersClasses = cx('numbers', { hidden: !config.showLineNumbers });
+    const numbersClasses = cx('numbers', {
+      hidden: !config.showLineNumbers,
+      overlay: view.firstVisibleColumn > 0,
+    });
     const numLines = _.ceil(view.height / config.charHeight);
     const lines = _.slice(view.lines, view.firstVisibleRow, numLines + view.firstVisibleRow);
     let numbers = _.range(view.firstVisibleRow + 1, view.lines.length + 1);
