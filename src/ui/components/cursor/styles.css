@@ -3,6 +3,7 @@
   color: var(--primary-background-color);
   background-color: var(--cursor-color);
   height: var(--line-height);
+  width: var(--char-width);
   line-height: var(--line-height);
   cursor: default;
   user-select: none;

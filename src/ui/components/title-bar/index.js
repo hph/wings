@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import css from './styles.css';
 
-class TitleBar extends Component {
-  static propTypes = {
-    label: PropTypes.string.isRequired,
-  };
-
-  render () {
-    return <div className={css.root}>{this.props.label}</div>;
-  }
+function TitleBar ({ label }) {
+  return <div className={css.root}>{label}</div>;
 }
+
+TitleBar.propTypes = {
+  label: PropTypes.string.isRequired,
+};
 
 export default TitleBar;
