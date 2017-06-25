@@ -8,7 +8,8 @@ const cx = classnames.bind(css);
 
 function Cursor ({ config, view }) {
   const insertMode = config.mode === 'insert';
-  const classes = cx('root', { insertMode });
+  const pulsate = insertMode && !config.isUserTyping;
+  const classes = cx('root', { insertMode, pulsate });
   const styles = {
     left: view.column * config.charWidth,
     top: (view.row - view.firstVisibleRow) * config.charHeight,

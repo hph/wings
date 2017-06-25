@@ -12,6 +12,9 @@
 .insert-mode {
   width: 1px;
   opacity: 1;
+}
+
+.pulsate {
   animation: pulsate 1.2s ease-in-out infinite;
 }
 
@@ -22,6 +25,6 @@
   }
 
   50% {
-    opacity: 0.4;
+    opacity: 0;
   }
 }

@@ -25,6 +25,11 @@ export default function createUserInputMiddleware () {
   input.addEventListener('blur', input.focus);
 
   return ({ getState, dispatch }) => {
+    let stoppedTypingTimer;
+    function onStoppedTyping () {
+      dispatch(updateConfig({ isUserTyping: false }));
+    }
+
     function delegate ({ value, replaceLast, fixed }) {
       const state = getState();
       const view = state.views[0]; // Temporary while we only have one view.
@@ -54,6 +59,14 @@ export default function createUserInputMiddleware () {
         } else if (state.config.mode === 'insert' && !fixed) {
           const command = replaceLast ? commands.replace : commands.insert;
           dispatch(updateView(view.id, command(payload)));
+
+          // Set isUserTyping as determined by whether the user has begun or
+          // stopped typing.
+          if (!state.config.isUserTyping) {
+            dispatch(updateConfig({ isUserTyping: true }));
+          }
+          clearTimeout(stoppedTypingTimer);
+          stoppedTypingTimer = setTimeout(onStoppedTyping, 500);
         }
       });
     }
