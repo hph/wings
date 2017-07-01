@@ -211,7 +211,7 @@ export function newLineBelow ({ row, lines }) {
   };
 }
 
-export function goToFirstLine ({ lines }) {
+export function goToFirstLine () {
   return {
     column: 0,
     row: 0,

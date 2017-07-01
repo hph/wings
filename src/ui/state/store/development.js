@@ -1,18 +1,10 @@
-import { applyMiddleware, createStore, compose } from 'redux';
+import { createStore, compose } from 'redux';
 
-import {
-  DevTools,
-  createUserInputMiddleware,
-  createCursorPositionMiddleware,
-  reducer,
-} from 'ui/state';
+import { DevTools, middleware, reducer } from 'ui/state';
 
 export default function configureStore (initialState) {
   const enhancer = compose(
-    applyMiddleware(
-      createUserInputMiddleware(),
-      createCursorPositionMiddleware(),
-    ),
+    middleware,
     DevTools.instrument({ maxAge: 30 }),
   );
   return createStore(reducer, initialState, enhancer);

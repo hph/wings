@@ -1,15 +1,7 @@
-import { applyMiddleware, createStore } from 'redux';
+import { createStore } from 'redux';
 
-import {
-  createUserInputMiddleware,
-  createCursorPositionMiddleware,
-  reducer,
-} from 'ui/state';
+import { middleware, reducer } from 'ui/state';
 
 export default function configureStore (initialState) {
-  const enhancer = applyMiddleware(
-    createUserInputMiddleware(),
-    createCursorPositionMiddleware(),
-  );
-  return createStore(reducer, initialState, enhancer);
+  return createStore(reducer, initialState, middleware);
 }
