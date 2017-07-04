@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { updateConfig, updateView } from 'ui/state/actions';
+import { updateConfig, updateCommand, updateView } from 'ui/state/actions';
 import * as commands from 'ui/commands';
 
 export default function handleUserInput ({ action, getState, dispatch }) {
@@ -47,6 +47,8 @@ export default function handleUserInput ({ action, getState, dispatch }) {
       }
     } else if (handler) { // Executing a command.
       dispatch(updateView(view.id, commands[handler](payload)));
+    } else if (config.mode === 'ex') {
+      dispatch(updateCommand({ value }));
     }
   });
 }

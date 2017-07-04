@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import setCustomProperties from 'dynamic-css-properties';
 
-import { TitleBar, View } from 'ui/components';
+import { CommandBar, TitleBar, View } from 'ui/components';
 import { updateConfig } from 'ui/state/actions';
 import css from './styles.css';
 
@@ -71,9 +71,8 @@ class App extends Component {
     return (
       <div className={css.root}>
         {config.isTitleBarVisible && <TitleBar label="Wings" />}
-        {_.isEmpty(views) ? (
-          'Pass a filename as an argument to render it here'
-        ) : (
+        {config.mode === 'ex' && <CommandBar />}
+        {!_.isEmpty(views) && (
           <View config={config} dispatch={dispatch} view={views[0]} />
         )}
       </div>

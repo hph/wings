@@ -19,9 +19,30 @@ export function updateView (id, options) {
   };
 }
 
+export function destroyView (id) {
+  return {
+    type: types.DESTROY_VIEW,
+    id,
+  };
+}
+
 export function updateConfig (options) {
   return {
     type: types.UPDATE_CONFIG,
+    ...options,
+  };
+}
+
+export function updateCommand (options) {
+  return {
+    type: types.UPDATE_COMMAND,
+    ...options,
+  };
+}
+
+export function execCommand (options) {
+  return {
+    type: types.EXEC_COMMAND,
     ...options,
   };
 }

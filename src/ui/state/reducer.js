@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import { combineReducers } from 'redux';
 
+import fixedKeys from 'ui/fixed-keys';
 import * as types from 'ui/state/types';
 
 const defaults = {
   config: {},
   views: [],
+  command: '',
 };
 
 function configReducer (state = defaults.config, action) {
@@ -21,6 +23,7 @@ function configReducer (state = defaults.config, action) {
     default: return state;
   }
 }
+
 function viewsReducer (state = defaults.views, action) {
   const { type, ...values } = action;
   switch (type) {
@@ -46,6 +49,32 @@ function viewsReducer (state = defaults.views, action) {
       });
     }
 
+    case types.DESTROY_VIEW: {
+      // We currently only have one view at most; reject by id later on.
+      return [];
+    }
+
+    default: return state;
+  }
+}
+
+function commandReducer (state = defaults.command, action) {
+  const { type, value } = action;
+  switch (type) {
+    case types.UPDATE_COMMAND: {
+      if (fixedKeys.has(value)) {
+        if (value === 'Space') {
+          return `${ state } `;
+        } else if (value === 'Backspace') {
+          return state.substring(0, state.length - 1);
+        } else if (value === 'Enter') {
+          return '';
+        }
+        return state;
+      }
+      return state + value;
+    }
+
     default: return state;
   }
 }
@@ -53,4 +82,5 @@ function viewsReducer (state = defaults.views, action) {
 export default combineReducers({
   config: configReducer,
   views: viewsReducer,
+  command: commandReducer,
 });
