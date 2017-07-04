@@ -1,5 +1,6 @@
 import _ from 'lodash';
 
+import fixedKeys from 'ui/fixed-keys';
 import { updateConfig, updateCommand, updateView } from 'ui/state/actions';
 import * as commands from 'ui/commands';
 
@@ -27,7 +28,8 @@ export default function handleUserInput ({ action, getState, dispatch }) {
     enterInsertMode: 'insert',
   };
   _.forEach(handlers, (handler) => {
-    if (!handler && config.mode === 'insert') { // Inserting a character.
+    if (!handler && config.mode === 'insert' && !fixedKeys.has(payload.value)) {
+      // Inserting a character.
       const command = replacePrevious ? commands.replace : commands.insert;
       dispatch(updateView(view.id, command(payload)));
 
