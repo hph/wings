@@ -5,7 +5,7 @@ import { insertAt, updateFrom } from 'ui/utils';
 export function insert ({ column, row, lines, value }) {
   return {
     lines: insertAt(lines, insertAt(lines[row], value, column), row),
-    column: column + 1,
+    column: column + value.length,
   };
 }
 

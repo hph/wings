@@ -35,6 +35,10 @@ export default function userInputMiddleware ({ getState, dispatch }) {
   };
 
   input.addEventListener('keydown', (event) => {
+    if (event.metaKey && event.key === 'v') {
+      return;
+    }
+
     event.preventDefault();
     if (!event.isComposing && event.key !== 'Dead') {
       dispatch({
@@ -46,6 +50,10 @@ export default function userInputMiddleware ({ getState, dispatch }) {
         shiftKey: event.shiftKey,
       });
     }
+  });
+
+  input.addEventListener('paste', (event) => {
+    dispatch({ ...defaults, value: event.clipboardData.getData('text') });
   });
 
   let composedValue = '';
