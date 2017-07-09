@@ -16,6 +16,10 @@ export default function cursorPositionMiddleware ({ getState }) {
       return next(action);
     }
 
+    if (view.id !== action.id) {
+      return next(action);
+    }
+
     if (view.column === action.column && view.row === action.row) {
       return next(action);
     }
