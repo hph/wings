@@ -1,11 +1,12 @@
-import { createStore, compose } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import { createLogger } from 'redux-logger';
 
-import { DevTools, middleware, reducer } from 'ui/state';
+import { middleware, reducer } from 'ui/state';
 
 export default function configureStore (initialState) {
   const enhancer = compose(
     middleware,
-    DevTools.instrument({ maxAge: 30 }),
+    applyMiddleware(createLogger()),
   );
   return createStore(reducer, initialState, enhancer);
 }

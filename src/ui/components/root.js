@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { ipcRenderer } from 'electron';
 
 import { App } from 'ui/components';
-import { DevTools, actions, createStore } from 'ui/state';
+import { actions, createStore } from 'ui/state';
 
 class Root extends Component {
   static propTypes = {
@@ -22,19 +22,9 @@ class Root extends Component {
     if (filename) {
       store.dispatch(actions.createView(filename, text));
     }
-
-    const children = process.env.NODE_ENV === 'development'
-      ? (
-        <div>
-          <App />
-          <DevTools />
-        </div>
-      )
-      : <App />;
-
     return (
       <Provider store={store}>
-        {children}
+        <App />
       </Provider>
     );
   }
