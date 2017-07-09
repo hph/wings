@@ -26,7 +26,7 @@
   box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.12);
   white-space: pre;
   overflow: hidden;
-  z-index: 1;
+  z-index: 2;
 }
 
 .caret {
