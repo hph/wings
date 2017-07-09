@@ -86,7 +86,7 @@ const uiConfig = {
               query: {
                 camelCase: 'dashes',
                 importLoaders: 1,
-                minimize: false,
+                minimize: devProd(false, true),
                 modules: true,
                 getLocalIdent: (context, localIdentName, localName) => {
                   const path = context.context;
