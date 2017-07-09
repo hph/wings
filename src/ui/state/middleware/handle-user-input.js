@@ -1,8 +1,9 @@
 import _ from 'lodash';
 
 import fixedKeys from 'ui/fixed-keys';
-import { updateConfig, updateCommand, updateView } from 'ui/state/actions';
 import * as commands from 'ui/commands';
+import { updateConfig, updateCommand, updateView } from 'ui/state/actions';
+import { currentView } from 'ui/state/selectors';
 
 export default function handleUserInput ({ action, getState, dispatch }) {
   let stoppedTypingTimer;
@@ -11,8 +12,9 @@ export default function handleUserInput ({ action, getState, dispatch }) {
   }
 
   const { value, replacePrevious } = action;
-  const { config, views } = getState();
-  const view = views[0]; // Temmporary while we only have one view.
+  const state = getState();
+  const { config } = state;
+  const view = currentView(state);
   const payload = {
     ...view,
     ...config,

@@ -2,6 +2,7 @@ import fs from 'fs';
 import { remote } from 'electron';
 
 import * as types from 'ui/state/types';
+import { currentView } from 'ui/state/selectors';
 import { createView, destroyView, updateConfig } from 'ui/state/actions';
 
 export default function exCommands ({ getState, dispatch }) {
@@ -11,7 +12,7 @@ export default function exCommands ({ getState, dispatch }) {
     }
 
     const state = getState();
-    const view = state.views[0];
+    const view = currentView(state);
     const [command, ...args] = state.command.split(' ');
     if (command === 'w') {
       const filename = args.join(' ') || view.filename;

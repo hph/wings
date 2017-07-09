@@ -50,8 +50,7 @@ function viewsReducer (state = defaults.views, action) {
     }
 
     case types.DESTROY_VIEW: {
-      // We currently only have one view at most; reject by id later on.
-      return [];
+      return _.reject(state, ({ id }) => id === values.id);
     }
 
     default: return state;

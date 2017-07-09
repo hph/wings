@@ -1,5 +1,6 @@
 import _ from 'lodash';
 
+import { currentView } from 'ui/state/selectors';
 import * as types from 'ui/state/types';
 
 export default function cursorPositionMiddleware ({ getState }) {
@@ -8,8 +9,13 @@ export default function cursorPositionMiddleware ({ getState }) {
       return next(action);
     }
 
-    const { config, views } = getState();
-    const view = views[0];
+    const state = getState();
+    const { config } = state;
+    const view = currentView(state);
+    if (!view) {
+      return next(action);
+    }
+
     if (view.column === action.column && view.row === action.row) {
       return next(action);
     }

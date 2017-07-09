@@ -9,7 +9,6 @@ import { updateConfig } from 'ui/state/actions';
 import css from './styles.css';
 
 class App extends Component {
-
   static propTypes = {
     config: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
@@ -67,18 +66,17 @@ class App extends Component {
   };
 
   render () {
-    const { config, dispatch, views } = this.props;
+    const { config, views } = this.props;
     return (
       <div className={css.root}>
         {config.isTitleBarVisible && <TitleBar label="Wings" />}
         {config.mode === 'ex' && <CommandBar />}
-        {!_.isEmpty(views) && (
-          <View config={config} dispatch={dispatch} view={views[0]} />
-        )}
+        <div className={css.views}>
+          {_.map(views, ({ id }) => <View viewId={id} key={id} />)}
+        </div>
       </div>
     );
   }
-
 }
 
 export default connect(App.mapStateToProps)(App);

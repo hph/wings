@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -14,12 +15,28 @@ class View extends Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
+    splits: PropTypes.number.isRequired,
     view: PropTypes.object.isRequired,
+    viewId: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
   };
+
+  static mapStateToProps (state, props) {
+    return {
+      config: state.config,
+      splits: state.views.length,
+      view: _.find(state.views, view => view.id === props.viewId),
+    };
+  }
 
   componentDidMount () {
     window.addEventListener('resize', this.onResize);
     this.onResize();
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.splits !== this.props.splits) {
+      setTimeout(this.onResize);
+    }
   }
 
   componentWillUnmount () {
@@ -43,17 +60,21 @@ class View extends Component {
       column,
       row,
     }));
+
+    if (config.currentViewId !== view.id) {
+      dispatch(actions.updateConfig({ currentViewId: view.id }));
+    }
   };
 
   onResize = _.throttle(() => {
     this.props.dispatch(updateView(this.props.view.id, {
-      width: window.innerWidth - this.numbersEl.offsetWidth,
+      width: this.wrapperEl.offsetWidth - this.numbersEl.offsetWidth,
       height: this.textEl.offsetHeight,
     }));
   }, 16.7);
 
   render () {
-    const { config, view } = this.props;
+    const { config, view, splits } = this.props;
     const numbersClasses = cx('numbers', {
       hidden: !config.showLineNumbers,
       overlay: view.firstVisibleColumn > 0,
@@ -65,8 +86,16 @@ class View extends Component {
       numbers = _.map(numbers, number => Math.abs(number - 1 - view.row));
     }
     const textLeft = -view.firstVisibleColumn * config.charWidth;
+    const wrapperStyles = {
+      width: `${ 100 / splits }%`,
+    };
+    const rootClasses = cx('root', { overlay: splits > 0 });
     return (
-      <div className={css.root}>
+      <div
+        className={rootClasses}
+        ref={node => this.wrapperEl = node}
+        style={wrapperStyles}
+      >
         <div className={numbersClasses} ref={node => this.numbersEl = node}>
           {_.map(numbers, (number, index) => <div key={index}>{number}</div>)}
         </div>
@@ -77,11 +106,13 @@ class View extends Component {
           style={{ left: textLeft }}
         >
           {_.map(lines, (line, index) => <div key={index}>{line}</div>)}
-          <Cursor config={config} view={view} />
+          {config.currentViewId === view.id && (
+            <Cursor config={config} view={view} />
+          )}
         </div>
       </div>
     );
   }
 }
 
-export default View;
+export default connect(View.mapStateToProps)(View);
