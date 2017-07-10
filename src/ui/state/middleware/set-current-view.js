@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import { CREATE_VIEW, DESTROY_VIEW } from 'ui/state/types';
 import { updateConfig } from 'ui/state/actions';
 
@@ -9,9 +11,9 @@ export default function setCurrentView ({ getState, dispatch }) {
       });
     } else if (action.type === DESTROY_VIEW) {
       const { views } = getState();
-      const currentViewId = views[0] && views[0].id;
+      const nextView = _.find(views, ({ id }) => id !== action.id);
       setTimeout(() => {
-        dispatch(updateConfig({ currentViewId }));
+        dispatch(updateConfig({ currentViewId: nextView && nextView.id }));
       });
     }
 
