@@ -5,6 +5,8 @@ import { BrowserWindow, app, ipcMain } from 'electron';
 
 import getConfig from 'main-process/config';
 
+const isAsar = process.mainModule.filename.indexOf('app.asar') > -1;
+
 function createWindow (mainWindow, config) {
   mainWindow = new BrowserWindow({ // eslint-disable-line no-param-reassign
     ...config.window,
@@ -19,7 +21,7 @@ function createWindow (mainWindow, config) {
     slashes: true,
     hash: JSON.stringify({
       config: config.editor,
-      filename: process.argv[2],
+      filename: process.argv[isAsar ? 1 : 2],
     }),
   }));
 
