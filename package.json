@@ -1,9 +1,11 @@
 {
   "private": true,
+  "main": "./build/main-process.js",
   "scripts": {
     "build": "webpack --config=config/webpack.config.babel.js",
     "build:production": "NODE_ENV=production webpack --config=config/webpack.config.babel.js",
     "build:watch": "yarn build -- --watch",
+    "build:package": "electron-packager . Wings --asar --overwrite",
     "lint": "eslint -c=config/eslintrc.json --ignore-path=.gitignore .",
     "start": "electron build/main-process.js"
   },
@@ -24,6 +26,7 @@
     "css-loader": "^0.28.4",
     "dynamic-css-properties": "^0.1.2",
     "electron": "1.6.10",
+    "electron-packager": "^8.7.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-import-resolver-babel-module": "^3.0.0",
