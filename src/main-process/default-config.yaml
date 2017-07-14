@@ -16,6 +16,7 @@ editor:
     primaryBackgroundColor: '#002b36'
     secondaryBackgroundColor: '#073642'
     cursorColor: '#d33682'
+    directoryTriangleColor: '#268bd2'
     titleBarHeight: 23px
   keys:
     ex:

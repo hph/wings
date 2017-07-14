@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import setCustomProperties from 'dynamic-css-properties';
 
-import { CommandBar, TitleBar, View } from 'ui/components';
+import { CommandBar, TitleBar, TreeView, View } from 'ui/components';
 import { updateConfig } from 'ui/state/actions';
 import css from './styles.css';
 
@@ -72,6 +72,7 @@ class App extends Component {
         {config.isTitleBarVisible && <TitleBar label="Wings" />}
         {config.mode === 'ex' && <CommandBar />}
         <div className={css.views}>
+          {config.isTreeViewVisible && <TreeView />}
           {_.map(views, ({ id }) => <View viewId={id} key={id} />)}
         </div>
       </div>

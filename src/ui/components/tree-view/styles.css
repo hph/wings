@@ -1,0 +1,28 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-width: 240px;
+  height: 100%;
+  white-space: nowrap;
+  border-right: 1px solid var(--secondary-background-color);
+}
+
+.path {
+  padding: 0.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--secondary-color);
+  background-color: var(--secondary-background-color);
+}
+
+.scroll-wrapper {
+  height: calc(100vh - var(--title-bar-height) - var(--line-height) - 1em);
+  padding: 0 0.5em;
+  overflow-y: scroll;
+}
+
+/* The first level of the RecursiveInnerTree component should not be indented */
+.scroll-wrapper > div {
+  margin-left: 0;
+}

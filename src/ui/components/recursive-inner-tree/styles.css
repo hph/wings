@@ -1,0 +1,26 @@
+.root {
+  margin-left: 11px;
+}
+
+.directory,
+.file {
+  cursor: pointer;
+}
+
+.triangle {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 5px;
+  border-style: solid;
+}
+
+.down {
+  border-width: 6px 3px 0 3px;
+  border-color: var(--directory-triangle-color) transparent transparent transparent;
+}
+
+.right {
+  border-width: 3px 0 3px 6px;
+  border-color: transparent transparent transparent var(--directory-triangle-color);
+}

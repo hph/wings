@@ -3,7 +3,12 @@ import { remote } from 'electron';
 
 import * as types from 'ui/state/types';
 import { currentView } from 'ui/state/selectors';
-import { createView, destroyView, updateConfig } from 'ui/state/actions';
+import {
+  createView,
+  destroyView,
+  toggleTreeView,
+  updateConfig,
+} from 'ui/state/actions';
 
 export default function exCommands ({ getState, dispatch }) {
   return next => action => {
@@ -35,6 +40,8 @@ export default function exCommands ({ getState, dispatch }) {
           dispatch(createView(file, contents));
         });
       }
+    } else if (command === 't') {
+      dispatch(toggleTreeView());
     }
 
     next(action);

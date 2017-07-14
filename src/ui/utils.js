@@ -1,4 +1,7 @@
 import _ from 'lodash';
+import fs from 'fs-extra';
+import { join as joinPaths } from 'path';
+import { reduce } from 'bluebird';
 
 /**
  * Calculate the dimensions of characters in the monospaced font
@@ -45,4 +48,29 @@ export function updateFrom (original, value, start, end) {
     return original.substring(0, start) + value + original.substring(end);
   }
   return original;
+}
+
+/**
+ * Return a an object with the immediate files and directories inside
+ * a given directory.
+ */
+export function listContents (path) {
+  const defaults = {
+    path,
+    files: [],
+    directories: [],
+  };
+
+  return fs.readdir(path).then(subpaths => {
+    return reduce(subpaths, (acc, subpath) => {
+      return fs.lstat(joinPaths(path, subpath)).then(stats => {
+        if (stats.isDirectory()) {
+          acc.directories = [...acc.directories, subpath];
+        } else {
+          acc.files = [...acc.files, subpath];
+        }
+        return acc;
+      });
+    }, defaults);
+  });
 }
