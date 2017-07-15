@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { RecursiveInnerTree } from 'ui/components';
+import { collapsePath } from 'ui/utils';
 import css from './styles.css';
 
-function TreeView ({ dispatch }) {
-  const cwd = process.cwd();
+function TreeView ({ config, dispatch }) {
+  const { cwd } = config;
   const postfix = cwd === '/' ? '' : '/';
-  const qualifiedCwd = `${ cwd.replace(process.env.HOME, '~') }${ postfix }`;
+  const qualifiedCwd = `${ collapsePath(cwd) }${ postfix }`;
   return (
     <div className={css.root}>
       <div className={css.path} title={qualifiedCwd}>
@@ -22,11 +23,12 @@ function TreeView ({ dispatch }) {
 }
 
 TreeView.propTypes = {
+  config: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
-function mapStateToProps () {
-  return {};
+function mapStateToProps ({ config }) {
+  return { config };
 }
 
 export default connect(mapStateToProps)(TreeView);

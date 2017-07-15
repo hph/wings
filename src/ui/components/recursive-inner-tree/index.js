@@ -22,10 +22,20 @@ class RecursiveInnerTree extends Component {
   };
 
   componentDidMount () {
-    listContents(this.props.path).then(results => {
+    this.loadPath(this.props.path);
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.path !== this.props.path) {
+      this.loadPath(nextProps.path);
+    }
+  }
+
+  loadPath = path => {
+    listContents(path).then(results => {
       this.setState({ ...results });
     });
-  }
+  };
 
   toggleDirectory = directory => event => {
     event.stopPropagation();

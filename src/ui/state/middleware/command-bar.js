@@ -1,6 +1,8 @@
 import fs from 'fs';
+import path from 'path';
 import { remote } from 'electron';
 
+import { expandPath } from 'ui/utils';
 import * as types from 'ui/state/types';
 import { currentView } from 'ui/state/selectors';
 import {
@@ -42,6 +44,16 @@ export default function exCommands ({ getState, dispatch }) {
       }
     } else if (command === 't') {
       dispatch(toggleTreeView());
+    } else if (command === 'cd') {
+      const directory = path.resolve(expandPath(args[0]));
+      try {
+        process.chdir(directory);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('Could not change directory', err);
+        return;
+      }
+      dispatch(updateConfig({ cwd: directory }));
     }
 
     next(action);

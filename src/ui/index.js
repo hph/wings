@@ -20,6 +20,7 @@ const initialState = {
     charHeight: _.ceil(height),
     mode: 'normal',
     isTitleBarVisible: true,
+    cwd: process.cwd(),
   },
 };
 

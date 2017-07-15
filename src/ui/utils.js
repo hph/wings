@@ -74,3 +74,18 @@ export function listContents (path) {
     }, defaults);
   });
 }
+
+/**
+ * Replace /Users/$whoami with tilde (~) when applicable.
+ */
+const homePattern = new RegExp(`^${ process.env.HOME }`);
+export function collapsePath (path) {
+  return path.replace(homePattern, '~');
+}
+
+/**
+ * Replace tilde (~) with /Users/$whoami when applicable.
+ */
+export function expandPath (path) {
+  return path.replace(/^~/, process.env.HOME);
+}
