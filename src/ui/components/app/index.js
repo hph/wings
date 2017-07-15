@@ -73,7 +73,9 @@ class App extends Component {
         {config.mode === 'ex' && <CommandBar />}
         <div className={css.views}>
           {config.isTreeViewVisible && <TreeView />}
-          {_.map(views, ({ id }) => <View viewId={id} key={id} />)}
+          {_.map(views, ({ id }, index) => (
+            <View viewId={id} key={id} isFirst={index === 0} />
+          ))}
         </div>
       </div>
     );

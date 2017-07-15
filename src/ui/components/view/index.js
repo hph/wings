@@ -15,6 +15,7 @@ class View extends Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
+    isFirst: PropTypes.bool.isRequired,
     splits: PropTypes.number.isRequired,
     view: PropTypes.object.isRequired,
     viewId: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
@@ -67,17 +68,20 @@ class View extends Component {
   };
 
   onResize = _.throttle(() => {
+    const numbersElWidth = this.numbersEl ? this.numbersEl.offsetWidth : 0;
     this.props.dispatch(updateView(this.props.view.id, {
-      width: this.wrapperEl.offsetWidth - this.numbersEl.offsetWidth,
+      width: this.wrapperEl.offsetWidth - numbersElWidth,
       height: this.textEl.offsetHeight,
     }));
   }, 16.7);
 
   render () {
-    const { config, view, splits } = this.props;
+    const { config, isFirst, view, splits } = this.props;
     const numbersClasses = cx('numbers', {
-      hidden: !config.showLineNumbers,
       overlay: view.firstVisibleColumn > 0,
+    });
+    const textClasses = cx('text', {
+      border: !config.showLineNumbers && !isFirst,
     });
     const numLines = _.ceil(view.height / config.charHeight);
     const lines = _.slice(view.lines, view.firstVisibleRow, numLines + view.firstVisibleRow);
@@ -96,11 +100,13 @@ class View extends Component {
         ref={node => this.wrapperEl = node}
         style={wrapperStyles}
       >
-        <div className={numbersClasses} ref={node => this.numbersEl = node}>
-          {_.map(numbers, (number, index) => <div key={index}>{number}</div>)}
-        </div>
+        {config.showLineNumbers && (
+          <div className={numbersClasses} ref={node => this.numbersEl = node}>
+            {_.map(numbers, number => <div key={number}>{number}</div>)}
+          </div>
+        )}
         <div
-          className={css.text}
+          className={textClasses}
           ref={node => this.textEl = node}
           onMouseDown={this.onTextClick}
           style={{ left: textLeft }}

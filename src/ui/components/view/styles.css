@@ -19,10 +19,6 @@
   z-index: 1;
 }
 
-.numbers.hidden {
-  display: none;
-}
-
 .numbers.overlay {
   box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.12);
 }
@@ -32,6 +28,10 @@
   position: relative;
   text-align: left;
   white-space: pre;
+}
+
+.text.border {
+  border-left: 1px solid var(--secondary-background-color);
 }
 
 /* Ensure that empty lines also have a height */
