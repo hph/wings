@@ -7,7 +7,8 @@ import css from './styles.css';
 
 function TreeView ({ dispatch }) {
   const cwd = process.cwd();
-  const qualifiedCwd = `${ cwd.replace(process.env.HOME, '~') }/`;
+  const postfix = cwd === '/' ? '' : '/';
+  const qualifiedCwd = `${ cwd.replace(process.env.HOME, '~') }${ postfix }`;
   return (
     <div className={css.root}>
       <div className={css.path} title={qualifiedCwd}>
