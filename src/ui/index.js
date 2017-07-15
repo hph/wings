@@ -2,9 +2,13 @@ import _ from 'lodash';
 import React from 'react';
 import { render } from 'react-dom';
 import { readFile } from 'fs';
+import { webFrame } from 'electron';
 
 import { Root } from 'ui/components';
 import { computeFontDimensions } from 'ui/utils';
+
+// Disable pinch zoom.
+webFrame.setVisualZoomLevelLimits(1, 1);
 
 const { config, filename } = JSON.parse(window.location.hash.slice(1));
 const { width, height } = computeFontDimensions(config);
