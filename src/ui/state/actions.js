@@ -55,3 +55,9 @@ export function toggleTreeView () {
     isTreeViewVisible,
   };
 }
+
+export function userInputFocus (focus) {
+  return {
+    type: focus ? types.USER_INPUT_FOCUS : types.USER_INPUT_UNFOCUS,
+  };
+}

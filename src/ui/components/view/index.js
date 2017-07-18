@@ -6,7 +6,7 @@ import classnames from 'classnames/bind';
 
 import { actions } from 'ui/state';
 import { Cursor } from 'ui/components';
-import { updateView } from 'ui/state/actions';
+import { updateView, userInputFocus } from 'ui/state/actions';
 import css from './styles.css';
 
 const cx = classnames.bind(css);
@@ -61,6 +61,10 @@ class View extends Component {
       column,
       row,
     }));
+
+    if (config.isBrowserVisible) {
+      dispatch(userInputFocus(true));
+    }
 
     if (config.currentViewId !== view.id) {
       dispatch(actions.updateConfig({ currentViewId: view.id }));

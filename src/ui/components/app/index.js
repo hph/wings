@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import setCustomProperties from 'dynamic-css-properties';
 
-import { CommandBar, TitleBar, TreeView, View } from 'ui/components';
+import { Browser, CommandBar, TitleBar, TreeView, View } from 'ui/components';
 import { updateConfig } from 'ui/state/actions';
 import css from './styles.css';
 
@@ -57,9 +57,13 @@ class App extends Component {
       return;
     }
 
+    const { config, dispatch } = this.props;
     const isTitleBarVisible = !this.windowIsFullscreen();
-    if (isTitleBarVisible !== this.props.config.isTitleBarVisible) {
-      this.props.dispatch(updateConfig({ isTitleBarVisible }));
+    if (isTitleBarVisible !== config.isTitleBarVisible) {
+      dispatch(updateConfig({ isTitleBarVisible }));
+      setCustomProperties({
+        titleBarHeight: isTitleBarVisible ? config.theme.titleBarHeight : '0px',
+      });
     }
 
     window.requestAnimationFrame(this.showOrHideTitleBar.bind(this, start));
@@ -76,6 +80,7 @@ class App extends Component {
           {_.map(views, ({ id }, index) => (
             <View viewId={id} key={id} isFirst={index === 0} />
           ))}
+          {config.isBrowserVisible && <Browser />}
         </div>
       </div>
     );

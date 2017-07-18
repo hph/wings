@@ -23,6 +23,7 @@
     "consistent-return": 0,
     "fp/no-mutating-methods": 2,
     "import/prefer-default-export": 0,
+    "jsx-a11y/no-autofocus": 0,
     "jsx-a11y/no-static-element-interactions": 0,
     "jsx-quotes": [2, "prefer-double"],
     "no-confusing-arrow": 0,

@@ -1,4 +1,9 @@
 import handleUserInput from 'ui/state/middleware/handle-user-input';
+import {
+  USER_INPUT,
+  USER_INPUT_FOCUS,
+  USER_INPUT_UNFOCUS,
+} from 'ui/state/types';
 
 /**
  * Create an invisible input element outside the viewport and
@@ -12,8 +17,6 @@ function createElement () {
   document.body.appendChild(input);
   return input;
 }
-
-const USER_INPUT = 'USER_INPUT';
 
 /**
  * This middleware concerns itself with setting up an invisible input field
@@ -74,7 +77,16 @@ export default function userInputMiddleware ({ getState, dispatch }) {
     }
   });
 
-  return next => action => action.type === USER_INPUT
-    ? handleUserInput({ action, getState, dispatch })
-    : next(action);
+  return next => action => {
+    if (action.type === USER_INPUT) {
+      handleUserInput({ action, getState, dispatch });
+    } else if (action.type === USER_INPUT_FOCUS) {
+      input.focus();
+      input.addEventListener('blur', input.focus);
+    } else if (action.type === USER_INPUT_UNFOCUS) {
+      input.removeEventListener('blur', input.focus);
+    }
+
+    next(action);
+  };
 }

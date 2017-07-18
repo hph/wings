@@ -1,0 +1,31 @@
+.root {
+  height: calc(100vh - var(--title-bar-height));
+  width: 100%;
+  border-left: 1px solid var(--secondary-background-color);
+}
+
+.webview,
+.error-container {
+  height: calc(100% - 32px);
+  width: 100%;
+  background-color: #fff;
+}
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigation {
+  box-sizing: border-box;
+  height: 32px;
+  width: 100%;
+  margin: 0;
+  padding: 0 0.5em;
+  font-size: var(--font-size);
+  color: #1e1e1e;
+  border: none;
+  border-bottom: 1px solid var(--secondary-background-color);
+  outline: none;
+}

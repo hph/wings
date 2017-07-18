@@ -10,6 +10,7 @@ import {
   destroyView,
   toggleTreeView,
   updateConfig,
+  userInputFocus,
 } from 'ui/state/actions';
 
 export default function exCommands ({ getState, dispatch }) {
@@ -54,6 +55,12 @@ export default function exCommands ({ getState, dispatch }) {
         return;
       }
       dispatch(updateConfig({ cwd: directory }));
+    } else if (command === 'b') {
+      const isBrowserVisible = !state.config.isBrowserVisible;
+      dispatch(updateConfig({ isBrowserVisible }));
+      if (isBrowserVisible) {
+        dispatch(userInputFocus(false));
+      }
     }
 
     next(action);
