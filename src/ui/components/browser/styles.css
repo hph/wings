@@ -1,5 +1,5 @@
 .root {
-  height: calc(100vh - var(--title-bar-height));
+  height: var(--viewport-height);
   width: 100%;
   border-left: 1px solid var(--secondary-background-color);
 }

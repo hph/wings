@@ -51,6 +51,7 @@ class App extends Component {
     setCustomProperties({
       ...config.theme,
       charWidth: `${ config.charWidth }px`,
+      viewportHeight: 'calc(100vh - var(--title-bar-height)',
     });
   }
 
