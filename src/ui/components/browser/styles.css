@@ -24,6 +24,7 @@
   margin: 0;
   padding: 0 0.5em;
   font-size: var(--font-size);
+  font-family: var(--font-family);
   color: #1e1e1e;
   border: none;
   border-bottom: 1px solid var(--secondary-background-color);
