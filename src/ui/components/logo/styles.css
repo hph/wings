@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.root svg {
+  height: 24%;
+  width: 24%;
+}
+
+.root svg g {
+  fill: var(--secondary-background-color);
+}

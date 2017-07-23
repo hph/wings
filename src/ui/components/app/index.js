@@ -4,7 +4,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import setCustomProperties from 'dynamic-css-properties';
 
-import { Browser, CommandBar, TitleBar, TreeView, View } from 'ui/components';
+import {
+  Browser,
+  CommandBar,
+  Logo,
+  TitleBar,
+  TreeView,
+  View,
+} from 'ui/components';
 import { updateConfig } from 'ui/state/actions';
 import css from './styles.css';
 
@@ -77,9 +84,13 @@ class App extends Component {
         {config.mode === 'ex' && <CommandBar />}
         <div className={css.views}>
           {config.isTreeViewVisible && <TreeView />}
-          {_.map(views, ({ id }, index) => (
-            <View viewId={id} key={id} isFirst={index === 0} />
-          ))}
+          {_.isEmpty(views) ? (
+            <Logo />
+          ) : (
+            _.map(views, ({ id }, index) => (
+              <View viewId={id} key={id} isFirst={index === 0} />
+            ))
+          )}
           {config.isBrowserVisible && <Browser />}
         </div>
       </div>

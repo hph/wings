@@ -4,23 +4,24 @@
       <stop stop-color="#3023AE" offset="0%"></stop>
       <stop stop-color="#C86DD7" offset="100%"></stop>
     </linearGradient>
-    <text id="text-2" font-family="Futura-Medium, Futura" font-size="580" font-weight="400">
-      <tspan x="205" y="729">W</tspan>
-    </text>
-    <filter x="-1.1%" y="-0.6%" width="102.3%" height="101.8%" filterUnits="objectBoundingBox" id="filter-3">
+    <filter x="-1.2%" y="-1.0%" width="102.3%" height="102.8%" filterUnits="objectBoundingBox" id="filter-2">
       <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
       <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-      <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+      <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+      <feMerge>
+        <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+        <feMergeNode in="SourceGraphic"></feMergeNode>
+      </feMerge>
     </filter>
   </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g id="Wings">
-        <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="512" cy="512" r="488"></circle>
-        <g id="W" fill="#FFFFFF">
-          <use fill-opacity="1" filter="url(#filter-3)" xlink:href="#text-2"></use>
-          <use fill-rule="evenodd" xlink:href="#text-2"></use>
-          <use fill-opacity="1" xlink:href="#text-2"></use>
-        </g>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="Wings" fill-rule="nonzero" fill="url(#linearGradient-1)">
+      <circle id="Oval" cx="512" cy="512" r="488"></circle>
+    </g>
+    <g id="W" filter="url(#filter-2)" transform="translate(209.000000, 265.000000)" fill-rule="nonzero" fill="#FFFFFF">
+      <g id="Group" transform="translate(303.023022, 247.303466) rotate(180.000000) translate(-303.023022, -247.303466) translate(0.523022, 0.303466)">
+        <path d="M0,475.048958 L73.3967817,475.048958 L159.911286,244.239504 C165.533167,229.039603 170.270123,215.713662 174.122153,204.261682 C177.974182,192.809702 181.357722,182.086484 184.272771,172.092029 C191.560395,196.245296 199.160346,219.878019 207.072623,242.990197 C208.113712,245.905246 208.842474,247.883315 209.25891,248.924405 L301.082969,493.163908 L397.904256,244.239504 C402.485048,232.16287 406.805567,220.086237 410.865815,208.009603 C414.926062,195.93297 418.726037,183.752227 422.26574,171.467375 C424.347919,180.837178 427.158859,191.143959 430.698562,202.387722 C434.238265,213.631484 438.819057,226.957425 444.440938,242.365543 L530.330789,475.048958 L604.352223,475.048958 L427.262968,0 L322.94584,260.792821 C318.365048,272.453018 314.200691,283.644726 310.45277,294.367944 C306.70485,305.091162 303.373365,315.241781 300.458315,324.819801 C296.918613,312.534949 293.378909,301.030915 289.839206,290.307696 C286.299503,279.584479 282.655692,269.329751 278.907771,259.543514 L176.464603,0 L0,475.048958 Z" id="Shape"></path>
       </g>
     </g>
+  </g>
 </svg>

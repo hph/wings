@@ -44,6 +44,10 @@ const commonConfig = {
           ],
         },
       },
+      {
+        test: /\.svg$/,
+        loader: 'raw-loader',
+      },
     ],
   },
   resolve: {

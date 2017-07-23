@@ -20,4 +20,5 @@ body {
 
 .views {
   display: flex;
+  height: calc(100% - var(--title-bar-height));
 }
