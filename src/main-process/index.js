@@ -13,8 +13,8 @@ getConfig()
     }
     app.once('window-all-closed', app.quit);
   })
-  .catch(({ reason }) => {
+  .catch((error) => {
     // eslint-disable-next-line no-console
-    console.log(`Invalid config file (reason: ${ reason })`);
+    console.log('Uncaught error initializing application', error);
     process.exit(1);
   });
