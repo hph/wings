@@ -32,6 +32,7 @@ export default function getConfig () {
     defaultConfig: getDefaultConfig(),
     userConfig: getUserConfig(),
   }).then(({ defaultConfig, userConfig }) => {
-    return _.defaultsDeep(userConfig, defaultConfig);
+    const target = { isDefault: _.isEmpty(userConfig) };
+    return _.defaultsDeep(target, userConfig, defaultConfig);
   });
 }
