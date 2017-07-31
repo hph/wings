@@ -1,11 +1,9 @@
 import _ from 'lodash';
 import os from 'os';
 import path from 'path';
-import { promisify, props } from 'bluebird';
-import { readFile as _readFile } from 'fs';
+import { props } from 'bluebird';
+import { readFile } from 'fs-extra';
 import { safeLoad } from 'js-yaml';
-
-const readFile = promisify(_readFile);
 
 /**
  * Read and resolve the user's config file as JSON if there is one,
@@ -21,7 +19,7 @@ function getUserConfig () {
  * Read and resolve the default config as JSON.
  */
 function getDefaultConfig () {
-  return readFile(path.join(__dirname, './default-config.yaml'), { encoding: 'utf-8' })
+  return readFile(path.join(__dirname, 'default-config.yaml'), { encoding: 'utf-8' })
     .then(contents => safeLoad(contents));
 }
 
