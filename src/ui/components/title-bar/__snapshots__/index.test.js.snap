@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TitleBar renders a label inside it 1`] = `
+<div
+  className="root"
+>
+  Wings is great!
+</div>
+`;
+
+exports[`TitleBar renders a simple div with a class 1`] = `
+<div
+  className="root"
+>
+  
+</div>
+`;
