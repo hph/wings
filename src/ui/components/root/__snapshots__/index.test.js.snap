@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Root creates a store and dispatches an action if provided with a file 1`] = `<App />`;
+
+exports[`Root renders the App component 1`] = `<App />`;

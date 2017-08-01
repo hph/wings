@@ -90,6 +90,7 @@ test('LineNumbers starts off at the first visible row', () => {
     },
   });
 });
+
 test('LineNumbers starts off at the first visible row with relative line numbers', () => {
   createSnapshot({
     ...defaultProps,
