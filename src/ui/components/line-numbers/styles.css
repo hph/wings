@@ -1,0 +1,11 @@
+.root {
+  padding: 0 5px;
+  color: var(--secondary-color);
+  background-color: var(--secondary-background-color);
+  text-align: right;
+  z-index: 1;
+}
+
+.root.overlay {
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.12);
+}

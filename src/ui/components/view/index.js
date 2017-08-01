@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import { actions } from 'ui/state';
-import { Cursor } from 'ui/components';
+import { Cursor, LineNumbers } from 'ui/components';
 import { updateView, userInputFocus } from 'ui/state/actions';
 import css from './styles.css';
 
@@ -81,18 +81,11 @@ class View extends Component {
 
   render () {
     const { config, isFirst, view, splits } = this.props;
-    const numbersClasses = cx('numbers', {
-      overlay: view.firstVisibleColumn > 0,
-    });
     const textClasses = cx('text', {
       border: !config.showLineNumbers && !isFirst,
     });
     const numLines = _.ceil(view.height / config.charHeight);
     const lines = _.slice(view.lines, view.firstVisibleRow, numLines + view.firstVisibleRow);
-    let numbers = _.range(view.firstVisibleRow + 1, view.lines.length + 1);
-    if (config.relativeLineNumbers) {
-      numbers = _.map(numbers, number => number - 1 - view.row);
-    }
     const textLeft = -view.firstVisibleColumn * config.charWidth;
     const wrapperStyles = {
       width: `${ 100 / splits }%`,
@@ -105,9 +98,12 @@ class View extends Component {
         style={wrapperStyles}
       >
         {config.showLineNumbers && (
-          <div className={numbersClasses} ref={node => this.numbersEl = node}>
-            {_.map(numbers, number => <div key={number}>{Math.abs(number)}</div>)}
-          </div>
+          <LineNumbers
+            className={css.numbers}
+            ref={node => this.numbersEl = node}
+            config={config}
+            view={view}
+          />
         )}
         <div
           className={textClasses}

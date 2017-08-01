@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LineNumbers adds an overlay class when firstVisibleColumn is larger than 0 1`] = `
+<div
+  className="root overlay"
+/>
+`;
+
+exports[`LineNumbers allows passing in an external classname 1`] = `
+<div
+  className="root custom-classname"
+/>
+`;
+
+exports[`LineNumbers renders line numbers 1`] = `
+<div
+  className="root"
+>
+  <div>
+    1
+  </div>
+  <div>
+    2
+  </div>
+  <div>
+    3
+  </div>
+</div>
+`;
+
+exports[`LineNumbers renders relative line numbers when so configured 1`] = `
+<div
+  className="root"
+>
+  <div>
+    2
+  </div>
+  <div>
+    1
+  </div>
+  <div>
+    0
+  </div>
+  <div>
+    1
+  </div>
+  <div>
+    2
+  </div>
+</div>
+`;
+
+exports[`LineNumbers starts off at the first visible row 1`] = `
+<div
+  className="root"
+>
+  <div>
+    3
+  </div>
+  <div>
+    4
+  </div>
+  <div>
+    5
+  </div>
+</div>
+`;
+
+exports[`LineNumbers starts off at the first visible row with relative line numbers 1`] = `
+<div
+  className="root"
+>
+  <div>
+    0
+  </div>
+  <div>
+    1
+  </div>
+  <div>
+    2
+  </div>
+</div>
+`;
+
+exports[`LineNumbers starts zero-indexed when using relative line numbers 1`] = `
+<div
+  className="root"
+>
+  <div>
+    0
+  </div>
+  <div>
+    1
+  </div>
+  <div>
+    2
+  </div>
+</div>
+`;
