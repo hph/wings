@@ -91,7 +91,7 @@ class View extends Component {
     const lines = _.slice(view.lines, view.firstVisibleRow, numLines + view.firstVisibleRow);
     let numbers = _.range(view.firstVisibleRow + 1, view.lines.length + 1);
     if (config.relativeLineNumbers) {
-      numbers = _.map(numbers, number => Math.abs(number - 1 - view.row));
+      numbers = _.map(numbers, number => number - 1 - view.row);
     }
     const textLeft = -view.firstVisibleColumn * config.charWidth;
     const wrapperStyles = {
@@ -106,7 +106,7 @@ class View extends Component {
       >
         {config.showLineNumbers && (
           <div className={numbersClasses} ref={node => this.numbersEl = node}>
-            {_.map(numbers, number => <div key={number}>{number}</div>)}
+            {_.map(numbers, number => <div key={number}>{Math.abs(number)}</div>)}
           </div>
         )}
         <div
