@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logo renders an SVG logo 1`] = `
+<div
+  className="root"
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": "W.svg",
+    }
+  }
+/>
+`;

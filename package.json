@@ -87,6 +87,10 @@
   "jest": {
     "moduleNameMapper": {
       "\\.css$": "identity-obj-proxy"
+    },
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "\\.svg$": "<rootDir>/src/test/file-transformer.js"
     }
   }
 }
