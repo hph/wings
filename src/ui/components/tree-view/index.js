@@ -6,7 +6,7 @@ import { RecursiveInnerTree } from 'ui/components';
 import { collapsePath } from 'ui/utils';
 import css from './styles.css';
 
-function TreeView ({ config, dispatch }) {
+export function TreeView ({ config, dispatch }) {
   const { cwd } = config;
   const postfix = cwd === '/' ? '' : '/';
   const qualifiedCwd = `${ collapsePath(cwd) }${ postfix }`;

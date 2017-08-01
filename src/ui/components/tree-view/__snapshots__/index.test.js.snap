@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TreeView renders a basic wrapper around RecursiveInnerTree 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="path"
+    title="~/Code/"
+  >
+    ~/Code/
+  </div>
+  <div
+    className="scrollWrapper"
+  >
+    <RecursiveInnerTree
+      dispatch={[Function]}
+      path="~/Code"
+    />
+  </div>
+</div>
+`;
