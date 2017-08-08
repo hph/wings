@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommandBar renders a command bar with the provided command 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="colon"
+    >
+      :
+    </div>
+    <div>
+      foo
+    </div>
+    <div
+      className="caret"
+    />
+  </div>
+</div>
+`;
+
+exports[`CommandBar renders an empty command bar 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="colon"
+    >
+      :
+    </div>
+    <div>
+      
+    </div>
+    <div
+      className="caret"
+    />
+  </div>
+</div>
+`;

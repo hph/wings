@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import css from './styles.css';
 
-function CommandBar ({ command }) {
+export function CommandBar ({ command }) {
   return (
     <div className={css.root}>
       <div className={css.container}>
