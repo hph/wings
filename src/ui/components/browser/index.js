@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import { userInputFocus } from 'ui/state/actions';
 import css from './styles.css';
 
-function withScheme (url) {
+export function withScheme (url) {
   return url.match(/^https?:\/\//) ? url : url.replace('', 'http://');
 }
 
-class Browser extends Component {
+export class Browser extends Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };
