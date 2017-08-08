@@ -7,6 +7,7 @@ editor:
   shiftWidth: 2
   showLineNumbers: true
   relativeLineNumbers: true
+  showTimeoutMs: 1000
   theme:
     fontFamily: "'SF Mono', Monaco, 'Andale Mono', 'Lucida Console', Courier, monospace"
     fontSize: 14px

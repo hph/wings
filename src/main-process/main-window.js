@@ -42,7 +42,7 @@ export default function createWindow (mainWindow, config) {
   // or after the configured timeout, whichever comes first.
   mainWindow.once('ready-to-show', maybeShow);
   ipcMain.once('root-mounted', maybeShow);
-  setTimeout(show, config.showTimeoutMs);
+  setTimeout(show, config.editor.showTimeoutMs);
 
   mainWindow.once('closed', () => {
     mainWindow = null; // eslint-disable-line no-param-reassign
