@@ -3,13 +3,31 @@
 exports[`LineNumbers adds an overlay class when firstVisibleColumn is larger than 0 1`] = `
 <div
   className="root overlay"
-/>
+>
+  <div>
+    1
+  </div>
+</div>
 `;
 
 exports[`LineNumbers allows passing in an external classname 1`] = `
 <div
   className="root custom-classname"
-/>
+>
+  <div>
+    1
+  </div>
+</div>
+`;
+
+exports[`LineNumbers renders at least one line even when empty 1`] = `
+<div
+  className="root"
+>
+  <div>
+    1
+  </div>
+</div>
 `;
 
 exports[`LineNumbers renders line numbers 1`] = `

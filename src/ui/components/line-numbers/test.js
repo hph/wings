@@ -7,7 +7,7 @@ import LineNumbers from './index';
 const defaultProps = {
   className: '',
   config: {
-    relativelineNumbers: false,
+    relativeLineNumbers: false,
   },
   view: {
     lines: [],
@@ -22,6 +22,10 @@ const createSnapshot = (props = defaultProps) => {
     renderer.create(<LineNumbers {...props} />).toJSON(),
   ).toMatchSnapshot();
 };
+
+test('LineNumbers renders at least one line even when empty', () => {
+  createSnapshot();
+});
 
 test('LineNumbers allows passing in an external classname', () => {
   createSnapshot({
