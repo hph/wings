@@ -15,7 +15,7 @@ import {
 import { updateConfig } from 'ui/state/actions';
 import css from './styles.css';
 
-class App extends Component {
+export class App extends Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,

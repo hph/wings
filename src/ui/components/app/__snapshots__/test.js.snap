@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App can render many things at once when so configured 1`] = `
+<div
+  className="root"
+>
+  <TitleBar
+    label="Wings"
+  />
+  <div
+    className="views"
+  >
+    <TreeView />
+    <View
+      isFirst={true}
+      viewId={1}
+    />
+    <View
+      isFirst={false}
+      viewId={2}
+    />
+    <Browser />
+  </div>
+</div>
+`;
+
+exports[`App defaults to rendering a logo in an empty state 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="views"
+  >
+    <Logo />
+  </div>
+</div>
+`;
+
+exports[`App renders a Browser when so configured 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="views"
+  >
+    <Logo />
+    <Browser />
+  </div>
+</div>
+`;
+
+exports[`App renders a CommandBar in ex mode 1`] = `
+<div
+  className="root"
+>
+  <CommandBar />
+  <div
+    className="views"
+  >
+    <Logo />
+  </div>
+</div>
+`;
+
+exports[`App renders a TitleBar when so configured 1`] = `
+<div
+  className="root"
+>
+  <TitleBar
+    label="Wings"
+  />
+  <div
+    className="views"
+  >
+    <Logo />
+  </div>
+</div>
+`;
+
+exports[`App renders a TreeView when so configured 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="views"
+  >
+    <TreeView />
+    <Logo />
+  </div>
+</div>
+`;
+
+exports[`App renders a View when so configured 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="views"
+  >
+    <View
+      isFirst={true}
+      viewId={1}
+    />
+  </div>
+</div>
+`;
+
+exports[`App renders multiple instances of View when so configured 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="views"
+  >
+    <View
+      isFirst={true}
+      viewId={1}
+    />
+    <View
+      isFirst={false}
+      viewId={2}
+    />
+  </div>
+</div>
+`;
