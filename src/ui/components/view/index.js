@@ -11,7 +11,7 @@ import css from './styles.css';
 
 const cx = classnames.bind(css);
 
-class View extends Component {
+export class View extends Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
@@ -90,7 +90,7 @@ class View extends Component {
     const wrapperStyles = {
       width: `${ 100 / splits }%`,
     };
-    const rootClasses = cx('root', { overlay: splits > 0 });
+    const rootClasses = cx('root', 'overlay');
     return (
       <div
         className={rootClasses}

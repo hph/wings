@@ -1,0 +1,284 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`View has a left offset as determined by the first visible column 1`] = `
+<div
+  className="root overlay"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="text"
+    onMouseDown={[Function]}
+    style={
+      Object {
+        "left": -25,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`View only renders visible lines 1`] = `
+<div
+  className="root overlay"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="text"
+    onMouseDown={[Function]}
+    style={
+      Object {
+        "left": -0,
+      }
+    }
+  >
+    <div>
+      0
+    </div>
+    <div>
+      1
+    </div>
+    <div>
+      2
+    </div>
+    <div>
+      3
+    </div>
+    <div>
+      4
+    </div>
+  </div>
+</div>
+`;
+
+exports[`View renders LineNumbers when so configured 1`] = `
+<div
+  className="root overlay"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <LineNumbers
+    className="numbers"
+    config={
+      Object {
+        "charHeight": 20,
+        "charWidth": 5,
+        "showLineNumbers": true,
+      }
+    }
+    view={
+      Object {
+        "firstVisibleColumn": 0,
+        "firstVisibleRow": 0,
+        "height": 800,
+        "id": 1,
+        "lines": Array [],
+      }
+    }
+  />
+  <div
+    className="text"
+    onMouseDown={[Function]}
+    style={
+      Object {
+        "left": -0,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`View renders a Cursor in the current view 1`] = `
+<div
+  className="root overlay"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="text"
+    onMouseDown={[Function]}
+    style={
+      Object {
+        "left": NaN,
+      }
+    }
+  >
+    <Cursor
+      config={
+        Object {
+          "currentViewId": 1,
+        }
+      }
+      view={
+        Object {
+          "firstVisibleColumn": 0,
+          "firstVisibleRow": 0,
+          "height": 800,
+          "id": 1,
+          "lines": Array [],
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`View renders a border when it is not the first and there are no line numbers 1`] = `
+<div
+  className="root overlay"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="text border"
+    onMouseDown={[Function]}
+    style={
+      Object {
+        "left": -0,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`View renders a border when it is not the first and there are no line numbers 2`] = `
+<div
+  className="root overlay"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <LineNumbers
+    className="numbers"
+    config={
+      Object {
+        "charHeight": 20,
+        "charWidth": 5,
+        "showLineNumbers": true,
+      }
+    }
+    view={
+      Object {
+        "firstVisibleColumn": 0,
+        "firstVisibleRow": 0,
+        "height": 800,
+        "id": 1,
+        "lines": Array [],
+      }
+    }
+  />
+  <div
+    className="text"
+    onMouseDown={[Function]}
+    style={
+      Object {
+        "left": -0,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`View renders empty content 1`] = `
+<div
+  className="root overlay"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="text"
+    onMouseDown={[Function]}
+    style={
+      Object {
+        "left": -0,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`View renders lines of code 1`] = `
+<div
+  className="root overlay"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="text"
+    onMouseDown={[Function]}
+    style={
+      Object {
+        "left": -0,
+      }
+    }
+  >
+    <div>
+      hello, world!
+    </div>
+    <div>
+      this is just marvellous!
+    </div>
+  </div>
+</div>
+`;
+
+exports[`View starts rendering lines from the first visible row as configured 1`] = `
+<div
+  className="root overlay"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="text"
+    onMouseDown={[Function]}
+    style={
+      Object {
+        "left": -0,
+      }
+    }
+  >
+    <div>
+      10
+    </div>
+    <div>
+      11
+    </div>
+    <div>
+      12
+    </div>
+    <div>
+      13
+    </div>
+    <div>
+      14
+    </div>
+  </div>
+</div>
+`;
