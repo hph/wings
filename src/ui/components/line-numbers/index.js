@@ -12,6 +12,7 @@ class LineNumbers extends Component {
     className: PropTypes.string.isRequired,
     config: PropTypes.object.isRequired,
     view: PropTypes.object.isRequired,
+    innerRef: PropTypes.func.isRequired,
   };
 
   shouldComponentUpdate (nextProps) {
@@ -32,7 +33,7 @@ class LineNumbers extends Component {
   }
 
   render () {
-    const { className, config, view } = this.props;
+    const { className, config, view, innerRef } = this.props;
     const classes = cx('root', className, {
       overlay: view.firstVisibleColumn > 0,
     });
@@ -45,7 +46,7 @@ class LineNumbers extends Component {
       numbers = _.map(numbers, number => number - 1 - view.row);
     }
     return (
-      <div className={classes}>
+      <div className={classes} ref={innerRef}>
         {_.map(numbers, number => <div key={number}>{Math.abs(number)}</div>)}
       </div>
     );

@@ -15,6 +15,7 @@ const defaultProps = {
     firstVisibleRow: 0,
     firstVisibleColumn: 0,
   },
+  innerRef: () => {},
 };
 
 const createSnapshot = (props = defaultProps) => {

@@ -52,6 +52,7 @@ test('View renders a Cursor in the current view', () => {
   createSnapshot({
     ...defaultProps,
     config: {
+      ...defaultProps.config,
       currentViewId: 1,
     },
   });

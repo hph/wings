@@ -100,7 +100,7 @@ export class View extends Component {
         {config.showLineNumbers && (
           <LineNumbers
             className={css.numbers}
-            ref={node => this.numbersEl = node}
+            innerRef={node => this.numbersEl = node}
             config={config}
             view={view}
           />
