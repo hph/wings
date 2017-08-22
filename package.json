@@ -10,6 +10,7 @@
     "build:package": "electron-packager . Wings --asar --overwrite --icon=build/Wings.icns",
     "lint": "eslint -c=config/eslintrc.json --ignore-path=.gitignore .",
     "test": "jest",
+    "test:ci": "yarn jest -- --coverage && cat ./coverage/lcov.info | coveralls",
     "start": "electron build/main-process.js"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "bluebird": "^3.5.0",
     "classnames": "^2.2.5",
     "copy-webpack-plugin": "^4.0.1",
+    "coveralls": "^2.13.1",
     "css-loader": "^0.28.4",
     "dynamic-css-properties": "^0.1.2",
     "electron": "1.7.5",
