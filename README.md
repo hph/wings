@@ -1,21 +1,22 @@
 # Wings · [![Build Status](https://img.shields.io/travis/hph/wings.svg)](https://travis-ci.org/hph/wings) [![Coverage](https://img.shields.io/coveralls/hph/wings.svg)](https://coveralls.io/github/hph/wings)
 
-A personal text editor inspired by Vim. Written in JavaScript using React.
+A personal text editor inspired by Vim. Written in JavaScript and React.
 
 ![Demo](https://www.dropbox.com/s/qog2a5d8rdcjs6q/Wings.png?raw=1)
 
 ## Download
 
-You may download the latest Mac release [here](https://github.com/hph/wings/releases).
-You may also [build the app](https://github.com/hph/wings#building-for-production)
-manually, which should work on Mac, Linux and Windows.
+The latest Mac release is available for download [here](https://github.com/hph/wings/releases).
+You can also [build the app](https://github.com/hph/wings#building-for-production)
+yourself, which should work on Mac, Linux and Windows.
 
 ## Usage
 
-Wings is heavily inspired by Vim and currently supports a subset of its
-commands, in addition to some new things. At this time there is no proper
-documentation or even a list of features, but you can check out the keys
-section of the [default config](https://github.com/hph/wings/blob/master/src/main-process/default-config.yaml)
+Wings is heavily inspired by [Vim](https://en.wikipedia.org/wiki/Vim_(text_editor))
+and currently supports a subset of its commands, in addition to some new
+things. At this time there is no proper documentation or even a list of
+features, but you can check out the keys section of the
+[default config](https://github.com/hph/wings/blob/master/src/main-process/default-config.yaml)
 to learn more.
 
 ## Development
