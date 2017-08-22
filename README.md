@@ -10,6 +10,14 @@ You may download the latest Mac release [here](https://github.com/hph/wings/rele
 You may also [build the app](https://github.com/hph/wings#building-for-production)
 manually, which should work on Mac, Linux and Windows.
 
+## Usage
+
+Wings is heavily inspired by Vim and currently supports a subset of its
+commands, in addition to some new things. At this time there is no proper
+documentation or even a list of features, but you can check out the keys
+section of the [default config](https://github.com/hph/wings/blob/master/src/main-process/default-config.yaml)
+to learn more.
+
 ## Development
 
 In order to run Wings in development mode you will need
