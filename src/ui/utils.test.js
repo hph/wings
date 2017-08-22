@@ -1,4 +1,4 @@
-import { tmpdir, userInfo } from 'os';
+import { tmpdir } from 'os';
 import fs from 'fs-extra';
 
 import {
@@ -13,11 +13,11 @@ const noMatchPaths = [
   '/foo/bar',
   '/Users/most-likely-not-the-user',
 ];
-const { username } = userInfo();
+const homedir = process.env.HOME;
 const matchPaths = [
-  [`/Users/${ username }`, '~'],
-  [`/Users/${ username }/`, '~/'],
-  [`/Users/${ username }/something`, '~/something'],
+  [homedir, '~'],
+  [`${ homedir }/`, '~/'],
+  [`${ homedir }/something`, '~/something'],
 ];
 const root = `${ tmpdir() }/root`;
 
