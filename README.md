@@ -2,6 +2,9 @@
 
 My personal text editor. Inspired by Vim, written in JavaScript and React.
 
+Caveat emptor: this application is built for my own needs and is almost
+certainly of no direct use to anyone else.
+
 ![Demo](https://www.dropbox.com/s/qog2a5d8rdcjs6q/Wings.png?raw=1)
 
 ## Download
