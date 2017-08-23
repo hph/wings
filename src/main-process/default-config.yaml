@@ -49,7 +49,7 @@ editor:
       x: removeAt
       D:
         - removeFromCursor
-        - maybeMoveLeft
+        - moveLeft
       C:
         - enterInsertMode
         - removeFromCursor

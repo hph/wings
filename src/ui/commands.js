@@ -2,6 +2,22 @@ import _ from 'lodash';
 
 import { insertAt, updateFrom } from 'ui/utils';
 
+function upOrDown ({ column, row, lines, prevMaxColumn }, direction) {
+  const nextMaxColumn = _.max([0, lines[row + direction].length - 1]);
+  let nextColumn = nextMaxColumn;
+  let nextPrevMaxColumn = prevMaxColumn;
+  if (nextMaxColumn < column) {
+    nextPrevMaxColumn = _.max([column, prevMaxColumn]);
+  } else {
+    nextColumn = _.min([_.max([column, prevMaxColumn]), nextMaxColumn]);
+  }
+  return {
+    column: nextColumn,
+    row: row + direction,
+    prevMaxColumn: nextPrevMaxColumn,
+  };
+}
+
 export function insert ({ column, row, lines, value }) {
   return {
     lines: insertAt(lines, insertAt(lines[row], value, column), row),
@@ -104,29 +120,6 @@ export function splitLines ({ column, row, lines }) {
     lines: newLines,
     column: 0,
     row: row + 1,
-  };
-}
-
-export function upOrDown ({ column, row, lines, prevMaxColumn }, direction) {
-  const nextMaxColumn = _.max([0, lines[row + direction].length - 1]);
-  let nextColumn = nextMaxColumn;
-  let nextPrevMaxColumn = prevMaxColumn;
-  if (nextMaxColumn < column) {
-    nextPrevMaxColumn = _.max([column, prevMaxColumn]);
-  } else {
-    nextColumn = _.min([_.max([column, prevMaxColumn]), nextMaxColumn]);
-  }
-  return {
-    column: nextColumn,
-    row: row + direction,
-    prevMaxColumn: nextPrevMaxColumn,
-  };
-}
-
-export function maybeMoveLeft ({ column }) {
-  return {
-    column: column === 0 ? column : column - 1,
-    prevMaxColumn: 0,
   };
 }
 
