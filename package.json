@@ -92,7 +92,7 @@
     },
     "transform": {
       "^.+\\.js$": "babel-jest",
-      "\\.svg$": "<rootDir>/src/test/file-transformer.js"
+      "\\.svg$": "<rootDir>/config/jest-file-transformer.js"
     }
   }
 }
