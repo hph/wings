@@ -98,6 +98,40 @@ describe('insert', () => {
   });
 });
 
+describe('indent', () => {
+  it('should indent the line as determined by shiftWidth', () => {
+    expect(commands.indent({
+      column: 0,
+      row: 0,
+      lines: ['hello'],
+      shiftWidth: 2,
+    })).toEqual({
+      lines: ['  hello'],
+      column: 2,
+    });
+
+    expect(commands.indent({
+      column: 0,
+      row: 0,
+      lines: ['hello', 'world!'],
+      shiftWidth: 4,
+    })).toEqual({
+      lines: ['    hello', 'world!'],
+      column: 4,
+    });
+
+    expect(commands.indent({
+      column: 2,
+      row: 0,
+      lines: ['hello', 'world!'],
+      shiftWidth: 2,
+    })).toEqual({
+      lines: ['he  llo', 'world!'],
+      column: 4,
+    });
+  });
+});
+
 describe('replace', () => {
   it('should replace the previous character when given a single character value', () => {
     expect(commands.replace({
@@ -527,6 +561,19 @@ describe('moveDown', () => {
       row: 2,
       column: 0,
       prevMaxColumn: 0,
+    });
+  });
+
+  it('should keep the larger prevMaxColumn value', () => {
+    expect(commands.moveDown({
+      column: 5,
+      row: 0,
+      lines: ['hello, world!', '', 'abc'],
+      prevMaxColumn: 5,
+    })).toEqual({
+      column: 0,
+      row: 1,
+      prevMaxColumn: 5,
     });
   });
 });

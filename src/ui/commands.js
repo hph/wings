@@ -33,12 +33,9 @@ export function replace ({ column, row, lines, value }) {
 }
 
 export function indent ({ column, row, lines, shiftWidth }) {
-  const line = lines[row];
-  const newLines = _.clone(lines);
   const spaces = _.pad(' ', shiftWidth);
-  newLines[row] = line.substring(0, column) + spaces + line.substring(column);
   return {
-    lines: newLines,
+    lines: insertAt(lines, insertAt(lines[row], spaces, column), row),
     column: column + shiftWidth,
   };
 }
