@@ -23,7 +23,7 @@ function configReducer (state = defaults.config, action) {
     case types.TOGGLE_TREE_VIEW: {
       return {
         ...state,
-        isTreeViewVisible: values.isTreeViewVisible,
+        isTreeViewVisible: !state.isTreeViewVisible,
       };
     }
 

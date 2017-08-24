@@ -47,12 +47,9 @@ export function execCommand (options) {
   };
 }
 
-let isTreeViewVisible = false;
 export function toggleTreeView () {
-  isTreeViewVisible = !isTreeViewVisible;
   return {
     type: types.TOGGLE_TREE_VIEW,
-    isTreeViewVisible,
   };
 }
 
