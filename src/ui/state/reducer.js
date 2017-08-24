@@ -10,7 +10,7 @@ const defaults = {
   command: '',
 };
 
-function configReducer (state = defaults.config, action) {
+export function configReducer (state = defaults.config, action) {
   const { type, ...values } = action;
   switch (type) {
     case types.UPDATE_CONFIG: {
@@ -31,7 +31,7 @@ function configReducer (state = defaults.config, action) {
   }
 }
 
-function viewsReducer (state = defaults.views, action) {
+export function viewsReducer (state = defaults.views, action) {
   const { type, ...values } = action;
   switch (type) {
     case types.CREATE_VIEW: {
@@ -64,7 +64,7 @@ function viewsReducer (state = defaults.views, action) {
   }
 }
 
-function commandReducer (state = defaults.command, action) {
+export function commandReducer (state = defaults.command, action) {
   const { type, value } = action;
   switch (type) {
     case types.UPDATE_COMMAND: {
