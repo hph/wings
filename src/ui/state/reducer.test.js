@@ -135,5 +135,15 @@ describe('commandReducer', () => {
       expect(commandReducer('', action)).toEqual('');
       expect(commandReducer('hello', action)).toEqual('');
     });
+
+    it('should ignore other fixed keys', () => {
+      const action = {
+        type: types.UPDATE_COMMAND,
+        value: 'Tab',
+      };
+
+      expect(commandReducer('', action)).toEqual('');
+      expect(commandReducer('hello', action)).toEqual('hello');
+    });
   });
 });
