@@ -1,6 +1,6 @@
 # Wings · [![Build Status](https://img.shields.io/travis/hph/wings.svg)](https://travis-ci.org/hph/wings) [![Coverage](https://img.shields.io/coveralls/hph/wings.svg)](https://coveralls.io/github/hph/wings)
 
-My personal text editor. Inspired by Vim, written in JavaScript and React.
+A text editor inspired by Vim, written in JavaScript and React.
 
 Caveat emptor: this application is built for my own needs and is almost
 certainly of no direct use to anyone else.
