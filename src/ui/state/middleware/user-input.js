@@ -9,7 +9,7 @@ import {
  * Create an invisible input element outside the viewport and
  * append it to the body.
  */
-function createElement () {
+export function createElement () {
   const input = document.createElement('input');
   input.style.position = 'absolute';
   input.style.top = '-1000px';
@@ -19,14 +19,12 @@ function createElement () {
 }
 
 /**
- * This middleware concerns itself with setting up an invisible input field
- * to capture all user input and retain focus at all times, as well as dealing
- * with normal and composed key values ("´" + "a" = "á" is one such example).
+ * Attach event handlers to the provided elements and dispatch
+ * actions as appropriate.
  */
-export default function userInputMiddleware ({ getState, dispatch }) {
-  const input = createElement();
-  input.focus();
-  input.addEventListener('blur', input.focus);
+export function attachEventListeners (element, dispatch) {
+  element.focus();
+  element.addEventListener('blur', element.focus);
 
   const defaults = {
     type: USER_INPUT,
@@ -37,7 +35,7 @@ export default function userInputMiddleware ({ getState, dispatch }) {
     replacePrevious: false,
   };
 
-  input.addEventListener('keydown', (event) => {
+  element.addEventListener('keydown', (event) => {
     if (event.metaKey && event.key === 'v') {
       return;
     }
@@ -55,12 +53,12 @@ export default function userInputMiddleware ({ getState, dispatch }) {
     }
   });
 
-  input.addEventListener('paste', (event) => {
+  element.addEventListener('paste', (event) => {
     dispatch({ ...defaults, value: event.clipboardData.getData('text') });
   });
 
   let composedValue = '';
-  input.addEventListener('compositionupdate', ({ data }) => {
+  element.addEventListener('compositionupdate', ({ data }) => {
     if (composedValue === '') {
       composedValue = data;
       dispatch({ ...defaults, value: data });
@@ -76,6 +74,16 @@ export default function userInputMiddleware ({ getState, dispatch }) {
       composedValue = '';
     }
   });
+}
+
+/**
+ * This middleware concerns itself with setting up an invisible input field
+ * to capture all user input and retain focus at all times, as well as dealing
+ * with normal and composed key values ("´" + "a" = "á" is one such example).
+ */
+export default function userInputMiddleware ({ getState, dispatch }) {
+  const input = createElement();
+  attachEventListeners(input, dispatch);
 
   return next => action => {
     if (action.type === USER_INPUT) {
