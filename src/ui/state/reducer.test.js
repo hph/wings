@@ -59,6 +59,24 @@ describe('viewsReducer', () => {
         ],
       });
     });
+
+    it('should handle an empty text value by creating an array of one line', () => {
+      const action = {
+        type: types.CREATE_VIEW,
+        filename: 'file.txt',
+      };
+
+      expect(viewsReducer([], action)[0]).toEqual({
+        column: 0,
+        row: 0,
+        firstVisibleColumn: 0,
+        firstVisibleRow: 0,
+        width: 0,
+        height: 0,
+        filename: action.filename,
+        lines: [''],
+      });
+    });
   });
 
   describe('UPDATE_VIEW', () => {
