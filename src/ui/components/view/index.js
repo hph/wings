@@ -36,7 +36,7 @@ export class View extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.splits !== this.props.splits) {
-      setTimeout(this.onResize);
+      this.onResize();
     }
   }
 
