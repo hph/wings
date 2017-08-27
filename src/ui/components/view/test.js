@@ -251,7 +251,7 @@ describe('View', () => {
         firstVisibleRow: 0,
       },
       config: {
-        mode: 'insert',
+        mode: 'normal',
         charWidth: 5,
         charHeight: 20,
         isBrowserVisible: true,
@@ -338,14 +338,10 @@ describe('View', () => {
       });
     });
 
-    it('may have a column offset of one in normal mode', () => {
+    it('may have a column offset of one in insert mode', () => {
       const newProps = {
         ...props,
         dispatch: jest.fn(),
-        config: {
-          ...props.config,
-          mode: 'normal',
-        },
         view: {
           ...props.view,
           lines: [

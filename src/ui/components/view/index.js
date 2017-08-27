@@ -57,8 +57,12 @@ export class View extends Component {
       ? _.max([0, view.lines.length - 1])
       : clickY + view.firstVisibleRow;
 
-    const offset = config.mode === 'insert' ? 0 : 1;
-    const column = _.min([_.max([0, view.lines[row].length - offset]), clickX]);
+    const clickOffset = config.mode === 'insert' ? 1 : 0;
+    const maxLengthOffset = config.mode === 'insert' ? 0 : -1;
+    const column = _.min([
+      _.max([0, view.lines[row].length + maxLengthOffset]),
+      clickX + clickOffset,
+    ]);
 
     dispatch(actions.updateView(view.id, { column, row }));
 
