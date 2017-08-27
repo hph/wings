@@ -377,5 +377,33 @@ describe('View', () => {
         column: 13,
       });
     });
+
+    it('should use the last line if the cursor clicked below it', () => {
+      const newProps = {
+        ...props,
+        dispatch: jest.fn(),
+        view: {
+          ...props.view,
+          lines: [
+            'hi!',
+            'this line will be focused when we click below it',
+          ],
+        },
+      };
+      const newEvent = {
+        ...event,
+        target: event.currentTarget,
+        clientY: 100,
+        clientX: 10,
+      };
+      new View(newProps).onTextClick(newEvent);
+      const expectedOutput = {
+        type: types.UPDATE_VIEW,
+        id: 1,
+        column: 2,
+        row: 1,
+      };
+      expect(newProps.dispatch).toHaveBeenCalledWith(expectedOutput);
+    });
   });
 });
