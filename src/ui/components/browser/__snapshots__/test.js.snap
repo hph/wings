@@ -1,47 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Browser navbar updates the value as the user types 1`] = `
-<div
-  className="root"
->
-  <input
-    autoFocus={true}
-    className="navigation"
-    onChange={[Function]}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    type="text"
-    value="http://google.com"
-  />
-  
-  <webview
-    className="webview"
-    src=""
-  />
-</div>
-`;
-
-exports[`Browser navbar updates the value as the user types 2`] = `
-<div
-  className="root"
->
-  <input
-    autoFocus={true}
-    className="navigation"
-    onChange={[Function]}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    type="text"
-    value="example.com"
-  />
-  
-  <webview
-    className="webview"
-    src=""
-  />
-</div>
-`;
-
 exports[`Browser navigates to the URL in the navbar on an Enter keypress 1`] = `
 <div
   className="root"
@@ -105,6 +63,48 @@ exports[`Browser shows an error on a webview load error 1`] = `
       oh no!
     </div>
   </div>
+  <webview
+    className="webview"
+    src=""
+  />
+</div>
+`;
+
+exports[`Browser updates the value in the navbar as the user types 1`] = `
+<div
+  className="root"
+>
+  <input
+    autoFocus={true}
+    className="navigation"
+    onChange={[Function]}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    type="text"
+    value="http://google.com"
+  />
+  
+  <webview
+    className="webview"
+    src=""
+  />
+</div>
+`;
+
+exports[`Browser updates the value in the navbar as the user types 2`] = `
+<div
+  className="root"
+>
+  <input
+    autoFocus={true}
+    className="navigation"
+    onChange={[Function]}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    type="text"
+    value="example.com"
+  />
+  
   <webview
     className="webview"
     src=""

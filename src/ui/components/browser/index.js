@@ -25,25 +25,31 @@ export class Browser extends Component {
   };
 
   componentDidMount () {
-    this.navigation.select();
+    setTimeout(() => this.navigation.select());
 
     // Keep the navigation location in sync with internal webview navigation.
-    this.webview.addEventListener('will-navigate', ({ url }) => {
-      this.setState({ navLocation: url });
-    });
+    this.webview.addEventListener('will-navigate', this.onWillNavigate);
 
     // Keep the navigation location in sync with redirects from the server.
-    this.webview.addEventListener('did-get-redirect-request', (event) => {
-      const { newURL: newUrl, isMainFrame } = event;
-      if (newUrl && isMainFrame) {
-        this.setState({ navLocation: event.newURL });
-      }
-    });
+    this.webview.addEventListener('did-get-redirect-request', this.onDidGetRedirectRequest);
 
-    this.webview.addEventListener('did-fail-load', ({ errorDescription }) => {
-      this.setState({ error: errorDescription });
-    });
+    // Show an error message when one is received.
+    this.webview.addEventListener('did-fail-load', this.onDidFailLoad);
   }
+
+  onWillNavigate = ({ url }) => {
+    this.setState({ navLocation: url });
+  };
+
+  onDidGetRedirectRequest = ({ newURL: newUrl, isMainFrame }) => {
+    if (newUrl && isMainFrame) {
+      this.setState({ navLocation: newUrl });
+    }
+  };
+
+  onDidFailLoad = ({ errorDescription }) => {
+    this.setState({ error: errorDescription });
+  };
 
   onNavigationClick = () => {
     this.props.dispatch(userInputFocus(false));
