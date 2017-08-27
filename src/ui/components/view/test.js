@@ -15,7 +15,6 @@ function createNodeMock (element) {
       offsetHeight: 0,
     };
   }
-
   return null;
 }
 
@@ -196,19 +195,19 @@ describe('View', () => {
   });
 
   it('onResize takes the width of the numbers el into account when present', () => {
-    const newDispatch = jest.fn();
+    const dispatch = jest.fn();
     const props = {
       view: {
         id: 1,
       },
-      dispatch: newDispatch,
+      dispatch,
     };
 
     const view = new View(props);
     view.wrapperEl = { offsetWidth: 800 };
     view.textEl = { offsetHeight: 600 };
     view.onResize.call({ props });
-    expect(newDispatch).toHaveBeenCalledWith({
+    expect(dispatch).toHaveBeenCalledWith({
       type: types.UPDATE_VIEW,
       id: 1,
       width: 800,
@@ -220,7 +219,7 @@ describe('View', () => {
     secondView.wrapperEl = { offsetWidth: 800 };
     secondView.textEl = { offsetHeight: 600 };
     secondView.onResize.call({ props });
-    expect(newDispatch).toHaveBeenCalledWith({
+    expect(dispatch).toHaveBeenCalledWith({
       type: types.UPDATE_VIEW,
       id: 1,
       width: 750,
@@ -230,6 +229,7 @@ describe('View', () => {
 
   describe('onTextClick', () => {
     const currentTarget = {
+      offsetTop: 0,
       offsetLeft: 0,
       offsetRight: 0,
     };
@@ -244,7 +244,10 @@ describe('View', () => {
       dispatch,
       view: {
         id: 1,
-        lines: [''],
+        lines: [
+          'hello, world!',
+          'how are you doing?',
+        ],
         firstVisibleRow: 0,
       },
       config: {
@@ -257,22 +260,41 @@ describe('View', () => {
     };
 
     it('should calculate where the user clicked', () => {
-      new View(props).onTextClick(event);
-      expect(dispatch).toHaveBeenCalledWith({
+      const newProps = {
+        ...props,
+        dispatch: jest.fn(),
+      };
+
+      new View(newProps).onTextClick(event);
+      expect(newProps.dispatch).toHaveBeenCalledWith({
         type: types.UPDATE_VIEW,
         id: 1,
         column: 0,
         row: 0,
       });
 
-      new View(props).onTextClick({
+      new View(newProps).onTextClick({
         ...event,
+        clientX: 37,
+        clientY: 0,
       });
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(newProps.dispatch).toHaveBeenCalledWith({
         type: types.UPDATE_VIEW,
         id: 1,
-        column: 0,
+        column: 7,
         row: 0,
+      });
+
+      new View(newProps).onTextClick({
+        ...event,
+        clientX: 37,
+        clientY: 27,
+      });
+      expect(newProps.dispatch).toHaveBeenCalledWith({
+        type: types.UPDATE_VIEW,
+        id: 1,
+        column: 7,
+        row: 1,
       });
     });
 
@@ -282,16 +304,16 @@ describe('View', () => {
         type: types.USER_INPUT_FOCUS,
       });
 
-      const newDispatch = jest.fn();
-      new View({
+      const newProps = {
         ...props,
-        dispatch: newDispatch,
+        dispatch: jest.fn(),
         config: {
           ...props.config,
           isBrowserVisible: false,
         },
-      }).onTextClick(event);
-      expect(newDispatch).not.toHaveBeenCalledWith({
+      };
+      new View(newProps).onTextClick(event);
+      expect(newProps.dispatch).not.toHaveBeenCalledWith({
         type: types.USER_INPUT_FOCUS,
       });
     });
@@ -317,11 +339,11 @@ describe('View', () => {
     });
 
     it('may have a column offset of one in normal mode', () => {
-      const newDispatch = jest.fn();
       const newProps = {
         ...props,
-        dispatch: newDispatch,
+        dispatch: jest.fn(),
         config: {
+          ...props.config,
           mode: 'normal',
         },
         view: {
@@ -333,24 +355,30 @@ describe('View', () => {
           ],
         },
       };
-      new View(newProps).onTextClick(event);
+      const newEvent = {
+        ...event,
+        clientY: 15,
+        clientX: 76,
+      };
+      new View(newProps).onTextClick(newEvent);
       const expectedOutput = {
         type: types.UPDATE_VIEW,
         id: 1,
-        column: 17,
-        row: 2,
+        column: 12,
+        row: 0,
       };
-      expect(newDispatch).toHaveBeenCalledWith(expectedOutput);
+      expect(newProps.dispatch).toHaveBeenCalledWith(expectedOutput);
 
       new View({
         ...newProps,
         config: {
+          ...props.config,
           mode: 'insert',
         },
-      }).onTextClick(event);
-      expect(newDispatch).toHaveBeenCalledWith({
+      }).onTextClick(newEvent);
+      expect(newProps.dispatch).toHaveBeenCalledWith({
         ...expectedOutput,
-        column: 18,
+        column: 13,
       });
     });
   });

@@ -50,17 +50,17 @@ export class View extends Component {
 
     const clickX = _.floor(_.max([0, clientX - currentTarget.offsetLeft]) / config.charWidth);
     const clickY = _.floor(_.max([0, clientY - currentTarget.offsetTop]) / config.charHeight);
-    const numLines = _.max([0, view.lines.length - 1]);
+
+    // If the targets are the same then it means that the user
+    // clicked below the last line in the view.
     const row = currentTarget === target
-      ? numLines + view.firstVisibleRow
-      : _.min([numLines, clickY]) + view.firstVisibleRow;
+      ? _.max([0, view.lines.length - 1])
+      : clickY + view.firstVisibleRow;
+
     const offset = config.mode === 'insert' ? 0 : 1;
     const column = _.min([_.max([0, view.lines[row].length - offset]), clickX]);
 
-    dispatch(actions.updateView(view.id, {
-      column,
-      row,
-    }));
+    dispatch(actions.updateView(view.id, { column, row }));
 
     if (config.isBrowserVisible) {
       dispatch(userInputFocus(true));
