@@ -20,7 +20,7 @@ CommandBar.propTypes = {
   command: PropTypes.string.isRequired,
 };
 
-function mapStateToProps ({ command }) {
+export function mapStateToProps ({ command }) {
   return { command };
 }
 
