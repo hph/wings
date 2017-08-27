@@ -36,9 +36,7 @@ export class App extends Component {
 
   componentDidMount () {
     // Determine whether the titlebar should be shown or hidden on resize.
-    window.addEventListener('resize', () => {
-      this.showOrHideTitleBar(new Date().getTime());
-    });
+    window.addEventListener('resize', this.onResize);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -46,6 +44,10 @@ export class App extends Component {
       this.setCustomProperties(nextProps.config);
     }
   }
+
+  onResize = () => {
+    this.showOrHideTitleBar(new Date().getTime());
+  };
 
   setCustomProperties (config) {
     setCustomProperties({
@@ -69,7 +71,7 @@ export class App extends Component {
     const isTitleBarVisible = !this.windowIsFullscreen();
     if (isTitleBarVisible !== config.isTitleBarVisible) {
       dispatch(updateConfig({ isTitleBarVisible }));
-      setCustomProperties({
+      this.setCustomProperties({
         titleBarHeight: isTitleBarVisible ? config.theme.titleBarHeight : '0px',
       });
     }
