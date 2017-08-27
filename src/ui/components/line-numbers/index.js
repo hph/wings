@@ -22,6 +22,7 @@ class LineNumbers extends Component {
       config.charHeight !== nextProps.config.charHeight ||
       config.relativeLineNumbers !== nextProps.config.relativeLineNumbers ||
       view.firstVisibleRow !== nextProps.view.firstVisibleRow ||
+      view.firstVisibleColumn !== nextProps.view.firstVisibleColumn ||
       view.height !== nextProps.view.height ||
       view.lines.length !== nextProps.view.lines.length ||
       view.row !== nextProps.view.row
