@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { TreeView } from './index';
+import { TreeView, mapStateToProps } from './index';
 
 jest.mock('../recursive-inner-tree', () => 'RecursiveInnerTree');
 
@@ -18,6 +18,25 @@ const createSnapshot = (props = defaultProps) => {
   ).toMatchSnapshot();
 };
 
-test('TreeView renders a basic wrapper around RecursiveInnerTree', () => {
-  createSnapshot();
+describe('TreeView', () => {
+  it('renders a basic wrapper around RecursiveInnerTree', () => {
+    createSnapshot();
+  });
+
+  it('does not have a postfix in the / directory', () => {
+    createSnapshot({
+      ...defaultProps,
+      config: {
+        cwd: '/',
+      },
+    });
+  });
+
+  describe('mapStateToProps', () => {
+    it('returns config from the store', () => {
+      expect(mapStateToProps({ config: {} })).toEqual({
+        config: {},
+      });
+    });
+  });
 });

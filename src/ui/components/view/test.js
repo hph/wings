@@ -6,7 +6,6 @@ import { View } from './index';
 import * as types from '../../state/types';
 
 jest.mock('../cursor', () => 'Cursor');
-jest.mock('../line-numbers', () => 'LineNumbers');
 
 function createNodeMock (element) {
   if (element.type === 'div') {

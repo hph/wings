@@ -1,5 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`TreeView does not have a postfix in the / directory 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="path"
+    title="/"
+  >
+    /
+  </div>
+  <div
+    className="scrollWrapper"
+  >
+    <RecursiveInnerTree
+      dispatch={[Function]}
+      path="/"
+    />
+  </div>
+</div>
+`;
+
 exports[`TreeView renders a basic wrapper around RecursiveInnerTree 1`] = `
 <div
   className="root"

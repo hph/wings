@@ -27,7 +27,7 @@ TreeView.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-function mapStateToProps ({ config }) {
+export function mapStateToProps ({ config }) {
   return { config };
 }
 

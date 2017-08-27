@@ -232,7 +232,6 @@ describe('attachEventListeners', () => {
       handlers.compositionupdate({ data: '´s' });
 
       expect(dispatch.mock.calls.length).toBe(2);
-      expect(dispatch.mock.calls.length).toBe(2);
       expect(dispatch).toHaveBeenCalledWith({
         ...defaults,
         value: '´',

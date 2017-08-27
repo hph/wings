@@ -67,26 +67,13 @@ exports[`View renders LineNumbers when so configured 1`] = `
     }
   }
 >
-  <LineNumbers
-    className="numbers"
-    config={
-      Object {
-        "charHeight": 20,
-        "charWidth": 5,
-        "showLineNumbers": true,
-      }
-    }
-    innerRef={[Function]}
-    view={
-      Object {
-        "firstVisibleColumn": 0,
-        "firstVisibleRow": 0,
-        "height": 800,
-        "id": 1,
-        "lines": Array [],
-      }
-    }
-  />
+  <div
+    className="root numbers"
+  >
+    <div>
+      1
+    </div>
+  </div>
   <div
     className="text"
     onMouseDown={[Function]}
@@ -170,26 +157,13 @@ exports[`View renders a border when it is not the first and there are no line nu
     }
   }
 >
-  <LineNumbers
-    className="numbers"
-    config={
-      Object {
-        "charHeight": 20,
-        "charWidth": 5,
-        "showLineNumbers": true,
-      }
-    }
-    innerRef={[Function]}
-    view={
-      Object {
-        "firstVisibleColumn": 0,
-        "firstVisibleRow": 0,
-        "height": 800,
-        "id": 1,
-        "lines": Array [],
-      }
-    }
-  />
+  <div
+    className="root numbers"
+  >
+    <div>
+      1
+    </div>
+  </div>
   <div
     className="text"
     onMouseDown={[Function]}
