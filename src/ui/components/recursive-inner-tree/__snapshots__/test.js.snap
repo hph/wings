@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecursiveInnerTree initially renders an empty container and starts loading content 1`] = `
+<div
+  className="root"
+/>
+`;
