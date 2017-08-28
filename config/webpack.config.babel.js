@@ -7,6 +7,8 @@ import StatefulReactContainerPlugin from 'stateful-react-container-webpack-plugi
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 
+const packageJson = require('../package');
+
 function devProd (inDevelopment, inProduction) {
   return process.env.NODE_ENV === 'production'
     ? inProduction
@@ -32,7 +34,7 @@ const commonConfig = {
               'env',
               {
                 targets: {
-                  electron: '1.6.10',
+                  electron: packageJson.dependencies.electron,
                 },
               },
             ],
