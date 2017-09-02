@@ -63,3 +63,4 @@ editor:
       l: moveRight
       g: goToFirstLine
       G: goToLastLine
+      '%': goToMatchingBracket

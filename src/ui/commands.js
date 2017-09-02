@@ -234,3 +234,77 @@ export function nextWord ({ column, row, lines }) {
   };
   return getNext(column, 0);
 }
+
+function matchingBracketDown ({ column, row, lines, cursorChar, oppositeChar }) {
+  let sameCharCount = 0;
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[row + i];
+    if (i === 0) {
+      line = line.slice(column + 1);
+    }
+    for (let j = 0; j < line.length; j++) {
+      const char = line[j];
+      if (char === oppositeChar) {
+        if (sameCharCount === 0) {
+          return {
+            column: i === 0 ? j + column + 1 : j,
+            row: i + row,
+          };
+        }
+        sameCharCount -= 1;
+      } else if (char === cursorChar) {
+        sameCharCount += 1;
+      }
+    }
+  }
+  return {};
+}
+
+function matchingBracketUp ({ column, row, lines, cursorChar, oppositeChar }) {
+  let sameCharCount = 0;
+  for (let i = row; i > -1; i--) {
+    let line = lines[i];
+    if (i === row) {
+      line = line.slice(0, column);
+    }
+    for (let j = line.length - 1; j > -1; j--) {
+      const char = line[j];
+      if (char === oppositeChar) {
+        if (sameCharCount === 0) {
+          return {
+            column: j,
+            row: i,
+          };
+        }
+        sameCharCount -= 1;
+      } else if (char === cursorChar) {
+        sameCharCount += 1;
+      }
+    }
+  }
+  return {};
+}
+
+export function goToMatchingBracket ({ column, row, lines }) {
+  const openingChars = '([{';
+  const closingChars = ')]}';
+  const cursorChar = lines[row][column];
+  const args = {
+    column,
+    row,
+    lines,
+    cursorChar,
+  };
+  if (openingChars.includes(cursorChar)) {
+    return matchingBracketDown({
+      ...args,
+      oppositeChar: closingChars[openingChars.indexOf(cursorChar)],
+    });
+  } else if (closingChars.includes(cursorChar)) {
+    return matchingBracketUp({
+      ...args,
+      oppositeChar: openingChars[closingChars.indexOf(cursorChar)],
+    });
+  }
+  return {};
+}

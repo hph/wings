@@ -973,3 +973,144 @@ describe('nextWord', () => {
     }).prevMaxColumn).toEqual(0);
   });
 });
+
+describe('goToMatchingBracket', () => {
+  it('should not do anything when not on a bracket', () => {
+    expect(commands.goToMatchingBracket({
+      lines: ['aa'],
+      column: 0,
+      row: 0,
+    })).toEqual({});
+
+    expect(commands.goToMatchingBracket({
+      lines: ['bab'],
+      column: 2,
+      row: 0,
+    })).toEqual({});
+
+    expect(commands.goToMatchingBracket({
+      lines: ['<a', 'b>'],
+      column: 1,
+      row: 1,
+    })).toEqual({});
+  });
+
+  it('should not do anything if a matching bracket is not found', () => {
+    expect(commands.goToMatchingBracket({
+      lines: ['(oh no!'],
+      column: 0,
+      row: 0,
+    })).toEqual({});
+
+    expect(commands.goToMatchingBracket({
+      lines: ['(nope]'],
+      column: 0,
+      row: 0,
+    })).toEqual({});
+
+    expect(commands.goToMatchingBracket({
+      lines: ['not (', 'so', 'great'],
+      column: 4,
+      row: 0,
+    })).toEqual({});
+
+    expect(commands.goToMatchingBracket({
+      lines: ['nope)'],
+      column: 4,
+      row: 0,
+    })).toEqual({});
+  });
+
+  it('should go to the matching bracket in the same line in both directions', () => {
+    expect(commands.goToMatchingBracket({
+      lines: ['()'],
+      column: 0,
+      row: 0,
+    })).toEqual({
+      column: 1,
+      row: 0,
+    });
+
+    expect(commands.goToMatchingBracket({
+      lines: ['(huh?)'],
+      column: 0,
+      row: 0,
+    })).toEqual({
+      column: 5,
+      row: 0,
+    });
+
+    expect(commands.goToMatchingBracket({
+      lines: ['()'],
+      column: 1,
+      row: 0,
+    })).toEqual({
+      column: 0,
+      row: 0,
+    });
+
+    expect(commands.goToMatchingBracket({
+      lines: ['(wooo)'],
+      column: 5,
+      row: 0,
+    })).toEqual({
+      column: 0,
+      row: 0,
+    });
+  });
+
+  it('should support all the bracket types', () => {
+    ['(asdf)', '[asdf]', '{asdf}'].forEach(line => {
+      expect(commands.goToMatchingBracket({
+        lines: [line],
+        column: 0,
+        row: 0,
+      })).toEqual({
+        column: 5,
+        row: 0,
+      });
+    });
+  });
+
+  it('should ignore inner matches', () => {
+    expect(commands.goToMatchingBracket({
+      lines: [
+        'function () {',
+        '  if (true) {',
+        '    return;',
+        '  }',
+        '}',
+      ],
+      column: 12,
+      row: 0,
+    })).toEqual({
+      column: 0,
+      row: 4,
+    });
+
+    expect(commands.goToMatchingBracket({
+      lines: ['foo (', '()', ')'],
+      column: 0,
+      row: 2,
+    })).toEqual({
+      column: 4,
+      row: 0,
+    });
+  });
+
+  it('should go back to the previous position when run twice', () => {
+    const lines = ['a ( ', 'b (()', '}', '))', ''];
+    const input = {
+      column: 2,
+      row: 0,
+    };
+
+    expect(commands.goToMatchingBracket({
+      lines,
+      ...commands.goToMatchingBracket({
+        lines,
+        ...input,
+      }),
+    })).toEqual(input);
+  });
+});
