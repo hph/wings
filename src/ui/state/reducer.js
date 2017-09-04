@@ -36,7 +36,7 @@ export function viewsReducer (state = defaults.views, action) {
   switch (type) {
     case types.CREATE_VIEW: {
       const lines = (action.text || '').split('\n').slice(0, -1);
-      return [...state, _.defaults({ ..._.omit(values, 'text') }, {
+      return [...state, _.defaults({ ..._.omit(values, ['text']) }, {
         lines: _.isEmpty(lines) ? [''] : lines,
         column: 0,
         row: 0,
