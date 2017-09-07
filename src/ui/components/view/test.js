@@ -39,8 +39,8 @@ const defaultProps = {
 
 const createSnapshot = (props = defaultProps) => {
   expect(
-    renderer.create(<View {...props} />, { createNodeMock },
-  ).toJSON()).toMatchSnapshot();
+    renderer.create(<View {...props} />, { createNodeMock }).toJSON(),
+  ).toMatchSnapshot();
 };
 
 describe('View', () => {
