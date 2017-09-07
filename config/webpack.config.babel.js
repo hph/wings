@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import { resolve } from 'path';
 import HtmlPlugin from 'html-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
-import BabiliPlugin from 'babili-webpack-plugin';
+import BabelMinifyPlugin from 'babel-minify-webpack-plugin';
 import StatefulReactContainerPlugin from 'stateful-react-container-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
@@ -65,7 +65,7 @@ const commonConfig = {
       new webpack.NamedModulesPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
     ], [
-      new BabiliPlugin({}, {
+      new BabelMinifyPlugin({}, {
         comments: false,
         sourceMap: true,
       }),
