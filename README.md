@@ -1,4 +1,4 @@
-# Wings · [![Build Status](https://img.shields.io/travis/hph/wings.svg)](https://travis-ci.org/hph/wings) [![Coverage](https://img.shields.io/coveralls/hph/wings.svg)](https://coveralls.io/github/hph/wings)
+# Wings · [![Build Status](https://img.shields.io/travis/hph/wings/master.svg)](https://travis-ci.org/hph/wings) [![Coverage](https://img.shields.io/coveralls/hph/wings/master.svg)](https://coveralls.io/github/hph/wings)
 
 A text editor inspired by Vim, written in JavaScript and React.
 
