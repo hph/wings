@@ -12,14 +12,24 @@ const cx = classnames.bind(css);
 
 class RecursiveInnerTree extends Component {
   static propTypes = {
-    path: PropTypes.string.isRequired,
+    directories: PropTypes.array,
     dispatch: PropTypes.func.isRequired,
+    files: PropTypes.array,
+    path: PropTypes.string.isRequired,
   };
 
-  state = {
+  static defaultProps = {
     directories: [],
     files: [],
   };
+
+  constructor (props) {
+    super(props);
+    this.state = {
+      directories: props.directories,
+      files: props.files,
+    };
+  }
 
   componentDidMount () {
     this.loadPath(this.props.path);
@@ -32,7 +42,7 @@ class RecursiveInnerTree extends Component {
   }
 
   loadPath = path => {
-    listContents(path).then(results => {
+    return listContents(path).then(results => {
       this.setState({ ...results });
     });
   };
@@ -42,7 +52,7 @@ class RecursiveInnerTree extends Component {
     if (this.state[directory]) {
       this.setState({ [directory]: null });
     } else {
-      listContents(joinPaths(this.props.path, directory))
+      return listContents(joinPaths(this.props.path, directory))
         .then(results => {
           this.setState({ [directory]: results });
         });
@@ -52,7 +62,7 @@ class RecursiveInnerTree extends Component {
   openFile = file => event => {
     event.stopPropagation();
     const fileName = joinPaths(this.props.path, file);
-    fs.readFile(fileName, { encoding: 'utf-8' }).then(text => {
+    return fs.readFile(fileName, { encoding: 'utf-8' }).then(text => {
       this.props.dispatch(createView(fileName, text));
     });
   };

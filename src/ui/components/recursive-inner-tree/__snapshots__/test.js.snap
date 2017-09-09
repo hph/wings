@@ -5,3 +5,74 @@ exports[`RecursiveInnerTree initially renders an empty container and starts load
   className="root"
 />
 `;
+
+exports[`RecursiveInnerTree renders a set of dirctories and files 1`] = `
+<div
+  className="root"
+>
+  <div>
+    <span
+      className="directory"
+      onClick={[Function]}
+    >
+      <span
+        className="triangle right"
+      />
+      /foo/
+    </span>
+  </div>
+  <div>
+    <span
+      className="file"
+      onClick={[Function]}
+    >
+      bar.txt
+    </span>
+  </div>
+  <div>
+    <span
+      className="file"
+      onClick={[Function]}
+    >
+      baz.txt
+    </span>
+  </div>
+</div>
+`;
+
+exports[`RecursiveInnerTree renders a set of dirctories and files 2`] = `
+<div
+  className="root"
+>
+  <div>
+    <span
+      className="directory"
+      onClick={[Function]}
+    >
+      <span
+        className="triangle down"
+      />
+      /foo/
+    </span>
+    <div
+      className="root"
+    />
+  </div>
+  <div>
+    <span
+      className="file"
+      onClick={[Function]}
+    >
+      bar.txt
+    </span>
+  </div>
+  <div>
+    <span
+      className="file"
+      onClick={[Function]}
+    >
+      baz.txt
+    </span>
+  </div>
+</div>
+`;
