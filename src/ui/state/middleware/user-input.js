@@ -67,7 +67,7 @@ export function attachEventListeners (element, dispatch) {
         const [firstChar, secondChar] = data;
         if (firstChar !== composedValue) {
           dispatch({ ...defaults, value: firstChar, replacePrevious: true });
-        } else if (secondChar) {
+        } else {
           dispatch({ ...defaults, value: secondChar });
         }
       }
