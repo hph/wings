@@ -1,4 +1,4 @@
-# Wings · [![Build Status](https://img.shields.io/travis/hph/wings/master.svg)](https://travis-ci.org/hph/wings) [![Coverage](https://img.shields.io/coveralls/hph/wings/master.svg)](https://coveralls.io/github/hph/wings)
+# Wings · [![Build Status](https://img.shields.io/travis/hph/wings/master.svg?style=flat-square)](https://travis-ci.org/hph/wings) [![Coverage](https://img.shields.io/coveralls/hph/wings/master.svg?style=flat-square)](https://coveralls.io/github/hph/wings)
 
 A text editor inspired by Vim, written in JavaScript and React.
 
@@ -49,15 +49,19 @@ You may optionally provide an argument to open a file, such as `package.json`:
 
 ## Testing & code quality
 
-The project is set up with a small but growing set of tests and a linter, both
-of which you can run:
+The project has a linter, which you can run yourself:
 
     yarn lint
+
+The project is also set up with a comprehensive test suite, which you can also
+run:
+
     yarn test
 
 You can see the results for the linter and tests for the master branch on
 [Travis CI](https://travis-ci.org/hph/wings) and code coverage information on
-[Coveralls](https://coveralls.io/github/hph/wings).
+[Coveralls](https://coveralls.io/github/hph/wings). Builds are run against all
+branches and pull requests.
 
 ## Building for production
 
