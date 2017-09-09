@@ -10,7 +10,7 @@
     "build:package": "electron-packager . Wings --asar --overwrite --icon=build/Wings.icns",
     "lint": "eslint -c=config/eslintrc.json --ignore-path=.gitignore .",
     "test": "jest",
-    "test:ci": "yarn lint && yarn test --coverage && cat ./coverage/lcov.info | coveralls",
+    "test:ci": "yarn lint && yarn test -- --coverage && cat ./coverage/lcov.info | coveralls",
     "start": "electron build/main-process.js"
   },
   "dependencies": {

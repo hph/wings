@@ -19,6 +19,14 @@ editor:
     cursorColor: '#d33682'
     directoryTriangleColor: '#268bd2'
     titleBarHeight: 23px
+  commands:
+    w: saveCurrentFile
+    q: exitCurrentFileOrApp
+    x: saveAndExit
+    o: openFile
+    cd: changeDirectory
+    t: toggleTreeView
+    b: toggleBrowser
   keys:
     ex:
       Escape: exitMode

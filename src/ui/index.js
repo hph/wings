@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { render } from 'react-dom';
-import { readFile } from 'fs';
+import { readFile } from 'fs-extra';
 import { webFrame } from 'electron';
 
 import { Root } from 'ui/components';
