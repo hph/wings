@@ -3,14 +3,14 @@
   "main": "./build/main-process.js",
   "scripts": {
     "build": "yarn build:clean && yarn build:webpack && yarn build:iconset && yarn build:package",
-    "build:dev": "yarn build:webpack -- --watch",
+    "build:dev": "yarn build:webpack --watch",
     "build:clean": "rm -rf build",
     "build:webpack": "webpack --config=config/webpack.config.babel.js",
     "build:iconset": "svgexport src/assets/iconset.json && mv src/assets/Wings.iconset build/Wings.iconset && iconutil -c icns build/Wings.iconset && rm -rf build/Wings.iconset",
     "build:package": "electron-packager . Wings --asar --overwrite --icon=build/Wings.icns",
     "lint": "eslint -c=config/eslintrc.json --ignore-path=.gitignore .",
     "test": "jest",
-    "test:ci": "yarn lint && yarn test -- --coverage && cat ./coverage/lcov.info | coveralls",
+    "test:ci": "yarn lint && yarn test --coverage && cat ./coverage/lcov.info | coveralls",
     "start": "electron build/main-process.js"
   },
   "dependencies": {
