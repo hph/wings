@@ -41,6 +41,9 @@ export function openFile ({ args, dispatch }) {
     return fs.readFile(file, { encoding: 'utf-8' })
       .then(contents => {
         dispatch(createView(file, contents));
+      })
+      .catch(() => {
+        dispatch(createView(file, ''));
       });
   }
   return Promise.resolve();

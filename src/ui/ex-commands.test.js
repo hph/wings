@@ -124,6 +124,21 @@ describe('ex-commands', () => {
         expect(dispatch).toHaveBeenCalled();
       });
     });
+
+    it('should also open new files', () => {
+      const { readFile } = require('fs-extra'); // eslint-disable-line global-require
+      const { createView } = require('./state/actions'); // eslint-disable-line global-require
+      // Emulate an error being thrown by fs, the effect is the same.
+      const dispatch = jest.fn(() => { throw new Error(); });
+      return exCommands.openFile({
+        dispatch,
+        args: ['myfile.txt'],
+      }).catch(() => {
+        expect(readFile).toHaveBeenCalledWith('myfile.txt', { encoding: 'utf-8' });
+        expect(createView).toHaveBeenCalled();
+        expect(dispatch).toHaveBeenCalled();
+      });
+    });
   });
 
   describe('changeDirectory', () => {
