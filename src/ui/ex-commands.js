@@ -36,7 +36,7 @@ export function saveAndExit ({ args, dispatch, state }) {
 }
 
 export function openFile ({ args, dispatch }) {
-  const file = args.join(' ');
+  const file = args.join(' ').trim();
   if (file) {
     return fs.readFile(file, { encoding: 'utf-8' })
       .then(contents => {
@@ -46,6 +46,8 @@ export function openFile ({ args, dispatch }) {
         dispatch(createView(file, ''));
       });
   }
+
+  dispatch(createView('unnamed', ''));
   return Promise.resolve();
 }
 

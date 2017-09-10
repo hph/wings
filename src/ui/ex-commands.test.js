@@ -100,17 +100,6 @@ describe('ex-commands', () => {
   });
 
   describe('openFile', () => {
-    it('does nothing when not provided with a file', () => {
-      const { readFile } = require('fs-extra'); // eslint-disable-line global-require
-      const { createView } = require('./state/actions'); // eslint-disable-line global-require
-      return exCommands.openFile({
-        args: [],
-      }).then(() => {
-        expect(createView).not.toHaveBeenCalled();
-        expect(readFile).not.toHaveBeenCalled();
-      });
-    });
-
     it('should open the provided file', () => {
       const { readFile } = require('fs-extra'); // eslint-disable-line global-require
       const { createView } = require('./state/actions'); // eslint-disable-line global-require
@@ -136,6 +125,18 @@ describe('ex-commands', () => {
       }).catch(() => {
         expect(readFile).toHaveBeenCalledWith('myfile.txt', { encoding: 'utf-8' });
         expect(createView).toHaveBeenCalled();
+        expect(dispatch).toHaveBeenCalled();
+      });
+    });
+
+    it('should open a new unnamed file if no filename is provided', () => {
+      const { createView } = require('./state/actions'); // eslint-disable-line global-require
+      const dispatch = jest.fn();
+      return exCommands.openFile({
+        dispatch,
+        args: [''],
+      }).then(() => {
+        expect(createView).toHaveBeenCalledWith('unnamed', '');
         expect(dispatch).toHaveBeenCalled();
       });
     });
