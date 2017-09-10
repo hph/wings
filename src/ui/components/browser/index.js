@@ -11,12 +11,8 @@ export function withScheme (url) {
 
 export class Browser extends Component {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    userInputFocus: PropTypes.func.isRequired,
   };
-
-  static mapStateToProps () {
-    return {};
-  }
 
   state = {
     location: '',
@@ -52,7 +48,7 @@ export class Browser extends Component {
   };
 
   onNavigationClick = () => {
-    this.props.dispatch(userInputFocus(false));
+    this.props.userInputFocus(false);
   };
 
   setNavLocation = event => {
@@ -102,4 +98,8 @@ export class Browser extends Component {
   }
 }
 
-export default connect(Browser.mapStateToProps)(Browser);
+export function mapStateToProps () {
+  return {};
+}
+
+export default connect(mapStateToProps, { userInputFocus })(Browser);

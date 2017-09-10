@@ -1,8 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { App } from './index';
-import * as types from '../../state/types';
+import { App, mapStateToProps } from './index';
 
 jest.mock('dynamic-css-properties', () => jest.fn());
 jest.mock('../browser', () => 'Browser');
@@ -23,8 +22,8 @@ const defaultProps = {
       titleBarHeight: 23,
     },
   },
+  updateConfig: () => {},
   views: [],
-  dispatch: () => {},
 };
 
 const createSnapshot = (props = defaultProps) => {
@@ -125,7 +124,7 @@ describe('App', () => {
   });
 
   it('mapStateToProps returns config and views from the store', () => {
-    expect(App.mapStateToProps({
+    expect(mapStateToProps({
       config: {},
       views: [],
     })).toEqual({
@@ -201,12 +200,12 @@ describe('showOrHideTitleBar', () => {
     expect(window.requestAnimationFrame).toHaveBeenCalled();
   });
 
-  it('should dispatch the visiblity of the titlebar if it changes', () => {
+  it('should update the visiblity of the titlebar as required', () => {
     window.requestAnimationFrame = jest.fn();
-    const dispatch = jest.fn();
+    const updateConfig = jest.fn();
     const app = new App({
       ...defaultProps,
-      dispatch,
+      updateConfig,
       config: {
         ...defaultProps.config,
         isTitleBarVisible: false,
@@ -214,23 +213,20 @@ describe('showOrHideTitleBar', () => {
     });
 
     app.showOrHideTitleBar(new Date().getTime());
-    expect(dispatch).not.toHaveBeenCalled();
+    expect(updateConfig).not.toHaveBeenCalled();
 
     window.innerHeight = 0;
     window.screen.height = 1;
     app.showOrHideTitleBar(new Date().getTime());
-    expect(dispatch).toHaveBeenCalledWith({
-      type: types.UPDATE_CONFIG,
-      isTitleBarVisible: true,
-    });
+    expect(updateConfig).toHaveBeenCalledWith({ isTitleBarVisible: true });
   });
 
   it('should update css variables when the titlebar visibility changes', () => {
     window.requestAnimationFrame = jest.fn();
-    const dispatch = jest.fn();
+    const updateConfig = jest.fn();
     const props = {
       ...defaultProps,
-      dispatch,
+      updateConfig,
     };
 
     let app = new App(props);

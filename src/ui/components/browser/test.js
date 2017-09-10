@@ -1,8 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { userInputFocus } from 'ui/state/actions';
-import { Browser, withScheme } from './index';
+import { Browser, mapStateToProps, withScheme } from './index';
 
 function createNodeMockCreator (methods = {}) {
   return (element) => {
@@ -26,7 +25,7 @@ function createNodeMockCreator (methods = {}) {
 }
 
 const defaultProps = {
-  dispatch: () => {},
+  userInputFocus: jest.fn(),
 };
 
 const createTree = (props = defaultProps, mockMethods = {}) => {
@@ -68,13 +67,12 @@ describe('Browser', () => {
     expect(addEventListener.mock.calls[2][0]).toEqual('did-fail-load');
   });
 
-  it('dispatches an action to stop user input focus on click', () => {
-    const dispatch = jest.fn();
-    const { tree } = createTree({ ...defaultProps, dispatch });
+  it('calls a function to stop user input focus on click', () => {
+    const userInputFocus = jest.fn();
+    const { tree } = createTree({ ...defaultProps, userInputFocus });
     tree.children[0].props.onClick();
 
-    expect(dispatch.mock.calls.length).toBe(1);
-    expect(dispatch.mock.calls[0][0]).toEqual(userInputFocus(false));
+    expect(userInputFocus).toHaveBeenCalledWith(false);
   });
 
   it('updates the value in the navbar as the user types', () => {
@@ -124,8 +122,8 @@ describe('Browser', () => {
 
   describe('mapStateToProps', () => {
     it('returns an empty object', () => {
-      // The store provides the dispatch prop.
-      expect(Browser.mapStateToProps({})).toEqual({});
+      // The store provides the userInputFocus prop.
+      expect(mapStateToProps({})).toEqual({});
     });
   });
 

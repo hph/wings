@@ -9,7 +9,6 @@ const defaultProps = {
   config: {
     cwd: '~/Code',
   },
-  dispatch: () => {},
 };
 
 const createSnapshot = (props = defaultProps) => {

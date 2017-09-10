@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import { connect } from 'react-redux';
 import { join as joinPaths } from 'path';
 import fs from 'fs-extra';
 
@@ -10,10 +11,10 @@ import css from './styles.css';
 
 const cx = classnames.bind(css);
 
-class RecursiveInnerTree extends Component {
+export class RecursiveInnerTree extends Component {
   static propTypes = {
+    createView: PropTypes.func.isRequired,
     directories: PropTypes.array,
-    dispatch: PropTypes.func.isRequired,
     files: PropTypes.array,
     path: PropTypes.string.isRequired,
   };
@@ -63,7 +64,7 @@ class RecursiveInnerTree extends Component {
     event.stopPropagation();
     const fileName = joinPaths(this.props.path, file);
     return fs.readFile(fileName, { encoding: 'utf-8' }).then(text => {
-      this.props.dispatch(createView(fileName, text));
+      this.props.createView(fileName, text);
     });
   };
 
@@ -84,7 +85,7 @@ class RecursiveInnerTree extends Component {
             {this.state[directory] && (
               <RecursiveInnerTree
                 path={joinPaths(this.props.path, directory)}
-                dispatch={this.props.dispatch}
+                createView={this.props.createView}
               />
             )}
           </div>
@@ -101,4 +102,4 @@ class RecursiveInnerTree extends Component {
   }
 }
 
-export default RecursiveInnerTree;
+export default connect(null, { createView })(RecursiveInnerTree);

@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import { actions } from 'ui/state';
 import { Cursor, LineNumbers } from 'ui/components';
-import { updateView, userInputFocus } from 'ui/state/actions';
+import { updateConfig, updateView, userInputFocus } from 'ui/state/actions';
 import css from './styles.css';
 
 const cx = classnames.bind(css);
@@ -14,20 +13,14 @@ const cx = classnames.bind(css);
 export class View extends Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired,
     isFirst: PropTypes.bool.isRequired,
     splits: PropTypes.number.isRequired,
+    updateConfig: PropTypes.func.isRequired,
+    updateView: PropTypes.func.isRequired,
+    userInputFocus: PropTypes.func.isRequired,
     view: PropTypes.object.isRequired,
     viewId: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
   };
-
-  static mapStateToProps (state, props) {
-    return {
-      config: state.config,
-      splits: state.views.length,
-      view: _.find(state.views, view => view.id === props.viewId),
-    };
-  }
 
   componentDidMount () {
     window.addEventListener('resize', this.onResize);
@@ -46,7 +39,7 @@ export class View extends Component {
 
   onTextClick = (event) => {
     const { clientX, clientY, currentTarget, target } = event;
-    const { config, dispatch, view } = this.props;
+    const { config, view } = this.props;
 
     const clickX = _.floor(_.max([0, clientX - currentTarget.offsetLeft]) / config.charWidth);
     const clickY = _.floor(_.max([0, clientY - currentTarget.offsetTop]) / config.charHeight);
@@ -64,23 +57,23 @@ export class View extends Component {
       clickX + clickOffset,
     ]);
 
-    dispatch(actions.updateView(view.id, { column, row }));
+    this.props.updateView(view.id, { column, row });
 
     if (config.isBrowserVisible) {
-      dispatch(userInputFocus(true));
+      this.props.userInputFocus(true);
     }
 
     if (config.currentViewId !== view.id) {
-      dispatch(actions.updateConfig({ currentViewId: view.id }));
+      this.props.updateConfig({ currentViewId: view.id });
     }
   };
 
   onResize = _.throttle(() => {
     const numbersElWidth = this.numbersEl ? this.numbersEl.offsetWidth : 0;
-    this.props.dispatch(updateView(this.props.view.id, {
+    this.props.updateView(this.props.view.id, {
       width: this.wrapperEl.offsetWidth - numbersElWidth,
       height: this.textEl.offsetHeight,
-    }));
+    });
   }, 16.7);
 
   render () {
@@ -125,4 +118,12 @@ export class View extends Component {
   }
 }
 
-export default connect(View.mapStateToProps)(View);
+export function mapStateToProps (state, props) {
+  return {
+    config: state.config,
+    splits: state.views.length,
+    view: _.find(state.views, view => view.id === props.viewId),
+  };
+}
+
+export default connect(View.mapStateToProps, { updateConfig, updateView, userInputFocus })(View);

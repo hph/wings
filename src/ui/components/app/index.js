@@ -18,16 +18,9 @@ import css from './styles.css';
 export class App extends Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired,
+    updateConfig: PropTypes.func.isRequired,
     views: PropTypes.array.isRequired,
   };
-
-  static mapStateToProps (state) {
-    return {
-      config: state.config,
-      views: state.views,
-    };
-  }
 
   constructor (props) {
     super(props);
@@ -67,10 +60,10 @@ export class App extends Component {
       return;
     }
 
-    const { config, dispatch } = this.props;
+    const { config } = this.props;
     const isTitleBarVisible = !this.windowIsFullscreen();
     if (isTitleBarVisible !== config.isTitleBarVisible) {
-      dispatch(updateConfig({ isTitleBarVisible }));
+      this.props.updateConfig({ isTitleBarVisible });
       this.setCustomProperties({
         titleBarHeight: isTitleBarVisible ? config.theme.titleBarHeight : '0px',
       });
@@ -101,4 +94,11 @@ export class App extends Component {
   }
 }
 
-export default connect(App.mapStateToProps)(App);
+export function mapStateToProps (state) {
+  return {
+    config: state.config,
+    views: state.views,
+  };
+}
+
+export default connect(mapStateToProps, { updateConfig })(App);

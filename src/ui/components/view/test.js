@@ -2,8 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import _ from 'lodash';
 
-import { View } from './index';
-import * as types from '../../state/types';
+import { View, mapStateToProps } from './index';
 
 jest.mock('../cursor', () => 'Cursor');
 
@@ -25,7 +24,9 @@ const defaultProps = {
   },
   splits: 1,
   views: [],
-  dispatch: () => {},
+  updateConfig: () => {},
+  updateView: () => {},
+  userInputFocus: () => {},
   isFirst: true,
   view: {
     id: 1,
@@ -158,11 +159,11 @@ describe('View', () => {
     };
     const props = { viewId: view.id };
 
-    expect(View.mapStateToProps(emptyState, props)).toEqual({
+    expect(mapStateToProps(emptyState, props)).toEqual({
       config: {},
       splits: 0,
     });
-    expect(View.mapStateToProps(nonEmptyState, props)).toEqual({
+    expect(mapStateToProps(nonEmptyState, props)).toEqual({
       view,
       config: {},
       splits: 1,
@@ -194,21 +195,19 @@ describe('View', () => {
   });
 
   it('onResize takes the width of the numbers el into account when present', () => {
-    const dispatch = jest.fn();
+    const updateView = jest.fn();
     const props = {
       view: {
         id: 1,
       },
-      dispatch,
+      updateView,
     };
 
     const view = new View(props);
     view.wrapperEl = { offsetWidth: 800 };
     view.textEl = { offsetHeight: 600 };
     view.onResize.call({ props });
-    expect(dispatch).toHaveBeenCalledWith({
-      type: types.UPDATE_VIEW,
-      id: 1,
+    expect(updateView).toHaveBeenCalledWith(1, {
       width: 800,
       height: 600,
     });
@@ -218,9 +217,7 @@ describe('View', () => {
     secondView.wrapperEl = { offsetWidth: 800 };
     secondView.textEl = { offsetHeight: 600 };
     secondView.onResize.call({ props });
-    expect(dispatch).toHaveBeenCalledWith({
-      type: types.UPDATE_VIEW,
-      id: 1,
+    expect(updateView).toHaveBeenCalledWith(1, {
       width: 750,
       height: 600,
     });
@@ -238,9 +235,7 @@ describe('View', () => {
       clientX: 0,
       clientY: 0,
     };
-    const dispatch = jest.fn();
     const props = {
-      dispatch,
       view: {
         id: 1,
         lines: [
@@ -256,83 +251,72 @@ describe('View', () => {
         isBrowserVisible: true,
         currentViewId: 1,
       },
+      updateConfig: jest.fn(),
+      updateView: jest.fn(),
+      userInputFocus: jest.fn(),
     };
 
     it('should calculate where the user clicked', () => {
-      const newProps = {
-        ...props,
-        dispatch: jest.fn(),
-      };
-
-      new View(newProps).onTextClick(event);
-      expect(newProps.dispatch).toHaveBeenCalledWith({
-        type: types.UPDATE_VIEW,
-        id: 1,
+      new View(props).onTextClick(event);
+      expect(props.updateView).toHaveBeenCalledWith(1, {
         column: 0,
         row: 0,
       });
 
-      new View(newProps).onTextClick({
+      new View(props).onTextClick({
         ...event,
         clientX: 37,
         clientY: 0,
       });
-      expect(newProps.dispatch).toHaveBeenCalledWith({
-        type: types.UPDATE_VIEW,
-        id: 1,
+      expect(props.updateView).toHaveBeenCalledWith(1, {
         column: 7,
         row: 0,
       });
 
-      new View(newProps).onTextClick({
+      new View(props).onTextClick({
         ...event,
         clientX: 37,
         clientY: 27,
       });
-      expect(newProps.dispatch).toHaveBeenCalledWith({
-        type: types.UPDATE_VIEW,
-        id: 1,
+      expect(props.updateView).toHaveBeenCalledWith(1, {
         column: 7,
         row: 1,
       });
     });
 
-    it('should dispatch an action to focus user input if the browser is active', () => {
+    it('should focus user input if the browser is active', () => {
       new View(props).onTextClick(event);
-      expect(dispatch).toHaveBeenCalledWith({
-        type: types.USER_INPUT_FOCUS,
-      });
+      expect(props.userInputFocus).toHaveBeenCalled();
 
       const newProps = {
         ...props,
-        dispatch: jest.fn(),
+        userInputFocus: jest.fn(),
+        updateConfig: jest.fn(),
         config: {
           ...props.config,
           isBrowserVisible: false,
         },
       };
       new View(newProps).onTextClick(event);
-      expect(newProps.dispatch).not.toHaveBeenCalledWith({
-        type: types.USER_INPUT_FOCUS,
-      });
+      expect(newProps.userInputFocus).not.toHaveBeenCalled();
     });
 
-    it('should dispatch an action to update the currently active view if the id changes', () => {
+    it('should update the currently active view if the id changes', () => {
       new View(props).onTextClick(event);
-      expect(dispatch).not.toHaveBeenCalledWith({
-        type: types.UPDATE_CONFIG,
+      expect(props.updateConfig).not.toHaveBeenCalledWith({
         currentViewId: 1,
       });
 
-      new View({
+      const newProps = {
         ...props,
         view: {
           ...props.view,
           id: 2,
         },
-      }).onTextClick(event);
-      expect(dispatch).toHaveBeenCalledWith({
-        type: types.UPDATE_CONFIG,
+      };
+
+      new View(newProps).onTextClick(event);
+      expect(newProps.updateConfig).toHaveBeenCalledWith({
         currentViewId: 2,
       });
     });
@@ -340,7 +324,7 @@ describe('View', () => {
     it('may have a column offset of one in insert mode', () => {
       const newProps = {
         ...props,
-        dispatch: jest.fn(),
+        updateView: jest.fn(),
         view: {
           ...props.view,
           lines: [
@@ -356,13 +340,10 @@ describe('View', () => {
         clientX: 76,
       };
       new View(newProps).onTextClick(newEvent);
-      const expectedOutput = {
-        type: types.UPDATE_VIEW,
-        id: 1,
+      expect(newProps.updateView).toHaveBeenCalledWith(1, {
         column: 12,
         row: 0,
-      };
-      expect(newProps.dispatch).toHaveBeenCalledWith(expectedOutput);
+      });
 
       new View({
         ...newProps,
@@ -371,16 +352,16 @@ describe('View', () => {
           mode: 'insert',
         },
       }).onTextClick(newEvent);
-      expect(newProps.dispatch).toHaveBeenCalledWith({
-        ...expectedOutput,
+      expect(newProps.updateView).toHaveBeenCalledWith(1, {
         column: 13,
+        row: 0,
       });
     });
 
     it('should use the last line if the cursor clicked below it', () => {
       const newProps = {
         ...props,
-        dispatch: jest.fn(),
+        updateView: jest.fn(),
         view: {
           ...props.view,
           lines: [
@@ -396,13 +377,8 @@ describe('View', () => {
         clientX: 10,
       };
       new View(newProps).onTextClick(newEvent);
-      const expectedOutput = {
-        type: types.UPDATE_VIEW,
-        id: 1,
-        column: 2,
-        row: 1,
-      };
-      expect(newProps.dispatch).toHaveBeenCalledWith(expectedOutput);
+
+      expect(newProps.updateView).toHaveBeenCalledWith(1, { column: 2, row: 1 });
     });
   });
 });

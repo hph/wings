@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import RecursiveInnerTree from './index';
+import { RecursiveInnerTree } from './index';
 
 jest.mock('fs-extra', () => ({
   readFile: jest.fn(() => Promise.resolve('text')),
@@ -11,13 +11,9 @@ jest.mock('../../utils', () => ({
   listContents: jest.fn(() => Promise.resolve('<results>')),
 }));
 
-jest.mock('../../state/actions', () => ({
-  createView: jest.fn(),
-}));
-
 const defaultProps = {
   path: '/',
-  dispatch: jest.fn(),
+  createView: jest.fn(),
 };
 
 const createSnapshot = (props = defaultProps) => {
@@ -99,18 +95,17 @@ describe('RecursiveInnerTree', () => {
 
   it('opens a file with openFile', () => {
     const { readFile } = require('fs-extra'); // eslint-disable-line global-require
-    const { createView } = require('../../state/actions'); // eslint-disable-line global-require
-    const dispatch = jest.fn();
+    const createView = jest.fn();
     const recursiveInnerTree = new RecursiveInnerTree({
       ...defaultProps,
-      dispatch,
+      createView,
     });
     const stopPropagation = jest.fn();
     return recursiveInnerTree.openFile('/file.txt')({ stopPropagation })
       .then(() => {
         expect(stopPropagation).toHaveBeenCalled();
         expect(readFile).toHaveBeenCalled();
-        expect(dispatch).toHaveBeenCalled();
+        expect(createView).toHaveBeenCalled();
         expect(createView).toHaveBeenCalledWith('/file.txt', 'text');
       });
   });

@@ -6,7 +6,7 @@ import { RecursiveInnerTree } from 'ui/components';
 import { collapsePath } from 'ui/utils';
 import css from './styles.css';
 
-export function TreeView ({ config, dispatch }) {
+export function TreeView ({ config }) {
   const { cwd } = config;
   const postfix = cwd === '/' ? '' : '/';
   const qualifiedCwd = `${ collapsePath(cwd) }${ postfix }`;
@@ -16,7 +16,7 @@ export function TreeView ({ config, dispatch }) {
         {qualifiedCwd}
       </div>
       <div className={css.scrollWrapper}>
-        <RecursiveInnerTree path={cwd} dispatch={dispatch} />
+        <RecursiveInnerTree path={cwd} />
       </div>
     </div>
   );
@@ -24,7 +24,6 @@ export function TreeView ({ config, dispatch }) {
 
 TreeView.propTypes = {
   config: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
 };
 
 export function mapStateToProps ({ config }) {
