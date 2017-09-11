@@ -126,4 +126,4 @@ export function mapStateToProps (state, props) {
   };
 }
 
-export default connect(View.mapStateToProps, { updateConfig, updateView, userInputFocus })(View);
+export default connect(mapStateToProps, { updateConfig, updateView, userInputFocus })(View);
