@@ -54,7 +54,8 @@ export function attachEventListeners (element, dispatch) {
   });
 
   element.addEventListener('paste', (event) => {
-    dispatch({ ...defaults, value: event.clipboardData.getData('text') });
+    const value = event.clipboardData.getData('text').split('\n');
+    dispatch({ ...defaults, value });
   });
 
   let composedValue = '';

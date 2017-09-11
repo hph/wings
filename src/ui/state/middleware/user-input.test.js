@@ -134,7 +134,7 @@ describe('attachEventListeners', () => {
 
     it('calls dispatch with data from the passed event', () => {
       const { handlers, dispatch } = attachWithHandlers();
-      const getData = jest.fn();
+      const getData = jest.fn(() => '');
       handlers.paste({
         clipboardData: {
           getData,
@@ -148,7 +148,7 @@ describe('attachEventListeners', () => {
         metaKey: false,
         shiftKey: false,
         replacePrevious: false,
-        value: undefined,
+        value: [''],
       });
       expect(getData).toHaveBeenCalledWith('text');
     });

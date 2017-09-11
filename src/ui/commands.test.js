@@ -96,6 +96,115 @@ describe('insert', () => {
       lines: ['hello', 'frabciend'],
     });
   });
+
+  describe('with an array value', () => {
+    it('should not do anything for empty current and new values', () => {
+      const original = {
+        column: 0,
+        row: 0,
+        lines: [''],
+      };
+      expect(commands.insert({
+        ...original,
+        value: [''],
+      })).toEqual(original);
+    });
+
+    it('should not do anything for an empty new value after a non-empty value', () => {
+      const original = {
+        column: 6,
+        row: 1,
+        lines: ['hello', 'world!'],
+      };
+      expect(commands.insert({
+        ...original,
+        value: [''],
+      })).toEqual(original);
+    });
+
+    it('should insert a non-empty value after an empty value', () => {
+      expect(commands.insert({
+        column: 0,
+        row: 0,
+        lines: [''],
+        value: ['hello', 'world!'],
+      })).toEqual({
+        column: 6,
+        row: 1,
+        lines: ['hello', 'world!'],
+      });
+    });
+
+    it('should handle single-item values properly', () => {
+      expect(commands.insert({
+        column: 5,
+        row: 0,
+        lines: ['hi, ""!'],
+        value: ['Wings'],
+      })).toEqual({
+        column: 10,
+        row: 0,
+        lines: ['hi, "Wings"!'],
+      });
+
+      expect(commands.insert({
+        column: 5,
+        row: 1,
+        lines: ['hello', 'so, "" is my name!'],
+        value: ['wings'],
+      })).toEqual({
+        column: 10,
+        row: 1,
+        lines: ['hello', 'so, "wings" is my name!'],
+      });
+
+      expect(commands.insert({
+        column: 5,
+        row: 1,
+        lines: ['hello', 'so, "" is my name!', 'right?'],
+        value: ['wings'],
+      })).toEqual({
+        column: 10,
+        row: 1,
+        lines: ['hello', 'so, "wings" is my name!', 'right?'],
+      });
+    });
+
+    it('should insert a multi-line value', () => {
+      expect(commands.insert({
+        column: 0,
+        row: 0,
+        lines: ['this is not so hard'],
+        value: ['hello', 'world!', ''],
+      })).toEqual({
+        column: 0,
+        row: 2,
+        lines: ['hello', 'world!', 'this is not so hard'],
+      });
+
+      expect(commands.insert({
+        column: 1,
+        row: 1,
+        lines: ['this is', 'a bit', 'more complex'],
+        value: ['hello', 'world!'],
+      })).toEqual({
+        column: 6,
+        row: 2,
+        lines: ['this is', 'ahello', 'world! bit', 'more complex'],
+      });
+
+      expect(commands.insert({
+        column: 6,
+        row: 1,
+        lines: ['it all', 'seems '],
+        value: ['to', 'kind of', 'work!'],
+      })).toEqual({
+        column: 5,
+        row: 3,
+        lines: ['it all', 'seems to', 'kind of', 'work!'],
+      });
+    });
+  });
 });
 
 describe('indent', () => {

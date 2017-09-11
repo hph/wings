@@ -19,6 +19,35 @@ function upOrDown ({ column, row, lines, prevMaxColumn }, direction) {
 }
 
 export function insert ({ column, row, lines, value }) {
+  if (_.isArray(value)) {
+    const line = lines[row];
+    const before = line.substring(0, column);
+    const after = line.substring(column);
+    const valueCopy = [...value];
+    const lastIndex = _.max([0, valueCopy.length - 1]);
+
+    // Any text in the current line in front of the cursor must be prepended to
+    // the first pasted line and any text in the current line under and after
+    // the cursor must be appended to the last pasted line.
+    valueCopy[0] = `${ before }${ valueCopy[0] || '' }`;
+    valueCopy[lastIndex] = `${ valueCopy[lastIndex] || '' }${ after }`;
+
+    const newLines = [
+      ..._.slice(lines, 0, row), // Spread anything before the current line.
+      ...valueCopy,
+      ..._.slice(lines, row + 1), // Spread anything after the current line.
+    ];
+    const newColumn = lastIndex === 0
+      ? column + value[lastIndex].length
+      : value[lastIndex].length;
+    const newRow = row + _.max([0, valueCopy.length - 1]);
+
+    return {
+      lines: newLines,
+      column: newColumn,
+      row: newRow,
+    };
+  }
   return {
     lines: insertAt(lines, insertAt(lines[row], value, column), row),
     column: column + value.length,
