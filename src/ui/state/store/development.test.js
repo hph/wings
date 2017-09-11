@@ -1,6 +1,6 @@
 import configureStore from './development';
 
-describe('production store', () => {
+describe('development store', () => {
   it('should create something that looks like a store', () => {
     const store = configureStore();
     expect(store.dispatch).toBeDefined();
