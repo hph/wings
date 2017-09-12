@@ -16,11 +16,13 @@ editor:
     secondaryColor: '#586e75'
     primaryBackgroundColor: '#002b36'
     secondaryBackgroundColor: '#073642'
-    cursorColor: '#d33682'
+    cursorColor: '#fff'
+    cursorBackgroundColor: '#d33682'
     directoryTriangleColor: '#268bd2'
     titleBarHeight: 23px
     selectionColor: '#fff'
     selectionBackgroundColor: '#d33682'
+    commandBarCaretBackgroundColor: '#d33682'
   commands:
     w: saveCurrentFile
     q: exitCurrentFileOrApp

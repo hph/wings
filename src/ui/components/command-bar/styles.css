@@ -33,7 +33,7 @@
   width: 1px;
   height: var(--line-height);
   margin-left: 1px;
-  background-color: var(--cursor-color);
+  background-color: var(--command-bar-caret-background-color);
   animation: pulsate 1.2s ease-in-out infinite;
 }
 
