@@ -1,0 +1,5 @@
+.selection {
+  display: inline-block;
+  color: var(--selection-color);
+  background-color: var(--selection-background-color);
+}

@@ -89,7 +89,7 @@ describe('View', () => {
       ...defaultProps,
       view: {
         ...defaultProps.view,
-        lines: _.range(100),
+        lines: _.range(100).map(n => n.toString()),
         height: 100,
       },
     });
@@ -100,7 +100,7 @@ describe('View', () => {
       ...defaultProps,
       view: {
         ...defaultProps.view,
-        lines: _.range(100),
+        lines: _.range(100).map(n => n.toString()),
         height: 100,
         firstVisibleRow: 10,
       },

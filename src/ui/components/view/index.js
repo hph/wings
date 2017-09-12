@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import { Cursor, LineNumbers } from 'ui/components';
+import { Cursor, Line, LineNumbers } from 'ui/components';
 import { updateConfig, updateView, userInputFocus } from 'ui/state/actions';
 import css from './styles.css';
 
@@ -108,7 +108,16 @@ export class View extends Component {
           onMouseDown={this.onTextClick}
           style={{ left: textLeft }}
         >
-          {_.map(lines, (line, index) => <div key={index}>{line}</div>)}
+          {_.map(lines, (line, index) => (
+            <Line
+              key={index}
+              row={index + view.firstVisibleRow}
+              selectionColumnEnd={view.selectionColumnEnd}
+              selectionColumnStart={view.selectionColumnStart}
+              selectionRowEnd={view.selectionRowEnd}
+              selectionRowStart={view.selectionRowStart}
+            >{line}</Line>
+          ))}
           {config.currentViewId === view.id && (
             <Cursor config={config} view={view} />
           )}

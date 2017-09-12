@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Line should continue highlighting a line from a previous line 1`] = `
+<div>
+  <div
+    className="selection"
+  >
+    keep highlighting
+  </div>
+   - but no more
+</div>
+`;
+
+exports[`Line should highlight a line within selection boundaries 1`] = `
+<div>
+  <div
+    className="selection"
+  >
+    foo bar baz
+  </div>
+</div>
+`;
+
+exports[`Line should highlight text within a line 1`] = `
+<div>
+  so, highlight "
+  <div
+    className="selection"
+  >
+    this
+  </div>
+  " and only that
+</div>
+`;
+
+exports[`Line should render a non-empty normal line 1`] = `
+<div>
+  this is some content
+</div>
+`;
+
+exports[`Line should render an empty normal line 1`] = `
+<div>
+  
+</div>
+`;
+
+exports[`Line should start highlighting within a line and continue highlighting 1`] = `
+<div>
+  from 
+  <div
+    className="selection"
+  >
+    here to eternity
+  </div>
+</div>
+`;

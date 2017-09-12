@@ -2,6 +2,7 @@ export App from 'ui/components/app';
 export Browser from 'ui/components/browser';
 export CommandBar from 'ui/components/command-bar';
 export Cursor from 'ui/components/cursor';
+export Line from 'ui/components/line';
 export LineNumbers from 'ui/components/line-numbers';
 export Logo from 'ui/components/logo';
 export RecursiveInnerTree from 'ui/components/recursive-inner-tree';

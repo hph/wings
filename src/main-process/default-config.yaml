@@ -19,6 +19,8 @@ editor:
     cursorColor: '#d33682'
     directoryTriangleColor: '#268bd2'
     titleBarHeight: 23px
+    selectionColor: '#fff'
+    selectionBackgroundColor: '#d33682'
   commands:
     w: saveCurrentFile
     q: exitCurrentFileOrApp
