@@ -8,6 +8,7 @@ const defaults = {
   config: {},
   views: [],
   command: '',
+  selections: {},
 };
 
 export function configReducer (state = defaults.config, action) {
@@ -85,8 +86,25 @@ export function commandReducer (state = defaults.command, action) {
   }
 }
 
+export function selectionsReducer (state = defaults.selections, action) {
+  const { type, viewId, ...values } = action;
+  switch (type) {
+    case types.SET_SELECTION: {
+      return {
+        ...state,
+        [viewId]: values,
+      };
+    }
+    case types.REMOVE_SELECTION: {
+      return _.omit(state, viewId);
+    }
+    default: return state;
+  }
+}
+
 export default combineReducers({
   config: configReducer,
   views: viewsReducer,
   command: commandReducer,
+  selections: selectionsReducer,
 });

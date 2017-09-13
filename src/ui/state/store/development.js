@@ -8,5 +8,5 @@ export default function configureStore (initialState) {
     middleware,
     applyMiddleware(createLogger()),
   );
-  return createStore(reducer, initialState, enhancer);
+  return window.store = createStore(reducer, initialState, enhancer);
 }

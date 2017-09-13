@@ -58,3 +58,17 @@ export function userInputFocus (focus) {
     type: focus ? types.USER_INPUT_FOCUS : types.USER_INPUT_UNFOCUS,
   };
 }
+
+export function setSelection (options) {
+  return {
+    type: types.SET_SELECTION,
+    ...options,
+  };
+}
+
+export function removeSelection ({ viewId }) {
+  return {
+    type: types.REMOVE_SELECTION,
+    viewId,
+  };
+}

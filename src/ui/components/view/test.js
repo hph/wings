@@ -151,11 +151,13 @@ describe('View', () => {
     const emptyState = {
       config: {},
       views: [],
+      selections: {},
     };
     const view = { id: 1 };
     const nonEmptyState = {
       config: {},
       views: [view],
+      selections: { 1: {} },
     };
     const props = { viewId: view.id };
 
@@ -166,6 +168,7 @@ describe('View', () => {
     expect(mapStateToProps(nonEmptyState, props)).toEqual({
       view,
       config: {},
+      selection: {},
       splits: 1,
     });
   });

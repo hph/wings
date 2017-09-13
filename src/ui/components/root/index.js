@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { ipcRenderer } from 'electron';
 
 import { App } from 'ui/components';
-import { actions, createStore } from 'ui/state';
+import { actions, configureStore } from 'ui/state';
 
 class Root extends Component {
   static propTypes = {
@@ -18,7 +18,7 @@ class Root extends Component {
 
   render () {
     const { filename, text, config } = this.props.initialState;
-    const store = createStore({ config });
+    const store = configureStore({ config });
     if (filename) {
       store.dispatch(actions.createView(filename, text));
     }

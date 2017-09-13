@@ -31,10 +31,12 @@ describe('Line', () => {
     createSnapshot({
       children: 'so, highlight "this" and only that',
       row: 0,
-      selectionColumnEnd: 18,
-      selectionColumnStart: 15,
-      selectionRowEnd: 0,
-      selectionRowStart: 0,
+      selection: {
+        columnEnd: 18,
+        columnStart: 15,
+        rowEnd: 0,
+        rowStart: 0,
+      },
     });
   });
 
@@ -42,10 +44,12 @@ describe('Line', () => {
     createSnapshot({
       children: 'keep highlighting - but no more',
       row: 1,
-      selectionColumnEnd: 16,
-      selectionColumnStart: 0,
-      selectionRowEnd: 1,
-      selectionRowStart: 0,
+      selection: {
+        columnEnd: 16,
+        columnStart: 0,
+        rowEnd: 1,
+        rowStart: 0,
+      },
     });
   });
 
@@ -53,10 +57,12 @@ describe('Line', () => {
     createSnapshot({
       children: 'from here to eternity',
       row: 0,
-      selectionColumnEnd: 0,
-      selectionColumnStart: 5,
-      selectionRowEnd: 1,
-      selectionRowStart: 0,
+      selection: {
+        columnEnd: 0,
+        columnStart: 5,
+        rowEnd: 1,
+        rowStart: 0,
+      },
     });
   });
 
@@ -64,10 +70,12 @@ describe('Line', () => {
     createSnapshot({
       children: 'foo bar baz',
       row: 1,
-      selectionColumnEnd: 0,
-      selectionColumnStart: 0,
-      selectionRowEnd: 2,
-      selectionRowStart: 0,
+      selection: {
+        columnEnd: 0,
+        columnStart: 0,
+        rowEnd: 2,
+        rowStart: 0,
+      },
     });
   });
 });

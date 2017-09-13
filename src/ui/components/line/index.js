@@ -3,17 +3,11 @@ import PropTypes from 'prop-types';
 
 import css from './styles.css';
 
-export default function Line ({
-  children,
-  row,
-  selectionColumnEnd,
-  selectionColumnStart,
-  selectionRowEnd,
-  selectionRowStart,
-}) {
-  if (selectionRowStart <= row && row <= selectionRowEnd) {
-    const start = selectionRowStart < row ? 0 : selectionColumnStart;
-    const end = selectionRowEnd > row ? children.length - 1 : selectionColumnEnd;
+export default function Line ({ children, row, selection }) {
+  const { columnEnd, columnStart, rowEnd, rowStart } = selection;
+  if (rowStart <= row && row <= rowEnd) {
+    const start = rowStart < row ? 0 : columnStart;
+    const end = rowEnd > row ? children.length - 1 : columnEnd;
     return (
       <div>
         {children.substring(0, start) || null}
@@ -29,8 +23,9 @@ export default function Line ({
 Line.propTypes = {
   children: PropTypes.string.isRequired,
   row: PropTypes.number.isRequired,
-  selectionColumnEnd: PropTypes.number, // eslint-disable-line react/require-default-props
-  selectionColumnStart: PropTypes.number, // eslint-disable-line react/require-default-props
-  selectionRowEnd: PropTypes.number, // eslint-disable-line react/require-default-props
-  selectionRowStart: PropTypes.number, // eslint-disable-line react/require-default-props
+  selection: PropTypes.object,
+};
+
+Line.defaultProps = {
+  selection: {},
 };

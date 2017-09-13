@@ -17,4 +17,9 @@ describe('development store', () => {
     expect(console.log).toHaveBeenCalled();
   });
   /* eslint-enable no-console */
+
+  it('should add the store to the window object', () => {
+    const store = configureStore();
+    expect(window.store).toEqual(store);
+  });
 });

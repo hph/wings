@@ -6,6 +6,7 @@ import classnames from 'classnames/bind';
 
 import { Cursor, Line, LineNumbers } from 'ui/components';
 import { updateConfig, updateView, userInputFocus } from 'ui/state/actions';
+import { viewSelection } from 'ui/state/selectors';
 import css from './styles.css';
 
 const cx = classnames.bind(css);
@@ -14,6 +15,7 @@ export class View extends Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
     isFirst: PropTypes.bool.isRequired,
+    selection: PropTypes.object, // eslint-disable-line react/require-default-props
     splits: PropTypes.number.isRequired,
     updateConfig: PropTypes.func.isRequired,
     updateView: PropTypes.func.isRequired,
@@ -77,7 +79,7 @@ export class View extends Component {
   }, 16.7);
 
   render () {
-    const { config, isFirst, view, splits } = this.props;
+    const { config, isFirst, view, selection, splits } = this.props;
     const textClasses = cx('text', {
       border: !config.showLineNumbers && !isFirst,
     });
@@ -112,10 +114,7 @@ export class View extends Component {
             <Line
               key={index}
               row={index + view.firstVisibleRow}
-              selectionColumnEnd={view.selectionColumnEnd}
-              selectionColumnStart={view.selectionColumnStart}
-              selectionRowEnd={view.selectionRowEnd}
-              selectionRowStart={view.selectionRowStart}
+              selection={selection}
             >{line}</Line>
           ))}
           {config.currentViewId === view.id && (
@@ -128,10 +127,12 @@ export class View extends Component {
 }
 
 export function mapStateToProps (state, props) {
+  const view = _.find(state.views, ({ id }) => id === props.viewId);
   return {
+    view,
+    selection: viewSelection(state, props),
     config: state.config,
     splits: state.views.length,
-    view: _.find(state.views, view => view.id === props.viewId),
   };
 }
 
