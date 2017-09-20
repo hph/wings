@@ -63,6 +63,13 @@ describe('View', () => {
     });
   });
 
+  it('should have test coverage for mock component refs', () => {
+    const view = new View(defaultProps);
+    view.numbersRef('mock');
+
+    expect(view.numbersEl).toEqual('mock');
+  });
+
   it('renders lines of code', () => {
     createSnapshot({
       lines: [
