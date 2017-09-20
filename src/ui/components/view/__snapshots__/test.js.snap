@@ -67,13 +67,11 @@ exports[`View renders LineNumbers when so configured 1`] = `
     }
   }
 >
-  <div
-    className="root numbers"
-  >
-    <div>
-      1
-    </div>
-  </div>
+  <LineNumbers
+    className="numbers"
+    innerRef={[Function]}
+    viewId={1}
+  />
   <div
     className="text"
     onMouseDown={[Function]}
@@ -105,23 +103,7 @@ exports[`View renders a Cursor in the current view 1`] = `
     }
   >
     <Cursor
-      config={
-        Object {
-          "charHeight": 20,
-          "charWidth": 5,
-          "currentViewId": 1,
-          "showLineNumbers": false,
-        }
-      }
-      view={
-        Object {
-          "firstVisibleColumn": 0,
-          "firstVisibleRow": 0,
-          "height": 800,
-          "id": 1,
-          "lines": Array [],
-        }
-      }
+      viewId={1}
     />
   </div>
 </div>
@@ -157,13 +139,11 @@ exports[`View renders a border when it is not the first and there are no line nu
     }
   }
 >
-  <div
-    className="root numbers"
-  >
-    <div>
-      1
-    </div>
-  </div>
+  <LineNumbers
+    className="numbers"
+    innerRef={[Function]}
+    viewId={1}
+  />
   <div
     className="text"
     onMouseDown={[Function]}

@@ -19,8 +19,12 @@ const initialState = {
     charWidth: width,
     charHeight: _.ceil(height),
     mode: 'normal',
+    isBrowserVisible: false,
+    isTreeViewVisible: false,
     isTitleBarVisible: true,
+    isUserTyping: false,
     cwd: process.cwd(),
+    currentViewId: 0, // Temporary just so we don't throw on load.
   },
 };
 

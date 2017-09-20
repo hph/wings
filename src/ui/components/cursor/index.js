@@ -1,29 +1,40 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 import PropTypes from 'prop-types';
 
+import { viewById } from 'ui/state/selectors';
 import css from './styles.css';
 
 const cx = classnames.bind(css);
 
-function Cursor ({ config, view }) {
-  const insertMode = config.mode === 'insert';
-  const pulsate = insertMode && !config.isUserTyping;
-  const classes = cx('root', { insertMode, pulsate });
-  const styles = {
-    left: view.column * config.charWidth,
-    top: (view.row - view.firstVisibleRow) * config.charHeight,
-  };
-  return (
-    <div className={classes} style={styles}>
-      {!insertMode && view.lines[view.row][view.column]}
-    </div>
-  );
+export function Cursor (props) {
+  const { block, character, top, left } = props;
+  const pulsate = props.pulsate && !block;
+  const classes = cx('root', { block, pulsate });
+  const styles = { top, left };
+  return <div className={classes} style={styles}>{character}</div>;
 }
 
 Cursor.propTypes = {
-  config: PropTypes.object.isRequired,
-  view: PropTypes.object.isRequired,
+  block: PropTypes.bool.isRequired,
+  character: PropTypes.string.isRequired,
+  left: PropTypes.number.isRequired,
+  pulsate: PropTypes.bool.isRequired,
+  top: PropTypes.number.isRequired,
 };
 
-export default Cursor;
+export function mapStateToProps (state, props) {
+  const { config } = state;
+  const view = viewById(state, props);
+  const block = config.mode !== 'insert';
+  return {
+    block,
+    character: block ? view.lines[view.row][view.column] || ' ' : '',
+    left: view.column * config.charWidth,
+    pulsate: config.isUserTyping,
+    top: (view.row - view.firstVisibleRow) * config.charHeight,
+  };
+}
+
+export default connect(mapStateToProps)(Cursor);

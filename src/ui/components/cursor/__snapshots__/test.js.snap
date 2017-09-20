@@ -1,6 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Cursor is rendered with inline styles for positioning 1`] = `
+exports[`Cursor should have a "pulsate" class when pulsate is set and block is false 1`] = `
+<div
+  className="root pulsate"
+  style={
+    Object {
+      "left": 0,
+      "top": 0,
+    }
+  }
+>
+   
+</div>
+`;
+
+exports[`Cursor should not have a "block" class if block is false 1`] = `
 <div
   className="root"
   style={
@@ -9,99 +23,35 @@ exports[`Cursor is rendered with inline styles for positioning 1`] = `
       "top": 0,
     }
   }
-/>
-`;
-
-exports[`Cursor positions the cursor by the column, row, and cursor dimensions 1`] = `
-<div
-  className="root"
-  style={
-    Object {
-      "left": 5,
-      "top": 20,
-    }
-  }
 >
-  e
+   
 </div>
 `;
 
-exports[`Cursor positions the cursor by the column, row, and cursor dimensions 2`] = `
+exports[`Cursor should render the provided character inside the cursor when block is true 1`] = `
 <div
-  className="root"
-  style={
-    Object {
-      "left": 10,
-      "top": 40,
-    }
-  }
->
-  i
-</div>
-`;
-
-exports[`Cursor positions the cursor by the column, row, and cursor dimensions 3`] = `
-<div
-  className="root"
-  style={
-    Object {
-      "left": 10,
-      "top": 0,
-    }
-  }
->
-  c
-</div>
-`;
-
-exports[`Cursor receives a "pulsate" class in insert mode while not typing 1`] = `
-<div
-  className="root insertMode pulsate"
+  className="root block"
   style={
     Object {
       "left": 0,
       "top": 0,
     }
   }
-/>
+>
+  a
+</div>
 `;
 
-exports[`Cursor receives an "insertMode" class in insert mode 1`] = `
+exports[`Cursor should render with inline styles for positioning 1`] = `
 <div
-  className="root insertMode"
+  className="root block"
   style={
     Object {
       "left": 0,
       "top": 0,
     }
   }
-/>
-`;
-
-exports[`Cursor renders the character under the cursor when not in insert mode 1`] = `
-<div
-  className="root"
-  style={
-    Object {
-      "left": 5,
-      "top": 0,
-    }
-  }
 >
-  b
-</div>
-`;
-
-exports[`Cursor takes firstVisibleRow into account to position relative to it 1`] = `
-<div
-  className="root"
-  style={
-    Object {
-      "left": 5,
-      "top": 0,
-    }
-  }
->
-  e
+   
 </div>
 `;

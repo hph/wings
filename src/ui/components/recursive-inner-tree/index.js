@@ -12,13 +12,6 @@ import css from './styles.css';
 const cx = classnames.bind(css);
 
 export class RecursiveInnerTree extends Component {
-  static propTypes = {
-    createView: PropTypes.func.isRequired,
-    directories: PropTypes.array,
-    files: PropTypes.array,
-    path: PropTypes.string.isRequired,
-  };
-
   static defaultProps = {
     directories: [],
     files: [],
@@ -101,5 +94,12 @@ export class RecursiveInnerTree extends Component {
     );
   }
 }
+
+RecursiveInnerTree.propTypes = {
+  createView: PropTypes.func.isRequired,
+  directories: PropTypes.array,
+  files: PropTypes.array,
+  path: PropTypes.string.isRequired,
+};
 
 export default connect(null, { createView })(RecursiveInnerTree);

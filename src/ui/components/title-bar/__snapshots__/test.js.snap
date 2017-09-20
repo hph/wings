@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TitleBar renders a label inside it 1`] = `
+exports[`TitleBar should render a label inside it 1`] = `
 <div
   className="root"
 >
@@ -8,7 +8,7 @@ exports[`TitleBar renders a label inside it 1`] = `
 </div>
 `;
 
-exports[`TitleBar renders a simple div with a class 1`] = `
+exports[`TitleBar should render a simple div with a class 1`] = `
 <div
   className="root"
 >

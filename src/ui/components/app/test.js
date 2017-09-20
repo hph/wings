@@ -12,92 +12,73 @@ jest.mock('../tree-view', () => 'TreeView');
 jest.mock('../view', () => 'View');
 
 const defaultProps = {
-  config: {
-    isBrowserVisible: false,
-    isTitleBarVisible: false,
-    isTreeViewVisible: false,
-    mode: 'normal',
-    charWidth: 5,
-    theme: {
-      titleBarHeight: 23,
-    },
+  isBrowserVisible: false,
+  isTitleBarVisible: false,
+  isTreeViewVisible: false,
+  isCommandBarVisible: false,
+  charWidth: 5,
+  theme: {
+    titleBarHeight: 23,
   },
   updateConfig: () => {},
   views: [],
 };
 
-const createSnapshot = (props = defaultProps) => {
-  expect(renderer.create(<App {...props} />).toJSON()).toMatchSnapshot();
-};
-
 describe('App', () => {
+  const createSnapshot = (passedProps) => {
+    const props = {
+      ...defaultProps,
+      ...passedProps,
+    };
+    expect(renderer.create(<App {...props} />).toJSON()).toMatchSnapshot();
+  };
+
   it('defaults to rendering a logo in an empty state', () => {
     createSnapshot();
   });
 
   it('renders a TitleBar when so configured', () => {
     createSnapshot({
-      ...defaultProps,
-      config: {
-        ...defaultProps.config,
-        isTitleBarVisible: true,
-      },
+      isTitleBarVisible: true,
     });
   });
 
-  it('renders a CommandBar in ex mode', () => {
+  it('renders a CommandBar when so configured', () => {
     createSnapshot({
-      ...defaultProps,
-      config: {
-        ...defaultProps.config,
-        mode: 'ex',
-      },
+      isCommandBarVisible: true,
     });
   });
 
   it('renders a TreeView when so configured', () => {
     createSnapshot({
-      ...defaultProps,
-      config: {
-        ...defaultProps.config,
-        isTreeViewVisible: true,
-      },
+      isTreeViewVisible: true,
     });
   });
 
   it('renders a Browser when so configured', () => {
     createSnapshot({
-      ...defaultProps,
-      config: {
-        ...defaultProps.config,
-        isBrowserVisible: true,
-      },
+      isBrowserVisible: true,
     });
   });
 
   it('renders a View when so configured', () => {
     createSnapshot({
-      ...defaultProps,
       views: [{ id: 1 }],
     });
   });
 
   it('renders multiple instances of View when so configured', () => {
     createSnapshot({
-      ...defaultProps,
       views: [{ id: 1 }, { id: 2 }],
     });
   });
 
   it('can render many things at once when so configured', () => {
     createSnapshot({
-      ...defaultProps,
-      config: {
-        isBrowserVisible: true,
-        isTitleBarVisible: true,
-        isTreeViewVisible: true,
-        mode: 'normal',
-      },
+      isBrowserVisible: true,
+      isTitleBarVisible: true,
+      isTreeViewVisible: true,
+      isCommandBarVisible: true,
       views: [{ id: 1 }, { id: 2 }],
     });
   });
@@ -105,10 +86,15 @@ describe('App', () => {
   it('will set custom properties when initializing', () => {
     // eslint-disable-next-line global-require
     const setCustomProperties = require('dynamic-css-properties');
+    setCustomProperties.mockReset();
 
-    renderer.create(<App {...defaultProps} />);
-    expect(setCustomProperties).toHaveBeenCalled();
-    expect(setCustomProperties.mock.calls[0][0]).toEqual({
+    const props = {
+      ...defaultProps,
+      isTitleBarVisible: true,
+    };
+    renderer.create(<App {...props} />);
+
+    expect(setCustomProperties).toHaveBeenCalledWith({
       charWidth: '5px',
       viewportHeight: 'calc(100vh - var(--title-bar-height)',
       titleBarHeight: 23,
@@ -119,21 +105,16 @@ describe('App', () => {
     const addEventListener = jest.fn();
     global.addEventListener = addEventListener;
     renderer.create(<App {...defaultProps} />);
+
     expect(addEventListener).toHaveBeenCalled();
     expect(addEventListener.mock.calls[0][0]).toEqual('resize');
   });
 
-  it('mapStateToProps returns config and views from the store', () => {
-    expect(mapStateToProps({
-      config: {},
-      views: [],
-    })).toEqual({
-      config: {},
-      views: [],
-    });
-  });
-
   it('componentWillReceiveProps calls setCustomProperties when the theme changes', () => {
+    // eslint-disable-next-line global-require
+    const setCustomProperties = require('dynamic-css-properties');
+    setCustomProperties.mockReset();
+
     const app = new App(defaultProps);
     app.setCustomProperties = jest.fn();
     app.componentWillReceiveProps(defaultProps);
@@ -141,22 +122,16 @@ describe('App', () => {
 
     app.componentWillReceiveProps({
       ...defaultProps,
-      config: {
-        ...defaultProps.config,
-        theme: {
-          color: 'hotpink',
-        },
-      },
-    });
-    expect(app.setCustomProperties).toHaveBeenCalledWith({
-      charWidth: 5,
-      isBrowserVisible: false,
-      isTitleBarVisible: false,
-      isTreeViewVisible: false,
-      mode: 'normal',
       theme: {
         color: 'hotpink',
       },
+    });
+
+    expect(app.setCustomProperties).toHaveBeenCalled();
+    expect(setCustomProperties).toHaveBeenCalledWith({
+      charWidth: '5px',
+      titleBarHeight: '0px',
+      viewportHeight: 'calc(100vh - var(--title-bar-height)',
     });
   });
 
@@ -164,6 +139,7 @@ describe('App', () => {
     window.addEventListener = jest.fn();
     const app = new App(defaultProps);
     app.componentDidMount();
+
     expect(window.addEventListener).toHaveBeenCalledWith('resize', app.onResize);
   });
 
@@ -171,6 +147,7 @@ describe('App', () => {
     const app = new App(defaultProps);
     app.showOrHideTitleBar = jest.fn();
     app.onResize.call(defaultProps);
+
     expect(app.showOrHideTitleBar).toHaveBeenCalled();
   });
 
@@ -187,7 +164,7 @@ describe('App', () => {
   });
 });
 
-describe('showOrHideTitleBar', () => {
+describe('App showOrHideTitleBar', () => {
   it('should exit if more than 150 ms have passed', () => {
     window.requestAnimationFrame = jest.fn();
     const app = new App(defaultProps);
@@ -206,10 +183,7 @@ describe('showOrHideTitleBar', () => {
     const app = new App({
       ...defaultProps,
       updateConfig,
-      config: {
-        ...defaultProps.config,
-        isTitleBarVisible: false,
-      },
+      isTitleBarVisible: false,
     });
 
     app.showOrHideTitleBar(new Date().getTime());
@@ -222,6 +196,10 @@ describe('showOrHideTitleBar', () => {
   });
 
   it('should update css variables when the titlebar visibility changes', () => {
+    // eslint-disable-next-line global-require
+    const setCustomProperties = require('dynamic-css-properties');
+    setCustomProperties.mockReset();
+
     window.requestAnimationFrame = jest.fn();
     const updateConfig = jest.fn();
     const props = {
@@ -240,24 +218,51 @@ describe('showOrHideTitleBar', () => {
     window.innerHeight = 0;
     window.screen.height = 1;
     app.showOrHideTitleBar(new Date().getTime());
-    expect(app.setCustomProperties).toHaveBeenCalledWith({
-      titleBarHeight: 23,
+    expect(app.setCustomProperties).toHaveBeenCalled();
+    expect(setCustomProperties).toHaveBeenCalledWith({
+      charWidth: '5px',
+      titleBarHeight: '0px',
+      viewportHeight: 'calc(100vh - var(--title-bar-height)',
     });
 
     app = new App({
       ...props,
-      config: {
-        ...defaultProps.config,
-        isTitleBarVisible: true,
-      },
+      isTitleBarVisible: true,
     });
     app.setCustomProperties = jest.fn();
 
     window.innerHeight = 0;
     window.screen.height = 0;
     app.showOrHideTitleBar(new Date().getTime());
-    expect(app.setCustomProperties).toHaveBeenCalledWith({
+    expect(app.setCustomProperties).toHaveBeenCalled();
+    expect(setCustomProperties).toHaveBeenCalledWith({
+      charWidth: '5px',
       titleBarHeight: '0px',
+      viewportHeight: 'calc(100vh - var(--title-bar-height)',
+    });
+  });
+});
+
+describe('App mapStateToProps', () => {
+  it('mapStateToProps returns props based on state', () => {
+    expect(mapStateToProps({
+      config: {
+        charWidth: 10,
+        isBrowserVisible: true,
+        isTreeViewVisible: true,
+        isTitleBarVisible: true,
+        mode: 'normal',
+        theme: {},
+      },
+      views: [],
+    })).toEqual({
+      charWidth: 10,
+      isBrowserVisible: true,
+      isTreeViewVisible: true,
+      isTitleBarVisible: true,
+      isCommandBarVisible: false,
+      theme: {},
+      views: [],
     });
   });
 });

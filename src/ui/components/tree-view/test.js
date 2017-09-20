@@ -5,37 +5,28 @@ import { TreeView, mapStateToProps } from './index';
 
 jest.mock('../recursive-inner-tree', () => 'RecursiveInnerTree');
 
-const defaultProps = {
-  config: {
-    cwd: '~/Code',
-  },
-};
-
-const createSnapshot = (props = defaultProps) => {
-  expect(
-    renderer.create(<TreeView {...props} />).toJSON(),
-  ).toMatchSnapshot();
-};
-
 describe('TreeView', () => {
-  it('renders a basic wrapper around RecursiveInnerTree', () => {
+  const createSnapshot = (passedProps) => {
+    const props = {
+      cwd: '~/Code',
+      ...passedProps,
+    };
+    expect(renderer.create(<TreeView {...props} />).toJSON()).toMatchSnapshot();
+  };
+
+  it('should render a basic wrapper around RecursiveInnerTree', () => {
     createSnapshot();
   });
 
-  it('does not have a postfix in the / directory', () => {
-    createSnapshot({
-      ...defaultProps,
-      config: {
-        cwd: '/',
-      },
-    });
+  it('should not have a postfix in the / directory', () => {
+    createSnapshot({ cwd: '/' });
   });
+});
 
-  describe('mapStateToProps', () => {
-    it('returns config from the store', () => {
-      expect(mapStateToProps({ config: {} })).toEqual({
-        config: {},
-      });
-    });
+describe('TreeView mapStateToProps', () => {
+  it('should return cwd from the state', () => {
+    const config = { cwd: '/foo' };
+
+    expect(mapStateToProps({ config })).toEqual(config);
   });
 });

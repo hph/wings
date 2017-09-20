@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TreeView does not have a postfix in the / directory 1`] = `
+exports[`TreeView should not have a postfix in the / directory 1`] = `
 <div
   className="root"
 >
@@ -20,7 +20,7 @@ exports[`TreeView does not have a postfix in the / directory 1`] = `
 </div>
 `;
 
-exports[`TreeView renders a basic wrapper around RecursiveInnerTree 1`] = `
+exports[`TreeView should render a basic wrapper around RecursiveInnerTree 1`] = `
 <div
   className="root"
 >

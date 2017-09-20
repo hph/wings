@@ -3,15 +3,14 @@
   color: var(--primary-background-color);
   background-color: var(--cursor-color);
   height: var(--line-height);
-  width: var(--char-width);
+  width: 1px;
   line-height: var(--line-height);
   cursor: default;
   user-select: none;
 }
 
-.insert-mode {
-  width: 1px;
-  opacity: 1;
+.block {
+  width: var(--char-width);
 }
 
 .pulsate {

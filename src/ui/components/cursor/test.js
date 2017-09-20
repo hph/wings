@@ -1,106 +1,134 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import Cursor from './index';
+import { Cursor, mapStateToProps } from './index';
 
-const defaultProps = {
-  config: {
+describe('Cursor', () => {
+  const createSnapshot = (passedProps = {}) => {
+    const props = {
+      block: true,
+      character: ' ',
+      left: 0,
+      pulsate: false,
+      top: 0,
+      ...passedProps,
+    };
+    expect(renderer.create(<Cursor {...props} />).toJSON()).toMatchSnapshot();
+  };
+
+  it('should render with inline styles for positioning', () => {
+    createSnapshot();
+  });
+
+  it('should not have a "block" class if block is false', () => {
+    createSnapshot({
+      block: false,
+    });
+  });
+
+  it('should have a "pulsate" class when pulsate is set and block is false', () => {
+    createSnapshot({
+      pulsate: true,
+      block: false,
+    });
+  });
+
+  it('should render the provided character inside the cursor when block is true', () => {
+    createSnapshot({
+      character: 'a',
+      block: true,
+    });
+  });
+});
+
+describe('Cursor mapStateToProps', () => {
+  const config = {
     charHeight: 20,
     charWidth: 5,
-    isUserTyping: true,
+    isUserTyping: false,
     mode: 'normal',
-  },
-  view: {
-    lines: [''],
+  };
+  const viewId = 1;
+  const views = [{
+    id: viewId,
     column: 0,
-    row: 0,
     firstVisibleRow: 0,
-  },
-};
+    lines: ['a'],
+    row: 0,
+  }];
 
-const createSnapshot = (props = defaultProps) => {
-  expect(
-    renderer.create(<Cursor {...props} />).toJSON(),
-  ).toMatchSnapshot();
-};
-
-test('Cursor is rendered with inline styles for positioning', () => {
-  createSnapshot();
-});
-
-test('Cursor receives an "insertMode" class in insert mode', () => {
-  createSnapshot({
-    ...defaultProps,
-    config: {
-      ...defaultProps.config,
-      mode: 'insert',
-    },
+  it('should determine whether to render a block or a line based on the mode', () => {
+    expect(mapStateToProps({ config, views }, { viewId }).block).toEqual(true);
+    expect(mapStateToProps({
+      config: {
+        ...config,
+        mode: 'insert',
+      },
+      views,
+    }, { viewId }).block).toEqual(false);
   });
-});
 
-test('Cursor receives a "pulsate" class in insert mode while not typing', () => {
-  createSnapshot({
-    ...defaultProps,
-    config: {
-      ...defaultProps.config,
-      mode: 'insert',
-      isUserTyping: false,
-    },
+  it('should show the character under the cursor in normal mode', () => {
+    expect(mapStateToProps({ config, views }, { viewId }).character).toEqual('a');
   });
-});
 
-test('Cursor renders the character under the cursor when not in insert mode', () => {
-  createSnapshot({
-    ...defaultProps,
-    view: {
-      ...defaultProps.view,
-      lines: ['abc'],
-      column: 1,
-      row: 0,
-    },
+  it('should default to a space if no character is matched in normal mode', () => {
+    expect(mapStateToProps({
+      config,
+      views: [{
+        ...views[0],
+        column: 1,
+      }],
+    }, { viewId }).character).toEqual(' ');
   });
-});
 
-test('Cursor positions the cursor by the column, row, and cursor dimensions', () => {
-  const lines = ['abc', 'def', 'ghi'];
-  createSnapshot({
-    ...defaultProps,
-    view: {
-      ...defaultProps.view,
-      lines,
-      column: 1,
-      row: 1,
-    },
+  it('should return an empty string for the character in insert mode', () => {
+    expect(mapStateToProps({
+      config: {
+        ...config,
+        mode: 'insert',
+      },
+      views,
+    }, { viewId }).character).toEqual('');
   });
-  createSnapshot({
-    ...defaultProps,
-    view: {
-      ...defaultProps.view,
-      lines,
-      column: 2,
-      row: 2,
-    },
-  });
-  createSnapshot({
-    ...defaultProps,
-    view: {
-      ...defaultProps.view,
-      lines,
-      column: 2,
-      row: 0,
-    },
-  });
-});
 
-test('Cursor takes firstVisibleRow into account to position relative to it', () => {
-  createSnapshot({
-    ...defaultProps,
-    view: {
-      ...defaultProps.view,
-      firstVisibleRow: 1,
-      lines: ['abc', 'def', 'ghi'],
-      column: 1,
-      row: 1,
-    },
+  it('should determine a left position based on the column and character width', () => {
+    expect(mapStateToProps({ config, views }, { viewId }).left).toEqual(0);
+    expect(mapStateToProps({
+      config: {
+        ...config,
+        charWidth: 7,
+      },
+      views: [{
+        ...views[0],
+        column: 1,
+      }],
+    }, { viewId }).left).toEqual(7);
+  });
+
+  it('should determine a top position based on the row, first visible row and character height', () => {
+    expect(mapStateToProps({ config, views }, { viewId }).top).toEqual(0);
+    expect(mapStateToProps({
+      config: {
+        ...config,
+        charheight: 20,
+      },
+      views: [{
+        ...views[0],
+        row: 1,
+        lines: ['a', 'b'],
+      }],
+    }, { viewId }).top).toEqual(20);
+  });
+
+  it('should pass on the value of isUserTyping as in the form of the pulsate prop', () => {
+    expect(mapStateToProps({ config, views }, { viewId }).pulsate).toEqual(false);
+    expect(mapStateToProps({
+      config: {
+        ...config,
+        isUserTyping: true,
+      },
+      views,
+    }, { viewId }).pulsate).toEqual(true);
   });
 });

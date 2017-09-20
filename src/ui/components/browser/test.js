@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { Browser, mapStateToProps, withScheme } from './index';
+import { Browser, withScheme } from './index';
 
 function createNodeMockCreator (methods = {}) {
   return (element) => {
@@ -24,32 +24,29 @@ function createNodeMockCreator (methods = {}) {
   };
 }
 
-const defaultProps = {
-  userInputFocus: jest.fn(),
-};
-
-const createTree = (props = defaultProps, mockMethods = {}) => {
-  const createNodeMock = createNodeMockCreator(mockMethods);
-  const component = renderer.create(<Browser {...props} />, { createNodeMock });
-  return {
-    component,
-    tree: component.toJSON(),
-  };
-};
-
-const createSnapshot = (props = defaultProps, mockMethods = {}) => {
-  const { tree } = createTree(props, mockMethods);
-  expect(tree).toMatchSnapshot();
-};
-
 describe('Browser', () => {
-  it('renders a default browser view', () => {
-    createSnapshot();
+  const createTree = (passedProps = {}, mockMethods = {}) => {
+    const props = {
+      userInputFocus: jest.fn(),
+      ...passedProps,
+    };
+    const createNodeMock = createNodeMockCreator(mockMethods);
+    const component = renderer.create(<Browser {...props} />, { createNodeMock });
+    return {
+      component,
+      tree: component.toJSON(),
+    };
+  };
+
+  it('should render a default browser view', () => {
+    const { tree } = createTree();
+
+    expect(tree).toMatchSnapshot();
   });
 
-  it('selects the navigation bar on mount', done => {
+  it('should select the navigation bar on mount', done => {
     const select = jest.fn();
-    createTree(defaultProps, { select });
+    createTree({}, { select });
 
     setTimeout(() => {
       expect(select.mock.calls.length).toBe(1);
@@ -57,9 +54,9 @@ describe('Browser', () => {
     });
   });
 
-  it('sets up event listeners on mount', () => {
+  it('should set up event listeners on mount', () => {
     const addEventListener = jest.fn();
-    createTree(defaultProps, { addEventListener });
+    createTree({}, { addEventListener });
 
     expect(addEventListener.mock.calls.length).toBe(3);
     expect(addEventListener.mock.calls[0][0]).toEqual('will-navigate');
@@ -67,15 +64,15 @@ describe('Browser', () => {
     expect(addEventListener.mock.calls[2][0]).toEqual('did-fail-load');
   });
 
-  it('calls a function to stop user input focus on click', () => {
+  it('should call a function to stop user input focus on click', () => {
     const userInputFocus = jest.fn();
-    const { tree } = createTree({ ...defaultProps, userInputFocus });
+    const { tree } = createTree({ userInputFocus });
     tree.children[0].props.onClick();
 
     expect(userInputFocus).toHaveBeenCalledWith(false);
   });
 
-  it('updates the value in the navbar as the user types', () => {
+  it('should update the value in the navbar as the user types', () => {
     const { component, tree } = createTree();
     expect(tree).toMatchSnapshot();
     tree.children[0].props.onChange({ target: { value: 'example.com' } });
@@ -83,9 +80,9 @@ describe('Browser', () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
 
-  it('navigates to the URL in the navbar on an Enter keypress', () => {
+  it('should navigate to the URL in the navbar on an Enter keypress', () => {
     const reload = jest.fn();
-    const { component, tree } = createTree(defaultProps, { reload });
+    const { component, tree } = createTree({}, { reload });
     tree.children[0].props.onChange({ target: { value: 'example.com' } });
     tree.children[0].props.onKeyDown({ key: 'Enter' });
     expect(component.toJSON()).toMatchSnapshot();
@@ -100,73 +97,61 @@ describe('Browser', () => {
     expect(reload.mock.calls.length).toBe(1);
   });
 
-  it('shows an error on a webview load error', () => {
+  it('should show an error on a webview load error', () => {
     let onDidFailLoad;
     const addEventListener = jest.fn((event, callback) => {
       if (event === 'did-fail-load') {
         onDidFailLoad = callback;
       }
     });
-    const { component } = createTree(defaultProps, { addEventListener });
+    const { component } = createTree({}, { addEventListener });
     onDidFailLoad({ errorDescription: 'oh no!' });
 
     expect(component.toJSON()).toMatchSnapshot();
   });
 
-  it('withScheme function prepends an HTTP scheme to a string', () => {
+  it('withScheme function should prepend an HTTP scheme to a string', () => {
     // Defaults to using http over https, unless provided.
     expect(withScheme('foo.com')).toEqual('http://foo.com');
     expect(withScheme('http://foo.com')).toEqual('http://foo.com');
     expect(withScheme('https://foo.com')).toEqual('https://foo.com');
   });
 
-  describe('mapStateToProps', () => {
-    it('returns an empty object', () => {
-      // The store provides the userInputFocus prop.
-      expect(mapStateToProps({})).toEqual({});
+  it('onWillNavigate should update the navLocation', () => {
+    const browser = new Browser();
+    browser.setState = jest.fn();
+    browser.onWillNavigate({ url: 'example.com' });
+
+    expect(browser.setState).toHaveBeenCalledWith({
+      navLocation: 'example.com',
     });
   });
 
-  describe('onWillNavigate', () => {
-    it('updates the navLocation', () => {
-      const browser = new Browser();
-      browser.setState = jest.fn();
-      browser.onWillNavigate({ url: 'example.com' });
-      expect(browser.setState).toHaveBeenCalledWith({
-        navLocation: 'example.com',
-      });
+  it('onDidGetRedirectRequest should update the navLocation', () => {
+    const browser = new Browser();
+    browser.setState = jest.fn();
+    browser.onDidGetRedirectRequest({ newURL: '', isMainFrame: false });
+    expect(browser.setState).not.toHaveBeenCalled();
+
+    browser.onDidGetRedirectRequest({ newURL: '', isMainFrame: true });
+    expect(browser.setState).not.toHaveBeenCalled();
+
+    browser.onDidGetRedirectRequest({ newURL: 'example.com', isMainFrame: false });
+    expect(browser.setState).not.toHaveBeenCalled();
+
+    browser.onDidGetRedirectRequest({ newURL: 'example.com', isMainFrame: true });
+    expect(browser.setState).toHaveBeenCalledWith({
+      navLocation: 'example.com',
     });
   });
 
-  describe('onDidGetRedirectRequest', () => {
-    it('updates the navLocation', () => {
-      const browser = new Browser();
-      browser.setState = jest.fn();
+  it('onDidFailLoad should update the state with an error message', () => {
+    const browser = new Browser();
+    browser.setState = jest.fn();
+    browser.onDidFailLoad({ errorDescription: 'Not found!' });
 
-      browser.onDidGetRedirectRequest({ newURL: '', isMainFrame: false });
-      expect(browser.setState).not.toHaveBeenCalled();
-
-      browser.onDidGetRedirectRequest({ newURL: '', isMainFrame: true });
-      expect(browser.setState).not.toHaveBeenCalled();
-
-      browser.onDidGetRedirectRequest({ newURL: 'example.com', isMainFrame: false });
-      expect(browser.setState).not.toHaveBeenCalled();
-
-      browser.onDidGetRedirectRequest({ newURL: 'example.com', isMainFrame: true });
-      expect(browser.setState).toHaveBeenCalledWith({
-        navLocation: 'example.com',
-      });
-    });
-  });
-
-  describe('onDidFailLoad', () => {
-    it('Browser onDidFailLoad updates the state with an error message', () => {
-      const browser = new Browser();
-      browser.setState = jest.fn();
-      browser.onDidFailLoad({ errorDescription: 'Not found!' });
-      expect(browser.setState).toHaveBeenCalledWith({
-        error: 'Not found!',
-      });
+    expect(browser.setState).toHaveBeenCalledWith({
+      error: 'Not found!',
     });
   });
 });

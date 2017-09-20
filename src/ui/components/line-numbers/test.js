@@ -1,127 +1,111 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import _ from 'lodash';
 
-import LineNumbers from './index';
-
-const defaultProps = {
-  className: '',
-  config: {
-    charHeight: 5,
-    relativeLineNumbers: false,
-  },
-  view: {
-    lines: [],
-    row: 0,
-    firstVisibleRow: 0,
-    firstVisibleColumn: 0,
-  },
-  innerRef: () => {},
-};
-
-const createSnapshot = (props = defaultProps) => {
-  expect(
-    renderer.create(<LineNumbers {...props} />).toJSON(),
-  ).toMatchSnapshot();
-};
+import { LineNumbers, mapStateToProps } from './index';
 
 describe('LineNumbers', () => {
+  const createSnapshot = (passedProps = {}) => {
+    const props = {
+      className: '',
+      currentLine: 0,
+      firstVisibleChar: 0,
+      firstVisibleLine: 0,
+      innerRef: () => {},
+      relative: false,
+      totalLines: 0,
+      visibleLines: 40,
+      ...passedProps,
+    };
+    expect(renderer.create(<LineNumbers {...props} />).toJSON()).toMatchSnapshot();
+  };
+
   it('renders at least one line even when empty', () => {
     createSnapshot();
   });
 
   it('allows passing in an external classname', () => {
     createSnapshot({
-      ...defaultProps,
       className: 'custom-classname',
     });
   });
 
-  it('adds an overlay class when firstVisibleColumn is larger than 0', () => {
+  it('adds an overlay class when firstVisibleChar is larger than 0', () => {
     createSnapshot({
-      ...defaultProps,
-      view: {
-        ...defaultProps.view,
-        firstVisibleColumn: 1,
-      },
+      firstVisibleChar: 1,
     });
   });
 
   it('renders line numbers', () => {
     createSnapshot({
-      ...defaultProps,
-      view: {
-        ...defaultProps.view,
-        lines: _.range(3),
-      },
+      totalLines: 3,
     });
   });
 
   it('starts zero-indexed when using relative line numbers', () => {
     createSnapshot({
-      ...defaultProps,
-      view: {
-        ...defaultProps.view,
-        lines: _.range(3),
-      },
-      config: {
-        ...defaultProps.config,
-        relativeLineNumbers: true,
-      },
+      totalLines: 3,
+      relative: true,
     });
   });
 
   it('renders relative line numbers when so configured', () => {
     createSnapshot({
-      ...defaultProps,
-      view: {
-        ...defaultProps.view,
-        lines: _.range(5),
-        row: 2,
-      },
-      config: {
-        ...defaultProps.config,
-        relativeLineNumbers: true,
-      },
+      totalLines: 5,
+      currentLine: 2,
+      relative: true,
     });
   });
 
-  it('starts off at the first visible row', () => {
+  it('starts off at the first visible line', () => {
     createSnapshot({
-      ...defaultProps,
-      view: {
-        ...defaultProps.view,
-        lines: _.range(5),
-        row: 2,
-        firstVisibleRow: 2,
-      },
+      totalLines: 5,
+      currentLine: 2,
+      firstVisibleLine: 2,
     });
   });
 
-  it('starts off at the first visible row with relative line numbers', () => {
+  it('starts off at the first visible line with relative line numbers', () => {
     createSnapshot({
-      ...defaultProps,
-      view: {
-        ...defaultProps.view,
-        lines: _.range(5),
-        row: 2,
-        firstVisibleRow: 2,
-      },
-      config: {
-        ...defaultProps.config,
-        relativeLineNumbers: true,
-      },
+      currentLine: 2,
+      totalLines: 5,
+      firstVisibleLine: 2,
+      relative: true,
     });
   });
+});
 
-  it('only updates when properties change', () => {
-    let lineNumbers = new LineNumbers(defaultProps);
-    expect(lineNumbers.shouldComponentUpdate(defaultProps)).toBe(false);
+describe('LineNumbers mapStateToProps', () => {
+  const viewId = 1;
+  const innerRef = jest.fn();
+  const config = {
+    charHeight: 20,
+    relativeLineNumbers: false,
+  };
+  const views = [{
+    id: viewId,
+    column: 0,
+    row: 0,
+    lines: ['a', 'b', 'c'],
+    height: 800,
+    firstVisibleColumn: 0,
+    firstVisibleRow: 1,
+  }];
+  const props = {
+    viewId,
+    innerRef,
+    className: 'some-class',
+  };
 
-    lineNumbers = new LineNumbers({
-      ...defaultProps,
-      className: 'newclass',
+  it('should pass on, rename or compute passed state & props', () => {
+    expect(mapStateToProps({ config, views }, props)).toEqual({
+      innerRef,
+      className: 'some-class',
+      currentLine: 0,
+      firstVisibleChar: 0,
+      firstVisibleLine: 1,
+      relative: false,
+      totalLines: 3,
+      visibleLines: 800 / 20,
     });
-    expect(lineNumbers.shouldComponentUpdate(defaultProps)).toBe(true);
   });
 });

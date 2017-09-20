@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 
 import css from './styles.css';
 
-class TitleBar extends PureComponent {
-  static propTypes = {
-    label: PropTypes.string.isRequired,
-  };
-
+export default class TitleBar extends PureComponent {
   render () {
     return <div className={css.root}>{this.props.label}</div>;
   }
 }
 
-export default TitleBar;
+TitleBar.propTypes = {
+  label: PropTypes.string.isRequired,
+};

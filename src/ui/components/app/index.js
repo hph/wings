@@ -16,15 +16,9 @@ import { updateConfig } from 'ui/state/actions';
 import css from './styles.css';
 
 export class App extends Component {
-  static propTypes = {
-    config: PropTypes.object.isRequired,
-    updateConfig: PropTypes.func.isRequired,
-    views: PropTypes.array.isRequired,
-  };
-
   constructor (props) {
     super(props);
-    this.setCustomProperties(props.config);
+    this.setCustomProperties();
   }
 
   componentDidMount () {
@@ -33,8 +27,8 @@ export class App extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.config.theme !== this.props.config.theme) {
-      this.setCustomProperties(nextProps.config);
+    if (nextProps.theme !== this.props.theme) {
+      this.setCustomProperties();
     }
   }
 
@@ -42,10 +36,12 @@ export class App extends Component {
     this.showOrHideTitleBar(new Date().getTime());
   };
 
-  setCustomProperties (config) {
+  setCustomProperties () {
+    const { charWidth, isTitleBarVisible, theme } = this.props;
     setCustomProperties({
-      ...config.theme,
-      charWidth: `${ config.charWidth }px`,
+      ...theme,
+      charWidth: `${ charWidth }px`,
+      titleBarHeight: isTitleBarVisible ? theme.titleBarHeight : '0px',
       viewportHeight: 'calc(100vh - var(--title-bar-height)',
     });
   }
@@ -60,43 +56,53 @@ export class App extends Component {
       return;
     }
 
-    const { config } = this.props;
     const isTitleBarVisible = !this.windowIsFullscreen();
-    if (isTitleBarVisible !== config.isTitleBarVisible) {
+    if (isTitleBarVisible !== this.props.isTitleBarVisible) {
       this.props.updateConfig({ isTitleBarVisible });
-      this.setCustomProperties({
-        titleBarHeight: isTitleBarVisible ? config.theme.titleBarHeight : '0px',
-      });
+      this.setCustomProperties();
     }
 
     window.requestAnimationFrame(this.showOrHideTitleBar.bind(this, start));
   };
 
   render () {
-    const { config, views } = this.props;
     return (
       <div className={css.root}>
-        {config.isTitleBarVisible && <TitleBar label="Wings" />}
-        {config.mode === 'ex' && <CommandBar />}
+        {this.props.isTitleBarVisible && <TitleBar label="Wings" />}
+        {this.props.isCommandBarVisible && <CommandBar />}
         <div className={css.views}>
-          {config.isTreeViewVisible && <TreeView />}
-          {_.isEmpty(views) ? (
-            <Logo />
-          ) : (
-            _.map(views, ({ id }, index) => (
+          {this.props.isTreeViewVisible && <TreeView />}
+          {_.isEmpty(this.props.views) ? <Logo /> : (
+            _.map(this.props.views, ({ id }, index) => (
               <View viewId={id} key={id} isFirst={index === 0} />
             ))
           )}
-          {config.isBrowserVisible && <Browser />}
+          {this.props.isBrowserVisible && <Browser />}
         </div>
       </div>
     );
   }
 }
 
+App.propTypes = {
+  charWidth: PropTypes.number.isRequired,
+  isBrowserVisible: PropTypes.bool.isRequired,
+  isCommandBarVisible: PropTypes.bool.isRequired,
+  isTitleBarVisible: PropTypes.bool.isRequired,
+  isTreeViewVisible: PropTypes.bool.isRequired,
+  theme: PropTypes.object.isRequired,
+  updateConfig: PropTypes.func.isRequired,
+  views: PropTypes.array.isRequired,
+};
+
 export function mapStateToProps (state) {
   return {
-    config: state.config,
+    charWidth: state.config.charWidth,
+    isBrowserVisible: state.config.isBrowserVisible,
+    isCommandBarVisible: state.config.mode === 'ex',
+    isTitleBarVisible: state.config.isTitleBarVisible,
+    isTreeViewVisible: state.config.isTreeViewVisible,
+    theme: state.config.theme,
     views: state.views,
   };
 }

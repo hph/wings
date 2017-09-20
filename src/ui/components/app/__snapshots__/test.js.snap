@@ -7,6 +7,7 @@ exports[`App can render many things at once when so configured 1`] = `
   <TitleBar
     label="Wings"
   />
+  <CommandBar />
   <div
     className="views"
   >
@@ -49,7 +50,7 @@ exports[`App renders a Browser when so configured 1`] = `
 </div>
 `;
 
-exports[`App renders a CommandBar in ex mode 1`] = `
+exports[`App renders a CommandBar when so configured 1`] = `
 <div
   className="root"
 >

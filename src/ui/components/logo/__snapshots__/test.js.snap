@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Logo renders an SVG logo 1`] = `
+exports[`Logo should render an SVG logo 1`] = `
 <div
   className="root"
   dangerouslySetInnerHTML={

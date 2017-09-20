@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Browser navigates to the URL in the navbar on an Enter keypress 1`] = `
+exports[`Browser should navigate to the URL in the navbar on an Enter keypress 1`] = `
 <div
   className="root"
 >
@@ -21,7 +21,7 @@ exports[`Browser navigates to the URL in the navbar on an Enter keypress 1`] = `
 </div>
 `;
 
-exports[`Browser renders a default browser view 1`] = `
+exports[`Browser should render a default browser view 1`] = `
 <div
   className="root"
 >
@@ -42,7 +42,7 @@ exports[`Browser renders a default browser view 1`] = `
 </div>
 `;
 
-exports[`Browser shows an error on a webview load error 1`] = `
+exports[`Browser should show an error on a webview load error 1`] = `
 <div
   className="root"
 >
@@ -70,7 +70,7 @@ exports[`Browser shows an error on a webview load error 1`] = `
 </div>
 `;
 
-exports[`Browser updates the value in the navbar as the user types 1`] = `
+exports[`Browser should update the value in the navbar as the user types 1`] = `
 <div
   className="root"
 >
@@ -91,7 +91,7 @@ exports[`Browser updates the value in the navbar as the user types 1`] = `
 </div>
 `;
 
-exports[`Browser updates the value in the navbar as the user types 2`] = `
+exports[`Browser should update the value in the navbar as the user types 2`] = `
 <div
   className="root"
 >

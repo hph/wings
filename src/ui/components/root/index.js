@@ -6,11 +6,7 @@ import { ipcRenderer } from 'electron';
 import { App } from 'ui/components';
 import { actions, createStore } from 'ui/state';
 
-class Root extends Component {
-  static propTypes = {
-    initialState: PropTypes.object.isRequired,
-  };
-
+export default class Root extends Component {
   componentDidMount () {
     // Notify Electron that the app is ready and the window can be shown.
     ipcRenderer.send('root-mounted', true);
@@ -30,4 +26,6 @@ class Root extends Component {
   }
 }
 
-export default Root;
+Root.propTypes = {
+  initialState: PropTypes.object.isRequired,
+};

@@ -10,10 +10,6 @@ export function withScheme (url) {
 }
 
 export class Browser extends Component {
-  static propTypes = {
-    userInputFocus: PropTypes.func.isRequired,
-  };
-
   state = {
     location: '',
     error: '',
@@ -98,8 +94,8 @@ export class Browser extends Component {
   }
 }
 
-export function mapStateToProps () {
-  return {};
-}
+Browser.propTypes = {
+  userInputFocus: PropTypes.func.isRequired,
+};
 
-export default connect(mapStateToProps, { userInputFocus })(Browser);
+export default connect(null, { userInputFocus })(Browser);
