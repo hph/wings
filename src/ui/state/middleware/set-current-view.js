@@ -17,6 +17,6 @@ export default function setCurrentView ({ getState, dispatch }) {
       });
     }
 
-    next(action);
+    return next(action);
   };
 }

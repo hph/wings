@@ -17,7 +17,8 @@ export default function commandBar ({ getState, dispatch }) {
     }
 
     handler({ state, dispatch, args });
-    next(action);
+    const result = next(action);
     dispatch(updateConfig({ mode: 'normal' }));
+    return result;
   };
 }

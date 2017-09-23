@@ -96,6 +96,6 @@ export default function userInputMiddleware ({ getState, dispatch }) {
       input.removeEventListener('blur', input.focus);
     }
 
-    next(action);
+    return next(action);
   };
 }
