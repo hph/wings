@@ -40,11 +40,10 @@ export class View extends Component {
       ? _.max([0, lines.length - 1])
       : clickY + firstVisibleRow;
 
-    const clickOffset = mode === 'insert' ? 1 : 0;
     const maxLengthOffset = mode === 'insert' ? 0 : -1;
     const column = _.min([
       _.max([0, lines[row].length + maxLengthOffset]),
-      clickX + clickOffset,
+      clickX,
     ]);
 
     this.props.updateView(viewId, { column, row });

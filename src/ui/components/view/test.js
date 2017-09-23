@@ -327,6 +327,30 @@ describe('View', () => {
       });
     });
 
+    it('should select the same column within a line in both insert and normal mode', () => {
+      const newProps = {
+        ...props,
+        updateView: jest.fn(),
+        lines: [
+          'hello, world!',
+        ],
+      };
+      const newEvent = {
+        ...event,
+        clientY: 0,
+        clientX: 13,
+      };
+      const expected = { column: 2, row: 0 };
+      new View(newProps).onTextClick(newEvent);
+      expect(newProps.updateView).toHaveBeenCalledWith(1, expected);
+
+      new View({
+        ...newProps,
+        mode: 'insert',
+      }).onTextClick(newEvent);
+      expect(newProps.updateView).toHaveBeenCalledWith(1, expected);
+    });
+
     it('should use the last line if the cursor clicked below it', () => {
       const newProps = {
         ...props,
