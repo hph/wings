@@ -121,14 +121,14 @@ describe('Cursor mapStateToProps', () => {
     }, { viewId }).top).toEqual(20);
   });
 
-  it('should pass on the value of isUserTyping as in the form of the pulsate prop', () => {
-    expect(mapStateToProps({ config, views }, { viewId }).pulsate).toEqual(false);
+  it('should determine whether to pulsate based on isUserTyping', () => {
+    expect(mapStateToProps({ config, views }, { viewId }).pulsate).toEqual(true);
     expect(mapStateToProps({
       config: {
         ...config,
         isUserTyping: true,
       },
       views,
-    }, { viewId }).pulsate).toEqual(true);
+    }, { viewId }).pulsate).toEqual(false);
   });
 });

@@ -32,7 +32,7 @@ export function mapStateToProps (state, props) {
     block,
     character: block ? view.lines[view.row][view.column] || ' ' : '',
     left: view.column * config.charWidth,
-    pulsate: config.isUserTyping,
+    pulsate: !config.isUserTyping,
     top: (view.row - view.firstVisibleRow) * config.charHeight,
   };
 }

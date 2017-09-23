@@ -5,8 +5,8 @@ import * as commands from 'ui/commands';
 import { updateConfig, updateCommand, updateView } from 'ui/state/actions';
 import { currentView } from 'ui/state/selectors';
 
+let stoppedTypingTimer;
 export default function handleUserInput ({ action, getState, dispatch }) {
-  let stoppedTypingTimer;
   function onStoppedTyping () {
     dispatch(updateConfig({ isUserTyping: false }));
   }
