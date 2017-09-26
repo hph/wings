@@ -107,7 +107,15 @@ describe('App', () => {
     renderer.create(<App {...defaultProps} />);
 
     expect(addEventListener).toHaveBeenCalled();
-    expect(addEventListener.mock.calls[0][0]).toEqual('resize');
+
+    // calledWith matchers require all arguments, but we only know the first.
+    let found = false;
+    addEventListener.mock.calls.forEach(args => {
+      if (args[0] === 'resize') {
+        found = true;
+      }
+    });
+    expect(found).toBe(true);
   });
 
   it('componentWillReceiveProps calls setCustomProperties when the theme changes', () => {
