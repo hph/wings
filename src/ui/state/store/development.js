@@ -8,5 +8,6 @@ export default function configureStore (initialState) {
     middleware,
     applyMiddleware(createLogger()),
   );
-  return createStore(reducer, initialState, enhancer);
+  // Make the store available in the console in development for debugging.
+  return window.store = createStore(reducer, initialState, enhancer);
 }

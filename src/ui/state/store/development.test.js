@@ -1,6 +1,12 @@
 import configureStore from './development';
 
 describe('development store', () => {
+  it('should expose the store in the console as a side effect', () => {
+    expect(window.store).not.toBeDefined();
+    configureStore();
+    expect(window.store).toBeDefined();
+  });
+
   it('should create something that looks like a store', () => {
     const store = configureStore();
     expect(store.dispatch).toBeDefined();
