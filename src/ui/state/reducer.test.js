@@ -1,4 +1,4 @@
-import { configReducer, viewsReducer, commandReducer } from './reducer';
+import { configReducer, panesReducer, commandReducer } from './reducer';
 import * as types from './types';
 
 describe('configReducer', () => {
@@ -36,16 +36,16 @@ describe('configReducer', () => {
   });
 });
 
-describe('viewsReducer', () => {
-  describe('CREATE_VIEW', () => {
+describe('panesReducer', () => {
+  describe('CREATE_PANE', () => {
     it('should set the default values and split the text into lines', () => {
       const action = {
-        type: types.CREATE_VIEW,
+        type: types.CREATE_PANE,
         filename: 'file.txt',
         text: 'hello\nworld!\n',
       };
 
-      expect(viewsReducer([], action)[0]).toEqual({
+      expect(panesReducer([], action)[0]).toEqual({
         column: 0,
         row: 0,
         firstVisibleColumn: 0,
@@ -62,11 +62,11 @@ describe('viewsReducer', () => {
 
     it('should handle an empty text value by creating an array of one line', () => {
       const action = {
-        type: types.CREATE_VIEW,
+        type: types.CREATE_PANE,
         filename: 'file.txt',
       };
 
-      expect(viewsReducer([], action)[0]).toEqual({
+      expect(panesReducer([], action)[0]).toEqual({
         column: 0,
         row: 0,
         firstVisibleColumn: 0,
@@ -79,7 +79,7 @@ describe('viewsReducer', () => {
     });
   });
 
-  describe('UPDATE_VIEW', () => {
+  describe('UPDATE_PANE', () => {
     const state = [
       { id: 1 },
       { id: 2 },
@@ -89,24 +89,24 @@ describe('viewsReducer', () => {
       another: 'value',
     };
     const action = {
-      type: types.UPDATE_VIEW,
+      type: types.UPDATE_PANE,
       id: 1,
       ...newValues,
     };
 
-    expect(viewsReducer(state, action)).toEqual([
+    expect(panesReducer(state, action)).toEqual([
       { id: 1, ...newValues },
       { id: 2 },
     ]);
   });
 
-  describe('DESTROY_VIEW', () => {
+  describe('DESTROY_PANE', () => {
     const state = [
       { id: 1 },
       { id: 2 },
     ];
 
-    expect(viewsReducer(state, { type: types.DESTROY_VIEW, id: 2 })).toEqual([
+    expect(panesReducer(state, { type: types.DESTROY_PANE, id: 2 })).toEqual([
       { id: 1 },
     ]);
   });

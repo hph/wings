@@ -10,6 +10,8 @@ import { computeFontDimensions } from 'ui/utils';
 // Disable pinch zoom.
 webFrame.setVisualZoomLevelLimits(1, 1);
 
+// XXX Not all of config should go into the state.
+// XXX Filename should be used to create a view instead of passing it in.
 const { config, filename } = JSON.parse(window.location.hash.slice(1));
 const { width, height } = computeFontDimensions(config);
 const initialState = {
@@ -24,7 +26,7 @@ const initialState = {
     isTitleBarVisible: true,
     isUserTyping: false,
     cwd: process.cwd(),
-    currentViewId: 0, // Temporary just so we don't throw on load.
+    currentPaneId: 0, // Temporary just so we don't throw on load.
   },
 };
 

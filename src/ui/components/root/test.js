@@ -80,7 +80,7 @@ describe('Root', () => {
       filename: 'truthy',
       id: 1,
       text: '',
-      type: 'CREATE_VIEW',
+      type: 'CREATE_PANE',
     });
   });
 });

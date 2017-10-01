@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import _ from 'lodash';
 
-import { View, mapStateToProps } from './index';
+import { Pane, mapStateToProps } from './index';
 
 jest.mock('../cursor', () => 'Cursor');
 jest.mock('../line-numbers', () => 'LineNumbers');
@@ -17,7 +17,7 @@ function createNodeMock (element) {
   return null;
 }
 
-describe('View', () => {
+describe('Pane', () => {
   const defaultProps = {
     charHeight: 20,
     charWidth: 5,
@@ -29,11 +29,11 @@ describe('View', () => {
     showLineNumbers: false,
     splits: 1,
     updateConfig: () => {},
-    updateView: () => {},
+    updatePane: () => {},
     userInputFocus: () => {},
-    viewId: 1,
-    views: [],
-    currentViewId: 0,
+    paneId: 1,
+    panes: [],
+    currentPaneId: 0,
     isBrowserVisible: false,
     mode: 'normal',
   };
@@ -43,7 +43,7 @@ describe('View', () => {
       ...passedProps,
     };
     expect(
-      renderer.create(<View {...props} />, { createNodeMock }).toJSON(),
+      renderer.create(<Pane {...props} />, { createNodeMock }).toJSON(),
     ).toMatchSnapshot();
   };
 
@@ -51,9 +51,9 @@ describe('View', () => {
     createSnapshot();
   });
 
-  it('renders a Cursor in the current view', () => {
+  it('renders a Cursor in the current pane', () => {
     createSnapshot({
-      currentViewId: 1,
+      currentPaneId: 1,
     });
   });
 
@@ -64,10 +64,10 @@ describe('View', () => {
   });
 
   it('should have test coverage for mock component refs', () => {
-    const view = new View(defaultProps);
-    view.numbersRef('mock');
+    const pane = new Pane(defaultProps);
+    pane.numbersRef('mock');
 
-    expect(view.numbersEl).toEqual('mock');
+    expect(pane.numbersEl).toEqual('mock');
   });
 
   it('renders lines of code', () => {
@@ -80,7 +80,7 @@ describe('View', () => {
   });
 
   it('only renders visible lines', () => {
-    // Since the line height is set to 20, and the configured view height is 100,
+    // Since the line height is set to 20, and the configured pane height is 100,
     // we will render 5 (100/20) lines, not the full 100.
     createSnapshot({
       lines: _.range(100).map(n => n.toString()),
@@ -99,7 +99,7 @@ describe('View', () => {
   it('width is determined by the number of splits', () => {
     const createComponent = splits => {
       return renderer.create(
-        <View {...defaultProps} splits={splits} />, { createNodeMock },
+        <Pane {...defaultProps} splits={splits} />, { createNodeMock },
       ).toJSON();
     };
     expect(createComponent(1).props.style).toEqual({ width: '100%' });
@@ -125,7 +125,7 @@ describe('View', () => {
   });
 
   it('should map store state to computed props', () => {
-    const view = {
+    const pane = {
       id: 1,
       column: 1,
       height: 2,
@@ -138,22 +138,22 @@ describe('View', () => {
       config: {
         charHeight: 6,
         charWidth: 7,
-        currentViewId: 1,
+        currentPaneId: 1,
         isBrowserVisible: false,
         mode: 'normal',
         showLineNumbers: false,
       },
-      views: [view],
+      panes: [pane],
     };
     const props = {
-      viewId: view.id,
+      paneId: pane.id,
     };
 
     expect(mapStateToProps(state, props)).toEqual({
-      ..._.omit(view, 'id', 'width'),
+      ..._.omit(pane, 'id', 'width'),
       ...state.config,
-      splits: state.views.length,
-      viewId: view.id,
+      splits: state.panes.length,
+      paneId: pane.id,
     });
   });
 
@@ -166,10 +166,10 @@ describe('View', () => {
       },
     };
 
-    View.prototype.componentWillReceiveProps.call(context, { splits: 0 });
+    Pane.prototype.componentWillReceiveProps.call(context, { splits: 0 });
     expect(onResize).not.toHaveBeenCalled();
 
-    View.prototype.componentWillReceiveProps.call(context, { splits: 1 });
+    Pane.prototype.componentWillReceiveProps.call(context, { splits: 1 });
     expect(onResize).toHaveBeenCalled();
   });
 
@@ -177,32 +177,32 @@ describe('View', () => {
     const onResize = jest.fn();
     const context = { onResize };
     window.removeEventListener = jest.fn();
-    View.prototype.componentWillUnmount.call(context, { splits: 1 });
+    Pane.prototype.componentWillUnmount.call(context, { splits: 1 });
     expect(window.removeEventListener).toHaveBeenCalledWith('resize', onResize);
   });
 
   it('onResize takes the width of the numbers el into account when present', () => {
-    const updateView = jest.fn();
+    const updatePane = jest.fn();
     const props = {
-      viewId: 1,
-      updateView,
+      paneId: 1,
+      updatePane,
     };
 
-    const view = new View(props);
-    view.wrapperEl = { offsetWidth: 800 };
-    view.textEl = { offsetHeight: 600 };
-    view.onResize.call({ props });
-    expect(updateView).toHaveBeenCalledWith(1, {
+    const pane = new Pane(props);
+    pane.wrapperEl = { offsetWidth: 800 };
+    pane.textEl = { offsetHeight: 600 };
+    pane.onResize.call({ props });
+    expect(updatePane).toHaveBeenCalledWith(1, {
       width: 800,
       height: 600,
     });
 
-    const secondView = new View(props);
-    secondView.numbersEl = { offsetWidth: 50 };
-    secondView.wrapperEl = { offsetWidth: 800 };
-    secondView.textEl = { offsetHeight: 600 };
-    secondView.onResize.call({ props });
-    expect(updateView).toHaveBeenCalledWith(1, {
+    const secondPane = new Pane(props);
+    secondPane.numbersEl = { offsetWidth: 50 };
+    secondPane.wrapperEl = { offsetWidth: 800 };
+    secondPane.textEl = { offsetHeight: 600 };
+    secondPane.onResize.call({ props });
+    expect(updatePane).toHaveBeenCalledWith(1, {
       width: 750,
       height: 600,
     });
@@ -221,7 +221,7 @@ describe('View', () => {
       clientY: 0,
     };
     const props = {
-      viewId: 1,
+      paneId: 1,
       lines: [
         'hello, world!',
         'how are you doing?',
@@ -231,42 +231,42 @@ describe('View', () => {
       charWidth: 5,
       charHeight: 20,
       isBrowserVisible: true,
-      currentViewId: 1,
+      currentPaneId: 1,
       updateConfig: jest.fn(),
-      updateView: jest.fn(),
+      updatePane: jest.fn(),
       userInputFocus: jest.fn(),
     };
 
     it('should calculate where the user clicked', () => {
-      new View(props).onTextClick(event);
-      expect(props.updateView).toHaveBeenCalledWith(1, {
+      new Pane(props).onTextClick(event);
+      expect(props.updatePane).toHaveBeenCalledWith(1, {
         column: 0,
         row: 0,
       });
 
-      new View(props).onTextClick({
+      new Pane(props).onTextClick({
         ...event,
         clientX: 37,
         clientY: 0,
       });
-      expect(props.updateView).toHaveBeenCalledWith(1, {
+      expect(props.updatePane).toHaveBeenCalledWith(1, {
         column: 7,
         row: 0,
       });
 
-      new View(props).onTextClick({
+      new Pane(props).onTextClick({
         ...event,
         clientX: 37,
         clientY: 27,
       });
-      expect(props.updateView).toHaveBeenCalledWith(1, {
+      expect(props.updatePane).toHaveBeenCalledWith(1, {
         column: 7,
         row: 1,
       });
     });
 
     it('should focus user input if the browser is active', () => {
-      new View(props).onTextClick(event);
+      new Pane(props).onTextClick(event);
       expect(props.userInputFocus).toHaveBeenCalled();
 
       const newProps = {
@@ -275,31 +275,31 @@ describe('View', () => {
         updateConfig: jest.fn(),
         isBrowserVisible: false,
       };
-      new View(newProps).onTextClick(event);
+      new Pane(newProps).onTextClick(event);
       expect(newProps.userInputFocus).not.toHaveBeenCalled();
     });
 
-    it('should update the currently active view if the id changes', () => {
-      new View(props).onTextClick(event);
+    it('should update the currently active pane if the id changes', () => {
+      new Pane(props).onTextClick(event);
       expect(props.updateConfig).not.toHaveBeenCalledWith({
-        currentViewId: 1,
+        currentPaneId: 1,
       });
 
       const newProps = {
         ...props,
-        viewId: 2,
+        paneId: 2,
       };
 
-      new View(newProps).onTextClick(event);
+      new Pane(newProps).onTextClick(event);
       expect(newProps.updateConfig).toHaveBeenCalledWith({
-        currentViewId: 2,
+        currentPaneId: 2,
       });
     });
 
     it('may have a column offset of one in insert mode', () => {
       const newProps = {
         ...props,
-        updateView: jest.fn(),
+        updatePane: jest.fn(),
         lines: [
           'hello, world!',
           'this line is long',
@@ -311,17 +311,17 @@ describe('View', () => {
         clientY: 15,
         clientX: 76,
       };
-      new View(newProps).onTextClick(newEvent);
-      expect(newProps.updateView).toHaveBeenCalledWith(1, {
+      new Pane(newProps).onTextClick(newEvent);
+      expect(newProps.updatePane).toHaveBeenCalledWith(1, {
         column: 12,
         row: 0,
       });
 
-      new View({
+      new Pane({
         ...newProps,
         mode: 'insert',
       }).onTextClick(newEvent);
-      expect(newProps.updateView).toHaveBeenCalledWith(1, {
+      expect(newProps.updatePane).toHaveBeenCalledWith(1, {
         column: 13,
         row: 0,
       });
@@ -330,7 +330,7 @@ describe('View', () => {
     it('should select the same column within a line in both insert and normal mode', () => {
       const newProps = {
         ...props,
-        updateView: jest.fn(),
+        updatePane: jest.fn(),
         lines: [
           'hello, world!',
         ],
@@ -341,20 +341,20 @@ describe('View', () => {
         clientX: 13,
       };
       const expected = { column: 2, row: 0 };
-      new View(newProps).onTextClick(newEvent);
-      expect(newProps.updateView).toHaveBeenCalledWith(1, expected);
+      new Pane(newProps).onTextClick(newEvent);
+      expect(newProps.updatePane).toHaveBeenCalledWith(1, expected);
 
-      new View({
+      new Pane({
         ...newProps,
         mode: 'insert',
       }).onTextClick(newEvent);
-      expect(newProps.updateView).toHaveBeenCalledWith(1, expected);
+      expect(newProps.updatePane).toHaveBeenCalledWith(1, expected);
     });
 
     it('should use the last line if the cursor clicked below it', () => {
       const newProps = {
         ...props,
-        updateView: jest.fn(),
+        updatePane: jest.fn(),
         lines: [
           'hi!',
           'this line will be focused when we click below it',
@@ -366,9 +366,9 @@ describe('View', () => {
         clientY: 100,
         clientX: 10,
       };
-      new View(newProps).onTextClick(newEvent);
+      new Pane(newProps).onTextClick(newEvent);
 
-      expect(newProps.updateView).toHaveBeenCalledWith(1, { column: 2, row: 1 });
+      expect(newProps.updatePane).toHaveBeenCalledWith(1, { column: 2, row: 1 });
     });
   });
 });

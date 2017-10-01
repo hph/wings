@@ -2,8 +2,8 @@ import _ from 'lodash';
 
 import fixedKeys from 'ui/fixed-keys';
 import * as commands from 'ui/commands';
-import { updateConfig, updateCommand, updateView } from 'ui/state/actions';
-import { currentView } from 'ui/state/selectors';
+import { updateConfig, updateCommand, updatePane } from 'ui/state/actions';
+import { currentPane } from 'ui/state/selectors';
 
 let stoppedTypingTimer;
 export default function handleUserInput ({ action, getState, dispatch }) {
@@ -14,9 +14,9 @@ export default function handleUserInput ({ action, getState, dispatch }) {
   const { value, replacePrevious } = action;
   const state = getState();
   const { config } = state;
-  const view = currentView(state);
+  const pane = currentPane(state);
   const payload = {
-    ...view,
+    ...pane,
     ...config,
     value,
     replacePrevious,
@@ -33,7 +33,7 @@ export default function handleUserInput ({ action, getState, dispatch }) {
     if (!handler && config.mode === 'insert' && !fixedKeys.has(payload.value)) {
       // Inserting a character.
       const command = replacePrevious ? commands.replace : commands.insert;
-      dispatch(updateView(view.id, command(payload)));
+      dispatch(updatePane(pane.id, command(payload)));
 
       // Set isUserTyping as determined by whether the user has begun or
       // stopped typing.
@@ -46,11 +46,11 @@ export default function handleUserInput ({ action, getState, dispatch }) {
       const newMode = configHandlers[handler];
       dispatch(updateConfig({ mode: newMode }));
       if (config.mode === 'insert' && newMode === 'normal') {
-        const column = _.max([0, view.column - 1]);
-        dispatch(updateView(view.id, { column }));
+        const column = _.max([0, pane.column - 1]);
+        dispatch(updatePane(pane.id, { column }));
       }
     } else if (handler) { // Executing a command.
-      dispatch(updateView(view.id, commands[handler](payload)));
+      dispatch(updatePane(pane.id, commands[handler](payload)));
     } else if (config.mode === 'ex') {
       dispatch(updateCommand({ value }));
     }

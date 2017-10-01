@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 import PropTypes from 'prop-types';
 
-import { viewById } from 'ui/state/selectors';
+import { paneById } from 'ui/state/selectors';
 import css from './styles.css';
 
 const cx = classnames.bind(css);
@@ -26,14 +26,14 @@ Cursor.propTypes = {
 
 export function mapStateToProps (state, props) {
   const { config } = state;
-  const view = viewById(state, props);
+  const pane = paneById(state, props);
   const block = config.mode !== 'insert';
   return {
     block,
-    character: block ? view.lines[view.row][view.column] || ' ' : '',
-    left: view.column * config.charWidth,
+    character: block ? pane.lines[pane.row][pane.column] || ' ' : '',
+    left: pane.column * config.charWidth,
     pulsate: !config.isUserTyping,
-    top: (view.row - view.firstVisibleRow) * config.charHeight,
+    top: (pane.row - pane.firstVisibleRow) * config.charHeight,
   };
 }
 

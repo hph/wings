@@ -3,26 +3,26 @@ import path from 'path';
 import { remote } from 'electron';
 
 import { expandPath } from 'ui/utils';
-import { currentView } from 'ui/state/selectors';
+import { currentPane } from 'ui/state/selectors';
 import {
-  createView,
-  destroyView,
+  createPane,
+  destroyPane,
   toggleTreeView as toggleTreeViewAction,
   updateConfig,
   userInputFocus,
 } from 'ui/state/actions';
 
 export function saveCurrentFile ({ args, state }) {
-  const view = currentView(state);
-  const filename = args.join(' ') || view.filename;
-  const text = `${ view.lines.join('\n') }\n`;
+  const pane = currentPane(state);
+  const filename = args.join(' ') || pane.filename;
+  const text = `${ pane.lines.join('\n') }\n`;
   return fs.writeFile(filename, text);
 }
 
 export function exitCurrentFileOrApp ({ dispatch, state }) {
-  const view = currentView(state);
-  if (view) {
-    dispatch(destroyView(view.id));
+  const pane = currentPane(state);
+  if (pane) {
+    dispatch(destroyPane(pane.id));
   } else {
     remote.getCurrentWindow().close();
   }
@@ -40,14 +40,14 @@ export function openFile ({ args, dispatch }) {
   if (file) {
     return fs.readFile(file, { encoding: 'utf-8' })
       .then(contents => {
-        dispatch(createView(file, contents));
+        dispatch(createPane(file, contents));
       })
       .catch(() => {
-        dispatch(createView(file, ''));
+        dispatch(createPane(file, ''));
       });
   }
 
-  dispatch(createView('unnamed', ''));
+  dispatch(createPane('unnamed', ''));
   return Promise.resolve();
 }
 

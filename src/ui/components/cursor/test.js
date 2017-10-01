@@ -48,9 +48,9 @@ describe('Cursor mapStateToProps', () => {
     isUserTyping: false,
     mode: 'normal',
   };
-  const viewId = 1;
-  const views = [{
-    id: viewId,
+  const paneId = 1;
+  const panes = [{
+    id: paneId,
     column: 0,
     firstVisibleRow: 0,
     lines: ['a'],
@@ -58,28 +58,28 @@ describe('Cursor mapStateToProps', () => {
   }];
 
   it('should determine whether to render a block or a line based on the mode', () => {
-    expect(mapStateToProps({ config, views }, { viewId }).block).toEqual(true);
+    expect(mapStateToProps({ config, panes }, { paneId }).block).toEqual(true);
     expect(mapStateToProps({
       config: {
         ...config,
         mode: 'insert',
       },
-      views,
-    }, { viewId }).block).toEqual(false);
+      panes,
+    }, { paneId }).block).toEqual(false);
   });
 
   it('should show the character under the cursor in normal mode', () => {
-    expect(mapStateToProps({ config, views }, { viewId }).character).toEqual('a');
+    expect(mapStateToProps({ config, panes }, { paneId }).character).toEqual('a');
   });
 
   it('should default to a space if no character is matched in normal mode', () => {
     expect(mapStateToProps({
       config,
-      views: [{
-        ...views[0],
+      panes: [{
+        ...panes[0],
         column: 1,
       }],
-    }, { viewId }).character).toEqual(' ');
+    }, { paneId }).character).toEqual(' ');
   });
 
   it('should return an empty string for the character in insert mode', () => {
@@ -88,47 +88,47 @@ describe('Cursor mapStateToProps', () => {
         ...config,
         mode: 'insert',
       },
-      views,
-    }, { viewId }).character).toEqual('');
+      panes,
+    }, { paneId }).character).toEqual('');
   });
 
   it('should determine a left position based on the column and character width', () => {
-    expect(mapStateToProps({ config, views }, { viewId }).left).toEqual(0);
+    expect(mapStateToProps({ config, panes }, { paneId }).left).toEqual(0);
     expect(mapStateToProps({
       config: {
         ...config,
         charWidth: 7,
       },
-      views: [{
-        ...views[0],
+      panes: [{
+        ...panes[0],
         column: 1,
       }],
-    }, { viewId }).left).toEqual(7);
+    }, { paneId }).left).toEqual(7);
   });
 
   it('should determine a top position based on the row, first visible row and character height', () => {
-    expect(mapStateToProps({ config, views }, { viewId }).top).toEqual(0);
+    expect(mapStateToProps({ config, panes }, { paneId }).top).toEqual(0);
     expect(mapStateToProps({
       config: {
         ...config,
         charheight: 20,
       },
-      views: [{
-        ...views[0],
+      panes: [{
+        ...panes[0],
         row: 1,
         lines: ['a', 'b'],
       }],
-    }, { viewId }).top).toEqual(20);
+    }, { paneId }).top).toEqual(20);
   });
 
   it('should determine whether to pulsate based on isUserTyping', () => {
-    expect(mapStateToProps({ config, views }, { viewId }).pulsate).toEqual(true);
+    expect(mapStateToProps({ config, panes }, { paneId }).pulsate).toEqual(true);
     expect(mapStateToProps({
       config: {
         ...config,
         isUserTyping: true,
       },
-      views,
-    }, { viewId }).pulsate).toEqual(false);
+      panes,
+    }, { paneId }).pulsate).toEqual(false);
   });
 });

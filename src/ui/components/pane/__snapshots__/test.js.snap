@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`View has a left offset as determined by the first visible column 1`] = `
+exports[`Pane has a left offset as determined by the first visible column 1`] = `
 <div
   className="root overlay"
   style={
@@ -21,7 +21,7 @@ exports[`View has a left offset as determined by the first visible column 1`] = 
 </div>
 `;
 
-exports[`View only renders visible lines 1`] = `
+exports[`Pane only renders visible lines 1`] = `
 <div
   className="root overlay"
   style={
@@ -58,7 +58,7 @@ exports[`View only renders visible lines 1`] = `
 </div>
 `;
 
-exports[`View renders LineNumbers when so configured 1`] = `
+exports[`Pane renders LineNumbers when so configured 1`] = `
 <div
   className="root overlay"
   style={
@@ -70,7 +70,7 @@ exports[`View renders LineNumbers when so configured 1`] = `
   <LineNumbers
     className="numbers"
     innerRef={[Function]}
-    viewId={1}
+    paneId={1}
   />
   <div
     className="text"
@@ -84,7 +84,7 @@ exports[`View renders LineNumbers when so configured 1`] = `
 </div>
 `;
 
-exports[`View renders a Cursor in the current view 1`] = `
+exports[`Pane renders a Cursor in the current pane 1`] = `
 <div
   className="root overlay"
   style={
@@ -103,13 +103,13 @@ exports[`View renders a Cursor in the current view 1`] = `
     }
   >
     <Cursor
-      viewId={1}
+      paneId={1}
     />
   </div>
 </div>
 `;
 
-exports[`View renders a border when it is not the first and there are no line numbers 1`] = `
+exports[`Pane renders a border when it is not the first and there are no line numbers 1`] = `
 <div
   className="root overlay"
   style={
@@ -130,7 +130,7 @@ exports[`View renders a border when it is not the first and there are no line nu
 </div>
 `;
 
-exports[`View renders a border when it is not the first and there are no line numbers 2`] = `
+exports[`Pane renders a border when it is not the first and there are no line numbers 2`] = `
 <div
   className="root overlay"
   style={
@@ -142,7 +142,7 @@ exports[`View renders a border when it is not the first and there are no line nu
   <LineNumbers
     className="numbers"
     innerRef={[Function]}
-    viewId={1}
+    paneId={1}
   />
   <div
     className="text"
@@ -156,7 +156,7 @@ exports[`View renders a border when it is not the first and there are no line nu
 </div>
 `;
 
-exports[`View renders empty content 1`] = `
+exports[`Pane renders empty content 1`] = `
 <div
   className="root overlay"
   style={
@@ -177,7 +177,7 @@ exports[`View renders empty content 1`] = `
 </div>
 `;
 
-exports[`View renders lines of code 1`] = `
+exports[`Pane renders lines of code 1`] = `
 <div
   className="root overlay"
   style={
@@ -205,7 +205,7 @@ exports[`View renders lines of code 1`] = `
 </div>
 `;
 
-exports[`View starts rendering lines from the first visible row as configured 1`] = `
+exports[`Pane starts rendering lines from the first visible row as configured 1`] = `
 <div
   className="root overlay"
   style={

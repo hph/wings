@@ -9,12 +9,12 @@ describe('command bar middleware', () => {
   const defaultState = {
     config: {
       isBrowserVisible: true,
-      currentViewId: 1,
+      currentPaneId: 1,
       commands: {
         x: 'saveAndExit',
       },
     },
-    views: [{
+    panes: [{
       id: 1,
       filename: 'foo.txt',
       lines: ['hello!'],

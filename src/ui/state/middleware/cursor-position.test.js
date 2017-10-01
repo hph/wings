@@ -4,8 +4,8 @@ import * as types from '../types';
 describe('cursorPositionMiddleware', () => {
   const runMiddleware = (providedGetState) => {
     const next = jest.fn();
-    const getState = providedGetState || (() => ({ config: {}, views: [] }));
-    const action = { type: types.UPDATE_VIEW };
+    const getState = providedGetState || (() => ({ config: {}, panes: [] }));
+    const action = { type: types.UPDATE_PANE };
     const middleware = cursorPositionMiddleware({ getState });
     return {
       next,
@@ -15,29 +15,29 @@ describe('cursorPositionMiddleware', () => {
     };
   };
 
-  it('ignores non-UPDATE_VIEW actions by calling the next middleware', () => {
+  it('ignores non-UPDATE_PANE actions by calling the next middleware', () => {
     const { next, middleware } = runMiddleware();
-    const action = { type: 'NOT_UPDATE_VIEW' };
+    const action = { type: 'NOT_UPDATE_PANE' };
     middleware(next)(action);
 
     expect(next).toHaveBeenCalledWith(action);
   });
 
-  it('calls the next middleware if there is no current view', () => {
+  it('calls the next middleware if there is no current pane', () => {
     const { next, action, middleware } = runMiddleware();
     middleware(next)(action);
 
     expect(next).toHaveBeenCalledWith(action);
   });
 
-  it('calls the next middleware if the action id does not match the current view', () => {
-    const currentViewId = 1;
+  it('calls the next middleware if the action id does not match the current pane', () => {
+    const currentPaneId = 1;
     const getState = () => ({
-      config: { currentViewId },
-      views: [{ id: currentViewId }],
+      config: { currentPaneId },
+      panes: [{ id: currentPaneId }],
     });
     const action = {
-      type: types.UPDATE_VIEW,
+      type: types.UPDATE_PANE,
       id: 2,
     };
     const { next, middleware } = runMiddleware(getState);
@@ -46,12 +46,12 @@ describe('cursorPositionMiddleware', () => {
     expect(next).toHaveBeenCalledWith(action);
   });
 
-  it('calls the next middleware if the row and column in the action and view are the same', () => {
-    const currentViewId = 1;
+  it('calls the next middleware if the row and column in the action and pane are the same', () => {
+    const currentPaneId = 1;
     const getState = () => ({
-      config: { currentViewId },
-      views: [{
-        id: currentViewId,
+      config: { currentPaneId },
+      panes: [{
+        id: currentPaneId,
         column: 0,
         row: 0,
         // This ensures that the test fails if next is not called before
@@ -61,8 +61,8 @@ describe('cursorPositionMiddleware', () => {
     });
     const next = jest.fn();
     const action = {
-      type: types.UPDATE_VIEW,
-      id: currentViewId,
+      type: types.UPDATE_PANE,
+      id: currentPaneId,
       column: 0,
       row: 0,
     };
@@ -72,16 +72,16 @@ describe('cursorPositionMiddleware', () => {
     expect(next).toHaveBeenCalledWith(action);
   });
 
-  it('should update the firstVisibleRow if it is smaller in the action than the view', () => {
-    const currentViewId = 1;
+  it('should update the firstVisibleRow if it is smaller in the action than the pane', () => {
+    const currentPaneId = 1;
     const getState = () => ({
       config: {
-        currentViewId,
+        currentPaneId,
         isTitleBarVisible: false,
         charHeight: 20,
       },
-      views: [{
-        id: currentViewId,
+      panes: [{
+        id: currentPaneId,
         column: 0,
         row: 10,
         firstVisibleRow: 10,
@@ -90,8 +90,8 @@ describe('cursorPositionMiddleware', () => {
     });
     const next = jest.fn();
     const action = {
-      type: types.UPDATE_VIEW,
-      id: currentViewId,
+      type: types.UPDATE_PANE,
+      id: currentPaneId,
       column: 0,
       row: 0,
     };
@@ -105,15 +105,15 @@ describe('cursorPositionMiddleware', () => {
   });
 
   it('should update the firstVisibleRow if the action row is larger than the last visible row', () => {
-    const currentViewId = 1;
+    const currentPaneId = 1;
     const getState = () => ({
       config: {
-        currentViewId,
+        currentPaneId,
         isTitleBarVisible: false,
         charHeight: 20,
       },
-      views: [{
-        id: currentViewId,
+      panes: [{
+        id: currentPaneId,
         column: 0,
         row: 10,
         firstVisibleRow: 0,
@@ -122,8 +122,8 @@ describe('cursorPositionMiddleware', () => {
     });
     const next = jest.fn();
     const action = {
-      type: types.UPDATE_VIEW,
-      id: currentViewId,
+      type: types.UPDATE_PANE,
+      id: currentPaneId,
       column: 0,
       row: 100,
       firstVisibleRow: 10,
@@ -138,18 +138,18 @@ describe('cursorPositionMiddleware', () => {
   });
 
   it('should calculate the height differently if the titlebar is visible', () => {
-    const currentViewId = 1;
+    const currentPaneId = 1;
     const getState = () => ({
       config: {
-        currentViewId,
+        currentPaneId,
         isTitleBarVisible: true,
         charHeight: 20,
         theme: {
           titleBarHeight: 23,
         },
       },
-      views: [{
-        id: currentViewId,
+      panes: [{
+        id: currentPaneId,
         column: 0,
         row: 10,
         firstVisibleRow: 0,
@@ -158,8 +158,8 @@ describe('cursorPositionMiddleware', () => {
     });
     const next = jest.fn();
     const action = {
-      type: types.UPDATE_VIEW,
-      id: currentViewId,
+      type: types.UPDATE_PANE,
+      id: currentPaneId,
       column: 0,
       row: 100,
       firstVisibleRow: 10,
@@ -173,15 +173,15 @@ describe('cursorPositionMiddleware', () => {
     });
   });
 
-  it('should update the first visible column if it is smaller in the action than the view', () => {
-    const currentViewId = 1;
+  it('should update the first visible column if it is smaller in the action than the pane', () => {
+    const currentPaneId = 1;
     const getState = () => ({
       config: {
-        currentViewId,
+        currentPaneId,
         charWidth: 5,
       },
-      views: [{
-        id: currentViewId,
+      panes: [{
+        id: currentPaneId,
         column: 10,
         row: 0,
         firstVisibleColumn: 10,
@@ -190,8 +190,8 @@ describe('cursorPositionMiddleware', () => {
     });
     const next = jest.fn();
     const action = {
-      type: types.UPDATE_VIEW,
-      id: currentViewId,
+      type: types.UPDATE_PANE,
+      id: currentPaneId,
       column: 0,
       row: 100,
     };
@@ -205,14 +205,14 @@ describe('cursorPositionMiddleware', () => {
   });
 
   it('should update the first visible column if it is larger in the action than the last visible column', () => {
-    const currentViewId = 1;
+    const currentPaneId = 1;
     const getState = () => ({
       config: {
-        currentViewId,
+        currentPaneId,
         charWidth: 5,
       },
-      views: [{
-        id: currentViewId,
+      panes: [{
+        id: currentPaneId,
         column: 10,
         row: 0,
         firstVisibleColumn: 0,
@@ -221,8 +221,8 @@ describe('cursorPositionMiddleware', () => {
     });
     const next = jest.fn();
     const action = {
-      type: types.UPDATE_VIEW,
-      id: currentViewId,
+      type: types.UPDATE_PANE,
+      id: currentPaneId,
       column: 200,
       row: 100,
     };

@@ -75,14 +75,14 @@ describe('LineNumbers', () => {
 });
 
 describe('LineNumbers mapStateToProps', () => {
-  const viewId = 1;
+  const paneId = 1;
   const innerRef = jest.fn();
   const config = {
     charHeight: 20,
     relativeLineNumbers: false,
   };
-  const views = [{
-    id: viewId,
+  const panes = [{
+    id: paneId,
     column: 0,
     row: 0,
     lines: ['a', 'b', 'c'],
@@ -91,13 +91,13 @@ describe('LineNumbers mapStateToProps', () => {
     firstVisibleRow: 1,
   }];
   const props = {
-    viewId,
+    paneId,
     innerRef,
     className: 'some-class',
   };
 
   it('should pass on, rename or compute passed state & props', () => {
-    expect(mapStateToProps({ config, views }, props)).toEqual({
+    expect(mapStateToProps({ config, panes }, props)).toEqual({
       innerRef,
       className: 'some-class',
       currentLine: 0,

@@ -16,9 +16,9 @@ describe('handleUserInput', () => {
           Escape: 'exitMode',
         },
       },
-      currentViewId: 1,
+      currentPaneId: 1,
     },
-    views: [{
+    panes: [{
       id: 1,
       column: 10,
       row: 0,
@@ -44,7 +44,7 @@ describe('handleUserInput', () => {
     });
   });
 
-  it('updates the view with entered characters and specifies that the user started typing', () => {
+  it('updates the pane with entered characters and specifies that the user started typing', () => {
     const { dispatch } = callFunction({ value: 'a' }, {
       ...defaultState,
       config: {
@@ -54,7 +54,7 @@ describe('handleUserInput', () => {
     });
 
     expect(dispatch).toHaveBeenCalledWith({
-      type: types.UPDATE_VIEW,
+      type: types.UPDATE_PANE,
       column: 11,
       id: 1,
       lines: ['hello, worald!', 'all good?'],
@@ -90,7 +90,7 @@ describe('handleUserInput', () => {
         ...defaultState.config,
         mode: 'insert',
       },
-      views: [{
+      panes: [{
         id: 1,
         lines: ['´'],
         row: 0,
@@ -99,13 +99,13 @@ describe('handleUserInput', () => {
     });
 
     expect(dispatch).toHaveBeenCalledWith({
-      type: types.UPDATE_VIEW,
+      type: types.UPDATE_PANE,
       id: 1,
       lines: ['á'],
     });
   });
 
-  it('should update the column in the view when switching from insert to normal mode', () => {
+  it('should update the column in the pane when switching from insert to normal mode', () => {
     const { dispatch } = callFunction({ value: 'Escape' }, {
       ...defaultState,
       config: {
@@ -114,17 +114,17 @@ describe('handleUserInput', () => {
       },
     });
     expect(dispatch).toHaveBeenCalledWith({
-      type: types.UPDATE_VIEW,
+      type: types.UPDATE_PANE,
       id: 1,
       column: 9,
     });
   });
 
-  it('executes view commands with the provided payload', () => {
+  it('executes pane commands with the provided payload', () => {
     const { dispatch } = callFunction({ value: 'A' });
 
     expect(dispatch).toHaveBeenCalledWith({
-      type: types.UPDATE_VIEW,
+      type: types.UPDATE_PANE,
       id: 1,
       column: 13,
       prevMaxColumn: 0,
@@ -138,7 +138,7 @@ describe('handleUserInput', () => {
       mode: 'insert',
     });
     expect(dispatch).toHaveBeenCalledWith({
-      type: types.UPDATE_VIEW,
+      type: types.UPDATE_PANE,
       id: 1,
       column: 0,
       prevMaxColumn: 0,

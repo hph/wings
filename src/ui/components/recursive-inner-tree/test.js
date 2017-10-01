@@ -14,7 +14,7 @@ jest.mock('../../utils', () => ({
 describe('RecursiveInnerTree', () => {
   const defaultProps = {
     path: '/',
-    createView: jest.fn(),
+    createPane: jest.fn(),
   };
 
   it('initially renders an empty container and starts loading content', () => {
@@ -97,18 +97,18 @@ describe('RecursiveInnerTree', () => {
     // eslint-disable-next-line global-require
     const { readFile } = require('fs-extra');
 
-    const createView = jest.fn();
+    const createPane = jest.fn();
     const recursiveInnerTree = new RecursiveInnerTree({
       ...defaultProps,
-      createView,
+      createPane,
     });
     const stopPropagation = jest.fn();
     return recursiveInnerTree.openFile('/file.txt')({ stopPropagation })
       .then(() => {
         expect(stopPropagation).toHaveBeenCalled();
         expect(readFile).toHaveBeenCalled();
-        expect(createView).toHaveBeenCalled();
-        expect(createView).toHaveBeenCalledWith('/file.txt', 'text');
+        expect(createPane).toHaveBeenCalled();
+        expect(createPane).toHaveBeenCalledWith('/file.txt', 'text');
       });
   });
 });

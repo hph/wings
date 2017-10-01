@@ -1,27 +1,27 @@
 import { types } from 'ui/state';
 
-let nextViewId = 0;
-export function createView (filename, text) {
-  nextViewId += 1;
+let nextPaneId = 0;
+export function createPane (filename, text) {
+  nextPaneId += 1;
   return {
-    type: types.CREATE_VIEW,
-    id: nextViewId,
+    type: types.CREATE_PANE,
+    id: nextPaneId,
     filename,
     text,
   };
 }
 
-export function updateView (id, options) {
+export function updatePane (id, options) {
   return {
-    type: types.UPDATE_VIEW,
+    type: types.UPDATE_PANE,
     id,
     ...options,
   };
 }
 
-export function destroyView (id) {
+export function destroyPane (id) {
   return {
-    type: types.DESTROY_VIEW,
+    type: types.DESTROY_PANE,
     id,
   };
 }

@@ -9,7 +9,7 @@ jest.mock('../command-bar', () => 'CommandBar');
 jest.mock('../logo', () => 'Logo');
 jest.mock('../title-bar', () => 'TitleBar');
 jest.mock('../tree-view', () => 'TreeView');
-jest.mock('../view', () => 'View');
+jest.mock('../pane', () => 'Pane');
 
 const defaultProps = {
   isBrowserVisible: false,
@@ -21,7 +21,7 @@ const defaultProps = {
     titleBarHeight: 23,
   },
   updateConfig: () => {},
-  views: [],
+  panes: [],
 };
 
 describe('App', () => {
@@ -61,15 +61,15 @@ describe('App', () => {
     });
   });
 
-  it('renders a View when so configured', () => {
+  it('renders a Pane when so configured', () => {
     createSnapshot({
-      views: [{ id: 1 }],
+      panes: [{ id: 1 }],
     });
   });
 
-  it('renders multiple instances of View when so configured', () => {
+  it('renders multiple instances of Pane when so configured', () => {
     createSnapshot({
-      views: [{ id: 1 }, { id: 2 }],
+      panes: [{ id: 1 }, { id: 2 }],
     });
   });
 
@@ -79,7 +79,7 @@ describe('App', () => {
       isTitleBarVisible: true,
       isTreeViewVisible: true,
       isCommandBarVisible: true,
-      views: [{ id: 1 }, { id: 2 }],
+      panes: [{ id: 1 }, { id: 2 }],
     });
   });
 
@@ -262,7 +262,7 @@ describe('App mapStateToProps', () => {
         mode: 'normal',
         theme: {},
       },
-      views: [],
+      panes: [],
     })).toEqual({
       charWidth: 10,
       isBrowserVisible: true,
@@ -270,7 +270,7 @@ describe('App mapStateToProps', () => {
       isTitleBarVisible: true,
       isCommandBarVisible: false,
       theme: {},
-      views: [],
+      panes: [],
     });
   });
 });

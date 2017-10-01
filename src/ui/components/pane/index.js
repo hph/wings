@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import { Cursor, LineNumbers } from 'ui/components';
-import { updateConfig, updateView, userInputFocus } from 'ui/state/actions';
-import { viewById } from 'ui/state/selectors';
+import { updateConfig, updatePane, userInputFocus } from 'ui/state/actions';
+import { paneById } from 'ui/state/selectors';
 import css from './styles.css';
 
 const cx = classnames.bind(css);
 
-export class View extends Component {
+export class Pane extends Component {
   componentDidMount () {
     window.addEventListener('resize', this.onResize);
     this.onResize();
@@ -29,13 +29,13 @@ export class View extends Component {
 
   onTextClick = (event) => {
     const { clientX, clientY, currentTarget, target } = event;
-    const { charWidth, charHeight, firstVisibleRow, lines, viewId, mode } = this.props;
+    const { charWidth, charHeight, firstVisibleRow, lines, paneId, mode } = this.props;
 
     const clickX = _.floor(_.max([0, clientX - currentTarget.offsetLeft]) / charWidth);
     const clickY = _.floor(_.max([0, clientY - currentTarget.offsetTop]) / charHeight);
 
     // If the targets are the same then it means that the user
-    // clicked below the last line in the view.
+    // clicked below the last line in the pane.
     const row = currentTarget === target
       ? _.max([0, lines.length - 1])
       : clickY + firstVisibleRow;
@@ -46,20 +46,20 @@ export class View extends Component {
       clickX,
     ]);
 
-    this.props.updateView(viewId, { column, row });
+    this.props.updatePane(paneId, { column, row });
 
     if (this.props.isBrowserVisible) {
       this.props.userInputFocus(true);
     }
 
-    if (this.props.currentViewId !== viewId) {
-      this.props.updateConfig({ currentViewId: viewId });
+    if (this.props.currentPaneId !== paneId) {
+      this.props.updateConfig({ currentPaneId: paneId });
     }
   };
 
   onResize = _.throttle(() => {
     const numbersElWidth = this.numbersEl ? this.numbersEl.offsetWidth : 0;
-    this.props.updateView(this.props.viewId, {
+    this.props.updatePane(this.props.paneId, {
       width: this.wrapperEl.offsetWidth - numbersElWidth,
       height: this.textEl.offsetHeight,
     });
@@ -96,7 +96,7 @@ export class View extends Component {
           <LineNumbers
             className={css.numbers}
             innerRef={this.numbersRef}
-            viewId={this.props.viewId}
+            paneId={this.props.paneId}
           />
         )}
         <div
@@ -106,8 +106,8 @@ export class View extends Component {
           style={{ left: textLeft }}
         >
           {_.map(lines, (line, index) => <div key={index}>{line}</div>)}
-          {this.props.currentViewId === this.props.viewId && (
-            <Cursor viewId={this.props.viewId} />
+          {this.props.currentPaneId === this.props.paneId && (
+            <Cursor paneId={this.props.paneId} />
           )}
         </div>
       </div>
@@ -115,10 +115,10 @@ export class View extends Component {
   }
 }
 
-View.propTypes = {
+Pane.propTypes = {
   charHeight: PropTypes.number.isRequired,
   charWidth: PropTypes.number.isRequired,
-  currentViewId: PropTypes.number.isRequired,
+  currentPaneId: PropTypes.number.isRequired,
   firstVisibleColumn: PropTypes.number.isRequired,
   firstVisibleRow: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
@@ -129,28 +129,28 @@ View.propTypes = {
   showLineNumbers: PropTypes.bool.isRequired,
   splits: PropTypes.number.isRequired,
   updateConfig: PropTypes.func.isRequired,
-  updateView: PropTypes.func.isRequired,
+  updatePane: PropTypes.func.isRequired,
   userInputFocus: PropTypes.func.isRequired,
-  viewId: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
+  paneId: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
 };
 
 export function mapStateToProps (state, props) {
-  const view = viewById(state, props);
+  const pane = paneById(state, props);
   return {
     charHeight: state.config.charHeight,
     charWidth: state.config.charWidth,
-    column: view.column,
-    currentViewId: state.config.currentViewId,
-    firstVisibleColumn: view.firstVisibleColumn,
-    firstVisibleRow: view.firstVisibleRow,
-    height: view.height,
+    column: pane.column,
+    currentPaneId: state.config.currentPaneId,
+    firstVisibleColumn: pane.firstVisibleColumn,
+    firstVisibleRow: pane.firstVisibleRow,
+    height: pane.height,
     isBrowserVisible: state.config.isBrowserVisible,
-    lines: view.lines,
+    lines: pane.lines,
     mode: state.config.mode,
     showLineNumbers: state.config.showLineNumbers,
-    splits: state.views.length,
-    viewId: props.viewId,
+    splits: state.panes.length,
+    paneId: props.paneId,
   };
 }
 
-export default connect(mapStateToProps, { updateConfig, updateView, userInputFocus })(View);
+export default connect(mapStateToProps, { updateConfig, updatePane, userInputFocus })(Pane);

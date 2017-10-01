@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 import _ from 'lodash';
 
-import { viewById } from 'ui/state/selectors';
+import { paneById } from 'ui/state/selectors';
 import css from './styles.css';
 
 const cx = classnames.bind(css);
@@ -45,16 +45,16 @@ LineNumbers.propTypes = {
 };
 
 export function mapStateToProps (state, props) {
-  const view = viewById(state, props);
+  const pane = paneById(state, props);
   return {
     className: props.className,
-    currentLine: view.row,
-    firstVisibleChar: view.firstVisibleColumn,
-    firstVisibleLine: view.firstVisibleRow,
+    currentLine: pane.row,
+    firstVisibleChar: pane.firstVisibleColumn,
+    firstVisibleLine: pane.firstVisibleRow,
     innerRef: props.innerRef,
     relative: state.config.relativeLineNumbers,
-    totalLines: view.lines.length,
-    visibleLines: _.ceil(view.height / state.config.charHeight),
+    totalLines: pane.lines.length,
+    visibleLines: _.ceil(pane.height / state.config.charHeight),
   };
 }
 

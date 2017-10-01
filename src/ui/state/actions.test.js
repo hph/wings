@@ -1,43 +1,43 @@
 import * as actions from './actions';
 import * as types from './types';
 
-describe('createView', () => {
+describe('createPane', () => {
   const filename = 'file.txt';
   const text = 'hello, world!';
 
-  it('should create a new view from the provided filename and text', () => {
-    expect(actions.createView(filename, text)).toEqual({
+  it('should create a new pane from the provided filename and text', () => {
+    expect(actions.createPane(filename, text)).toEqual({
       filename,
       text,
       id: 1,
-      type: types.CREATE_VIEW,
+      type: types.CREATE_PANE,
     });
   });
 
-  it('should generate a distinct id for each view created', () => {
-    expect(actions.createView(filename, text)).toEqual({
+  it('should generate a distinct id for each pane created', () => {
+    expect(actions.createPane(filename, text)).toEqual({
       filename,
       text,
       id: 2,
-      type: types.CREATE_VIEW,
+      type: types.CREATE_PANE,
     });
   });
 });
 
-describe('updateView', () => {
+describe('updatePane', () => {
   it('should return the passed object items with the appropriate action type', () => {
-    expect(actions.updateView(1, { filename: 'file.txt' })).toEqual({
-      type: types.UPDATE_VIEW,
+    expect(actions.updatePane(1, { filename: 'file.txt' })).toEqual({
+      type: types.UPDATE_PANE,
       id: 1,
       filename: 'file.txt',
     });
   });
 });
 
-describe('destroyView', () => {
+describe('destroyPane', () => {
   it('should return the provided id and the appropriate action type', () => {
-    expect(actions.destroyView(1)).toEqual({
-      type: types.DESTROY_VIEW,
+    expect(actions.destroyPane(1)).toEqual({
+      type: types.DESTROY_PANE,
       id: 1,
     });
   });

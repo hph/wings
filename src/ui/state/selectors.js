@@ -1,16 +1,16 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
 
-export const currentView = createSelector(
-  state => state.views,
-  state => state.config.currentViewId,
-  (views, currentViewId) => currentViewId
-    ? _.find(views, ({ id }) => id === currentViewId)
-    : views[0],
+export const currentPane = createSelector(
+  state => state.panes,
+  state => state.config.currentPaneId,
+  (panes, currentPaneId) => currentPaneId
+    ? _.find(panes, ({ id }) => id === currentPaneId)
+    : panes[0],
 );
 
-export const viewById = createSelector(
-  state => state.views,
-  (state, props) => props.viewId,
-  (views, viewId) => _.find(views, ({ id }) => id === viewId),
+export const paneById = createSelector(
+  state => state.panes,
+  (state, props) => props.paneId,
+  (panes, paneId) => _.find(panes, ({ id }) => id === paneId),
 );

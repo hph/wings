@@ -10,7 +10,7 @@ import {
   Logo,
   TitleBar,
   TreeView,
-  View,
+  Pane,
 } from 'ui/components';
 import { updateConfig } from 'ui/state/actions';
 import css from './styles.css';
@@ -70,11 +70,11 @@ export class App extends Component {
       <div className={css.root}>
         {this.props.isTitleBarVisible && <TitleBar label="Wings" />}
         {this.props.isCommandBarVisible && <CommandBar />}
-        <div className={css.views}>
+        <div className={css.panes}>
           {this.props.isTreeViewVisible && <TreeView />}
-          {_.isEmpty(this.props.views) ? <Logo /> : (
-            _.map(this.props.views, ({ id }, index) => (
-              <View viewId={id} key={id} isFirst={index === 0} />
+          {_.isEmpty(this.props.panes) ? <Logo /> : (
+            _.map(this.props.panes, ({ id }, index) => (
+              <Pane paneId={id} key={id} isFirst={index === 0} />
             ))
           )}
           {this.props.isBrowserVisible && <Browser />}
@@ -92,7 +92,7 @@ App.propTypes = {
   isTreeViewVisible: PropTypes.bool.isRequired,
   theme: PropTypes.object.isRequired,
   updateConfig: PropTypes.func.isRequired,
-  views: PropTypes.array.isRequired,
+  panes: PropTypes.array.isRequired,
 };
 
 export function mapStateToProps (state) {
@@ -103,7 +103,7 @@ export function mapStateToProps (state) {
     isTitleBarVisible: state.config.isTitleBarVisible,
     isTreeViewVisible: state.config.isTreeViewVisible,
     theme: state.config.theme,
-    views: state.views,
+    panes: state.panes,
   };
 }
 

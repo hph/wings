@@ -1,28 +1,28 @@
-import { currentView } from './selectors';
+import { currentPane } from './selectors';
 
-describe('currentView', () => {
-  const views = [{ id: 1 }, { id: 2 }];
+describe('currentPane', () => {
+  const panes = [{ id: 1 }, { id: 2 }];
 
-  it('should return the current view', () => {
-    expect(currentView({
-      views,
+  it('should return the current pane', () => {
+    expect(currentPane({
+      panes,
       config: {
-        currentViewId: 1,
+        currentPaneId: 1,
       },
-    })).toEqual(views[0]);
+    })).toEqual(panes[0]);
 
-    expect(currentView({
-      views,
+    expect(currentPane({
+      panes,
       config: {
-        currentViewId: 2,
+        currentPaneId: 2,
       },
-    })).toEqual(views[1]);
+    })).toEqual(panes[1]);
   });
 
-  it('should return the first view if there is no current view defined', () => {
-    expect(currentView({
-      views,
+  it('should return the first pane if there is no current pane defined', () => {
+    expect(currentPane({
+      panes,
       config: {},
-    })).toEqual(views[0]);
+    })).toEqual(panes[0]);
   });
 });

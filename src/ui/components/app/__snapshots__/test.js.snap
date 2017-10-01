@@ -9,16 +9,16 @@ exports[`App can render many things at once when so configured 1`] = `
   />
   <CommandBar />
   <div
-    className="views"
+    className="panes"
   >
     <TreeView />
-    <View
+    <Pane
       isFirst={true}
-      viewId={1}
+      paneId={1}
     />
-    <View
+    <Pane
       isFirst={false}
-      viewId={2}
+      paneId={2}
     />
     <Browser />
   </div>
@@ -30,7 +30,7 @@ exports[`App defaults to rendering a logo in an empty state 1`] = `
   className="root"
 >
   <div
-    className="views"
+    className="panes"
   >
     <Logo />
   </div>
@@ -42,7 +42,7 @@ exports[`App renders a Browser when so configured 1`] = `
   className="root"
 >
   <div
-    className="views"
+    className="panes"
   >
     <Logo />
     <Browser />
@@ -56,9 +56,24 @@ exports[`App renders a CommandBar when so configured 1`] = `
 >
   <CommandBar />
   <div
-    className="views"
+    className="panes"
   >
     <Logo />
+  </div>
+</div>
+`;
+
+exports[`App renders a Pane when so configured 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="panes"
+  >
+    <Pane
+      isFirst={true}
+      paneId={1}
+    />
   </div>
 </div>
 `;
@@ -71,7 +86,7 @@ exports[`App renders a TitleBar when so configured 1`] = `
     label="Wings"
   />
   <div
-    className="views"
+    className="panes"
   >
     <Logo />
   </div>
@@ -83,7 +98,7 @@ exports[`App renders a TreeView when so configured 1`] = `
   className="root"
 >
   <div
-    className="views"
+    className="panes"
   >
     <TreeView />
     <Logo />
@@ -91,35 +106,20 @@ exports[`App renders a TreeView when so configured 1`] = `
 </div>
 `;
 
-exports[`App renders a View when so configured 1`] = `
+exports[`App renders multiple instances of Pane when so configured 1`] = `
 <div
   className="root"
 >
   <div
-    className="views"
+    className="panes"
   >
-    <View
+    <Pane
       isFirst={true}
-      viewId={1}
+      paneId={1}
     />
-  </div>
-</div>
-`;
-
-exports[`App renders multiple instances of View when so configured 1`] = `
-<div
-  className="root"
->
-  <div
-    className="views"
-  >
-    <View
-      isFirst={true}
-      viewId={1}
-    />
-    <View
+    <Pane
       isFirst={false}
-      viewId={2}
+      paneId={2}
     />
   </div>
 </div>

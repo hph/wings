@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { join as joinPaths } from 'path';
 import fs from 'fs-extra';
 
-import { createView } from 'ui/state/actions';
+import { createPane } from 'ui/state/actions';
 import { listContents } from 'ui/utils';
 import css from './styles.css';
 
@@ -57,7 +57,7 @@ export class RecursiveInnerTree extends Component {
     event.stopPropagation();
     const fileName = joinPaths(this.props.path, file);
     return fs.readFile(fileName, { encoding: 'utf-8' }).then(text => {
-      this.props.createView(fileName, text);
+      this.props.createPane(fileName, text);
     });
   };
 
@@ -78,7 +78,7 @@ export class RecursiveInnerTree extends Component {
             {this.state[directory] && (
               <RecursiveInnerTree
                 path={joinPaths(this.props.path, directory)}
-                createView={this.props.createView}
+                createPane={this.props.createPane}
               />
             )}
           </div>
@@ -96,10 +96,10 @@ export class RecursiveInnerTree extends Component {
 }
 
 RecursiveInnerTree.propTypes = {
-  createView: PropTypes.func.isRequired,
+  createPane: PropTypes.func.isRequired,
   directories: PropTypes.array,
   files: PropTypes.array,
   path: PropTypes.string.isRequired,
 };
 
-export default connect(null, { createView })(RecursiveInnerTree);
+export default connect(null, { createPane })(RecursiveInnerTree);

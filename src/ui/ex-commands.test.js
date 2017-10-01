@@ -16,8 +16,8 @@ jest.mock('electron', () => {
 });
 
 jest.mock('./state/actions', () => ({
-  destroyView: jest.fn(),
-  createView: jest.fn(),
+  destroyPane: jest.fn(),
+  createPane: jest.fn(),
   updateConfig: jest.fn(),
   toggleTreeView: jest.fn(),
   userInputFocus: jest.fn(),
@@ -27,9 +27,9 @@ describe('ex-commands', () => {
   const defaultState = {
     config: {
       isBrowserVisible: true,
-      currentViewId: 1,
+      currentPaneId: 1,
     },
-    views: [{
+    panes: [{
       id: 1,
       filename: 'foo.txt',
       lines: ['hello!'],
@@ -38,14 +38,14 @@ describe('ex-commands', () => {
   };
 
   describe('saveCurrentFile', () => {
-    it('should save the current view', () => {
+    it('should save the current pane', () => {
       const { writeFile } = require('fs-extra'); // eslint-disable-line global-require
       exCommands.saveCurrentFile({ state: defaultState, args: [] });
 
       expect(writeFile).toHaveBeenCalledWith('foo.txt', 'hello!\n');
     });
 
-    it('should save the current view to a new file', () => {
+    it('should save the current pane to a new file', () => {
       const { writeFile } = require('fs-extra'); // eslint-disable-line global-require
       exCommands.saveCurrentFile({ state: defaultState, args: ['new-foo.txt'] });
 
@@ -54,28 +54,28 @@ describe('ex-commands', () => {
   });
 
   describe('exitCurrentFileOrApp', () => {
-    it('should destroy the current view if there is one', () => {
-      const { destroyView } = require('./state/actions'); // eslint-disable-line global-require
+    it('should destroy the current pane if there is one', () => {
+      const { destroyPane } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       exCommands.exitCurrentFileOrApp({ dispatch, state: defaultState });
 
-      expect(destroyView).toHaveBeenCalledWith(1);
+      expect(destroyPane).toHaveBeenCalledWith(1);
       expect(dispatch).toHaveBeenCalled();
     });
 
-    it('should close the app if there is no view', () => {
+    it('should close the app if there is no pane', () => {
       const { remote } = require('electron'); // eslint-disable-line global-require
-      const { destroyView } = require('./state/actions'); // eslint-disable-line global-require
+      const { destroyPane } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       exCommands.exitCurrentFileOrApp({
         dispatch,
         state: {
           ...defaultState,
-          views: [],
+          panes: [],
         },
       });
 
-      expect(destroyView).not.toHaveBeenCalledWith(0);
+      expect(destroyPane).not.toHaveBeenCalledWith(0);
       expect(dispatch).not.toHaveBeenCalled();
       expect(remote.getCurrentWindow).toHaveBeenCalled();
       expect(remote.close).toHaveBeenCalled();
@@ -102,21 +102,21 @@ describe('ex-commands', () => {
   describe('openFile', () => {
     it('should open the provided file', () => {
       const { readFile } = require('fs-extra'); // eslint-disable-line global-require
-      const { createView } = require('./state/actions'); // eslint-disable-line global-require
+      const { createPane } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       return exCommands.openFile({
         dispatch,
         args: ['myfile.txt'],
       }).then(() => {
         expect(readFile).toHaveBeenCalledWith('myfile.txt', { encoding: 'utf-8' });
-        expect(createView).toHaveBeenCalled();
+        expect(createPane).toHaveBeenCalled();
         expect(dispatch).toHaveBeenCalled();
       });
     });
 
     it('should also open new files', () => {
       const { readFile } = require('fs-extra'); // eslint-disable-line global-require
-      const { createView } = require('./state/actions'); // eslint-disable-line global-require
+      const { createPane } = require('./state/actions'); // eslint-disable-line global-require
       // Emulate an error being thrown by fs, the effect is the same.
       const dispatch = jest.fn(() => { throw new Error(); });
       return exCommands.openFile({
@@ -124,19 +124,19 @@ describe('ex-commands', () => {
         args: ['myfile.txt'],
       }).catch(() => {
         expect(readFile).toHaveBeenCalledWith('myfile.txt', { encoding: 'utf-8' });
-        expect(createView).toHaveBeenCalled();
+        expect(createPane).toHaveBeenCalled();
         expect(dispatch).toHaveBeenCalled();
       });
     });
 
     it('should open a new unnamed file if no filename is provided', () => {
-      const { createView } = require('./state/actions'); // eslint-disable-line global-require
+      const { createPane } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       return exCommands.openFile({
         dispatch,
         args: [''],
       }).then(() => {
-        expect(createView).toHaveBeenCalledWith('unnamed', '');
+        expect(createPane).toHaveBeenCalledWith('unnamed', '');
         expect(dispatch).toHaveBeenCalled();
       });
     });
@@ -190,7 +190,7 @@ describe('ex-commands', () => {
   });
 
   describe('toggleTreeView', () => {
-    it('should dispatch an action to toggle the tree view visibility', () => {
+    it('should dispatch an action to toggle the treeview visibility', () => {
       const { toggleTreeView } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       exCommands.toggleTreeView({ dispatch });

@@ -5,9 +5,9 @@ import fixedKeys from 'ui/fixed-keys';
 import * as types from 'ui/state/types';
 
 const defaults = {
-  config: {},
-  views: [],
   command: '',
+  config: {},
+  panes: [],
 };
 
 export function configReducer (state = defaults.config, action) {
@@ -31,10 +31,10 @@ export function configReducer (state = defaults.config, action) {
   }
 }
 
-export function viewsReducer (state = defaults.views, action) {
+export function panesReducer (state = defaults.panes, action) {
   const { type, ...values } = action;
   switch (type) {
-    case types.CREATE_VIEW: {
+    case types.CREATE_PANE: {
       const lines = (action.text || '').split('\n').slice(0, -1);
       return [...state, _.defaults({ ..._.omit(values, ['text']) }, {
         lines: _.isEmpty(lines) ? [''] : lines,
@@ -47,16 +47,16 @@ export function viewsReducer (state = defaults.views, action) {
       })];
     }
 
-    case types.UPDATE_VIEW: {
-      return _.map(state, (view) => {
-        if (view.id === action.id) {
-          return _.defaults({ ...values }, view);
+    case types.UPDATE_PANE: {
+      return _.map(state, (pane) => {
+        if (pane.id === action.id) {
+          return _.defaults({ ...values }, pane);
         }
-        return view;
+        return pane;
       });
     }
 
-    case types.DESTROY_VIEW: {
+    case types.DESTROY_PANE: {
       return _.reject(state, ({ id }) => id === values.id);
     }
 
@@ -87,6 +87,6 @@ export function commandReducer (state = defaults.command, action) {
 
 export default combineReducers({
   config: configReducer,
-  views: viewsReducer,
+  panes: panesReducer,
   command: commandReducer,
 });

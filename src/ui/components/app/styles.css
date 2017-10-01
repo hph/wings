@@ -18,7 +18,7 @@ body {
   height: 100vh;
 }
 
-.views {
+.panes {
   display: flex;
   height: var(--viewport-height);
 }

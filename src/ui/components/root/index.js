@@ -16,7 +16,7 @@ export default class Root extends Component {
     const { filename, text, config } = this.props.initialState;
     const store = createStore({ config });
     if (filename) {
-      store.dispatch(actions.createView(filename, text));
+      store.dispatch(actions.createPane(filename, text));
     }
     return (
       <Provider store={store}>
