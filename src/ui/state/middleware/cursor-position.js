@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { currentPane } from 'ui/state/selectors';
+import { charSizes, currentPane } from 'ui/state/selectors';
 import * as types from 'ui/state/types';
 
 export default function cursorPositionMiddleware ({ getState }) {
@@ -29,7 +29,8 @@ export default function cursorPositionMiddleware ({ getState }) {
     const height = config.isTitleBarVisible
       ? pane.height - parseInt(config.theme.titleBarHeight, 10)
       : pane.height;
-    const numLines = _.floor(height / config.charHeight) - 1;
+    const { charHeight, charWidth } = charSizes(state);
+    const numLines = _.floor(height / charHeight) - 1;
     const lastVisibleRow = pane.firstVisibleRow + numLines;
     if (action.row < pane.firstVisibleRow) {
       actionCopy.firstVisibleRow = action.row;
@@ -37,7 +38,7 @@ export default function cursorPositionMiddleware ({ getState }) {
       actionCopy.firstVisibleRow = pane.firstVisibleRow + action.row - lastVisibleRow;
     }
 
-    const numChars = _.floor(pane.width / config.charWidth) - 1;
+    const numChars = _.floor(pane.width / charWidth) - 1;
     const lastVisibleColumn = pane.firstVisibleColumn + numChars;
     if (action.column < pane.firstVisibleColumn) {
       actionCopy.firstVisibleColumn = action.column;

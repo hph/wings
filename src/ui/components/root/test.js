@@ -1,86 +1,63 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { Provider } from 'react-redux';
+import { ipcRenderer, webFrame } from 'electron';
 
+import { configureStore } from 'ui/state';
 import Root from './index';
 
 jest.mock('electron', () => ({
   ipcRenderer: {
     send: jest.fn(),
   },
+  webFrame: {
+    setVisualZoomLevelLimits: jest.fn(),
+  },
 }));
-jest.mock('../app', () => 'App');
-jest.mock('../../state/store', () => (jest.fn(() => ({
-  subscribe: () => {},
-  getState: () => {},
-  dispatch: () => {},
-}))));
+
+jest.mock('react-redux/lib/components/Provider', () => 'Provider');
+
+jest.mock('ui/components/app', () => 'App');
+
+jest.mock('ui/state', () => ({
+  configureStore: jest.fn(() => Promise.resolve('fake store')),
+}));
 
 describe('Root', () => {
-  const rootDidMount = jest.spyOn(Root.prototype, 'componentDidMount');
-  const providerRender = jest.spyOn(Provider.prototype, 'render');
-  const defaultProps = {
-    initialState: {
-      filename: '',
-      text: '',
-      config: {},
-    },
-  };
-  const createSnapshot = (passedProps = {}) => {
-    const props = {
-      ...defaultProps,
-      ...passedProps,
-    };
-    expect(renderer.create(<Root {...props} />).toJSON()).toMatchSnapshot();
-  };
-
-  it('should render the App component', () => {
-    createSnapshot();
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should render inside a Redux Provider', () => {
-    // There's probably a better way of doing this!
-    expect(providerRender).toHaveBeenCalled();
+  it('should initially render null', () => {
+    expect(renderer.create(<Root />).toJSON()).toMatchSnapshot();
   });
 
-  it('should create a store', () => {
-    // eslint-disable-next-line global-require
-    const createStore = require('../../state/store');
-
-    expect(createStore.mock.calls.length).toBe(1);
-    expect(createStore.mock.calls[0][0]).toEqual({ config: {} });
-  });
-
-  it('should emit a message via RPC that the root has been mounted, once it has', () => {
-    // eslint-disable-next-line global-require
-    const { ipcRenderer } = require('electron');
-
-    expect(rootDidMount).toHaveBeenCalled();
-    expect(ipcRenderer.send).toBeCalledWith('root-mounted', true);
-  });
-
-  it('should create a store and dispatches an action if provided with a file', () => {
-    // eslint-disable-next-line global-require
-    const createStore = require('../../state/store');
-
-    const dispatch = jest.fn();
-    createStore.mockImplementation(() => ({
-      dispatch,
-      subscribe: () => {},
-      getState: () => {},
-    }));
-    createSnapshot({
-      initialState: {
-        ...defaultProps.initialState,
-        filename: 'truthy',
-      },
+  it('should render App within a Redux Provider once the store has been created', done => {
+    const component = renderer.create(<Root />);
+    setTimeout(() => {
+      expect(component.toJSON()).toMatchSnapshot();
+      done();
     });
+  });
 
-    expect(dispatch).toHaveBeenCalledWith({
-      filename: 'truthy',
-      id: 1,
-      text: '',
-      type: 'CREATE_PANE',
+  it('should configure the store and set global options when instantiated', done => {
+    const root = new Root();
+    root.setState = jest.fn();
+
+    expect(configureStore).toHaveBeenCalled();
+    expect(webFrame.setVisualZoomLevelLimits).toHaveBeenCalledWith(1, 1);
+
+    setTimeout(() => {
+      expect(root.setState).toHaveBeenCalledWith({ store: 'fake store' });
+      done();
     });
+  });
+
+  it('should notify Electron that the window can be shown in componentDidUpdate', () => {
+    const root = new Root();
+    root.setState = jest.fn();
+
+    expect(ipcRenderer.send).not.toHaveBeenCalled();
+    root.componentDidUpdate();
+    expect(ipcRenderer.send).toHaveBeenCalledWith('root-mounted', true);
   });
 });

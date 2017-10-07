@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Root should create a store and dispatches an action if provided with a file 1`] = `<App />`;
+exports[`Root should initially render null 1`] = `null`;
 
-exports[`Root should render the App component 1`] = `<App />`;
+exports[`Root should render App within a Redux Provider once the store has been created 1`] = `
+<Provider
+  store="fake store"
+>
+  <App />
+</Provider>
+`;

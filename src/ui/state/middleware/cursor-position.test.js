@@ -1,6 +1,11 @@
 import cursorPositionMiddleware from './cursor-position';
 import * as types from '../types';
 
+jest.mock('ui/state/selectors', () => ({
+  charSizes: jest.fn(() => ({ charHeight: 21, charWidth: 5 })),
+  currentPane: jest.fn(state => state.panes[0]),
+}));
+
 describe('cursorPositionMiddleware', () => {
   const runMiddleware = (providedGetState) => {
     const next = jest.fn();
@@ -133,7 +138,7 @@ describe('cursorPositionMiddleware', () => {
 
     expect(next).toHaveBeenCalledWith({
       ...action,
-      firstVisibleRow: 61,
+      firstVisibleRow: 63,
     });
   });
 
@@ -169,7 +174,7 @@ describe('cursorPositionMiddleware', () => {
 
     expect(next).toHaveBeenCalledWith({
       ...action,
-      firstVisibleRow: 63,
+      firstVisibleRow: 64,
     });
   });
 

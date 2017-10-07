@@ -6,7 +6,7 @@ import classnames from 'classnames/bind';
 
 import { Cursor, LineNumbers } from 'ui/components';
 import { updateConfig, updatePane, userInputFocus } from 'ui/state/actions';
-import { paneById } from 'ui/state/selectors';
+import { charSizes, paneById } from 'ui/state/selectors';
 import css from './styles.css';
 
 const cx = classnames.bind(css);
@@ -137,8 +137,7 @@ Pane.propTypes = {
 export function mapStateToProps (state, props) {
   const pane = paneById(state, props);
   return {
-    charHeight: state.config.charHeight,
-    charWidth: state.config.charWidth,
+    ...charSizes(state),
     column: pane.column,
     currentPaneId: state.config.currentPaneId,
     firstVisibleColumn: pane.firstVisibleColumn,

@@ -4,8 +4,11 @@ import _ from 'lodash';
 
 import { Pane, mapStateToProps } from './index';
 
-jest.mock('../cursor', () => 'Cursor');
-jest.mock('../line-numbers', () => 'LineNumbers');
+jest.mock('ui/utils', () => ({
+  computeFontDimensions: jest.fn(() => ({ width: 5, height: 21 })),
+}));
+jest.mock('ui/components/cursor', () => 'Cursor');
+jest.mock('ui/components/line-numbers', () => 'LineNumbers');
 
 function createNodeMock (element) {
   if (element.type === 'div') {
@@ -136,12 +139,11 @@ describe('Pane', () => {
     };
     const state = {
       config: {
-        charHeight: 6,
-        charWidth: 7,
         currentPaneId: 1,
         isBrowserVisible: false,
         mode: 'normal',
         showLineNumbers: false,
+        theme: {},
       },
       panes: [pane],
     };
@@ -151,9 +153,11 @@ describe('Pane', () => {
 
     expect(mapStateToProps(state, props)).toEqual({
       ..._.omit(pane, 'id', 'width'),
-      ...state.config,
+      ..._.omit(state.config, 'theme'),
       splits: state.panes.length,
       paneId: pane.id,
+      charHeight: 21,
+      charWidth: 5,
     });
   });
 

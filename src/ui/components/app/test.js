@@ -1,30 +1,50 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import setCustomProperties from 'dynamic-css-properties';
 
-import { App, mapStateToProps } from './index';
+import { updateConfig } from 'ui/state/actions';
+import {
+  App,
+  setTheme,
+  isFullscreen,
+  mapDispatchToProps,
+  mapStateToProps,
+} from './index';
 
 jest.mock('dynamic-css-properties', () => jest.fn());
-jest.mock('../browser', () => 'Browser');
-jest.mock('../command-bar', () => 'CommandBar');
-jest.mock('../logo', () => 'Logo');
-jest.mock('../title-bar', () => 'TitleBar');
-jest.mock('../tree-view', () => 'TreeView');
-jest.mock('../pane', () => 'Pane');
+jest.mock('ui/components/browser', () => 'Browser');
+jest.mock('ui/components/command-bar', () => 'CommandBar');
+jest.mock('ui/components/logo', () => 'Logo');
+jest.mock('ui/components/title-bar', () => 'TitleBar');
+jest.mock('ui/components/tree-view', () => 'TreeView');
+jest.mock('ui/components/pane', () => 'Pane');
+jest.mock('ui/utils', () => ({
+  computeFontDimensions: jest.fn(() => ({ width: 5, height: 21 })),
+}));
+jest.mock('ui/state/actions', () => ({
+  updateConfig: jest.fn(),
+}));
 
 const defaultProps = {
   isBrowserVisible: false,
   isTitleBarVisible: false,
   isTreeViewVisible: false,
+  isFullscreen: jest.fn(false),
+  showTitleBar: jest.fn(),
+  setTheme: jest.fn(),
   isCommandBarVisible: false,
   charWidth: 5,
   theme: {
     titleBarHeight: 23,
   },
-  updateConfig: () => {},
   panes: [],
 };
 
 describe('App', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const createSnapshot = (passedProps) => {
     const props = {
       ...defaultProps,
@@ -83,67 +103,12 @@ describe('App', () => {
     });
   });
 
-  it('will set custom properties when initializing', () => {
-    // eslint-disable-next-line global-require
-    const setCustomProperties = require('dynamic-css-properties');
-    setCustomProperties.mockReset();
-
-    const props = {
-      ...defaultProps,
-      isTitleBarVisible: true,
-    };
-    renderer.create(<App {...props} />);
-
-    expect(setCustomProperties).toHaveBeenCalledWith({
-      charWidth: '5px',
-      viewportHeight: 'calc(100vh - var(--title-bar-height)',
-      titleBarHeight: 23,
-    });
+  it('will call setTheme with the provided props when instantiated', () => {
+    new App(defaultProps); // eslint-disable-line no-new
+    expect(defaultProps.setTheme).toHaveBeenCalledWith(defaultProps);
   });
 
-  it('will set a global resize event listener', () => {
-    const addEventListener = jest.fn();
-    global.addEventListener = addEventListener;
-    renderer.create(<App {...defaultProps} />);
-
-    expect(addEventListener).toHaveBeenCalled();
-
-    // calledWith matchers require all arguments, but we only know the first.
-    let found = false;
-    addEventListener.mock.calls.forEach(args => {
-      if (args[0] === 'resize') {
-        found = true;
-      }
-    });
-    expect(found).toBe(true);
-  });
-
-  it('componentWillReceiveProps calls setCustomProperties when the theme changes', () => {
-    // eslint-disable-next-line global-require
-    const setCustomProperties = require('dynamic-css-properties');
-    setCustomProperties.mockReset();
-
-    const app = new App(defaultProps);
-    app.setCustomProperties = jest.fn();
-    app.componentWillReceiveProps(defaultProps);
-    expect(app.setCustomProperties).not.toHaveBeenCalled();
-
-    app.componentWillReceiveProps({
-      ...defaultProps,
-      theme: {
-        color: 'hotpink',
-      },
-    });
-
-    expect(app.setCustomProperties).toHaveBeenCalled();
-    expect(setCustomProperties).toHaveBeenCalledWith({
-      charWidth: '5px',
-      titleBarHeight: '0px',
-      viewportHeight: 'calc(100vh - var(--title-bar-height)',
-    });
-  });
-
-  it('sets up a resize event listener on mount', () => {
+  it('will set a global resize event listener on mount', () => {
     window.addEventListener = jest.fn();
     const app = new App(defaultProps);
     app.componentDidMount();
@@ -151,24 +116,28 @@ describe('App', () => {
     expect(window.addEventListener).toHaveBeenCalledWith('resize', app.onResize);
   });
 
-  it('onResize calls showOrHideTitleBar', () => {
+  it('calls setTheme in componentWillReceiveProps when the theme changes', () => {
     const app = new App(defaultProps);
-    app.showOrHideTitleBar = jest.fn();
-    app.onResize.call(defaultProps);
+    defaultProps.setTheme.mockReset();
+    app.componentWillReceiveProps(defaultProps);
+    expect(defaultProps.setTheme).not.toHaveBeenCalled();
 
-    expect(app.showOrHideTitleBar).toHaveBeenCalled();
+    const nextProps = {
+      ...defaultProps,
+      theme: {
+        color: 'hotpink',
+      },
+    };
+    app.componentWillReceiveProps(nextProps);
+    expect(defaultProps.setTheme).toHaveBeenCalledWith(nextProps);
   });
 
-  it('windowIsFullscreen returns the equality of the inner and screen height', () => {
+  it('should call showTitleBar in onResize', () => {
     const app = new App(defaultProps);
+    app.showOrHideTitleBar = jest.fn();
+    app.onResize();
 
-    window.innerHeight = 10;
-    window.screen.height = 20;
-    expect(app.windowIsFullscreen()).toBe(false);
-
-    window.innerHeight = 10;
-    window.screen.height = 10;
-    expect(app.windowIsFullscreen()).toBe(true);
+    expect(app.showOrHideTitleBar).toHaveBeenCalledWith(expect.any(Number));
   });
 });
 
@@ -187,67 +156,94 @@ describe('App showOrHideTitleBar', () => {
 
   it('should update the visiblity of the titlebar as required', () => {
     window.requestAnimationFrame = jest.fn();
-    const updateConfig = jest.fn();
     const app = new App({
       ...defaultProps,
-      updateConfig,
       isTitleBarVisible: false,
     });
 
     app.showOrHideTitleBar(new Date().getTime());
-    expect(updateConfig).not.toHaveBeenCalled();
 
     window.innerHeight = 0;
     window.screen.height = 1;
     app.showOrHideTitleBar(new Date().getTime());
-    expect(updateConfig).toHaveBeenCalledWith({ isTitleBarVisible: true });
+    expect(defaultProps.showTitleBar).toHaveBeenCalledWith(true);
   });
 
   it('should update css variables when the titlebar visibility changes', () => {
-    // eslint-disable-next-line global-require
-    const setCustomProperties = require('dynamic-css-properties');
-    setCustomProperties.mockReset();
-
     window.requestAnimationFrame = jest.fn();
-    const updateConfig = jest.fn();
-    const props = {
-      ...defaultProps,
-      updateConfig,
-    };
-
-    let app = new App(props);
-    app.setCustomProperties = jest.fn();
+    let app = new App(defaultProps);
+    defaultProps.setTheme.mockReset();
 
     window.innerHeight = 0;
     window.screen.height = 0;
     app.showOrHideTitleBar(new Date().getTime());
-    expect(app.setCustomProperties).not.toHaveBeenCalled();
+    expect(defaultProps.setTheme).toHaveBeenCalledWith({
+      charWidth: 5,
+      isTitleBarVisible: true,
+      theme: {
+        titleBarHeight: 23,
+      },
+    });
 
     window.innerHeight = 0;
     window.screen.height = 1;
+    defaultProps.setTheme.mockReset();
     app.showOrHideTitleBar(new Date().getTime());
-    expect(app.setCustomProperties).toHaveBeenCalled();
-    expect(setCustomProperties).toHaveBeenCalledWith({
-      charWidth: '5px',
-      titleBarHeight: '0px',
-      viewportHeight: 'calc(100vh - var(--title-bar-height)',
-    });
+    expect(defaultProps.setTheme).toHaveBeenCalled();
 
-    app = new App({
-      ...props,
+    const props = {
+      ...defaultProps,
       isTitleBarVisible: true,
-    });
-    app.setCustomProperties = jest.fn();
+    };
+    app = new App(props);
 
     window.innerHeight = 0;
     window.screen.height = 0;
     app.showOrHideTitleBar(new Date().getTime());
-    expect(app.setCustomProperties).toHaveBeenCalled();
+    expect(props.setTheme).toHaveBeenCalledWith(props);
+  });
+});
+
+describe('setTheme', () => {
+  it('should call setCustomProperties with options computed from the provided arguments', () => {
+    setTheme({
+      charWidth: 5,
+      isTitleBarVisible: true,
+      theme: {
+        titleBarHeight: 23,
+      },
+    });
     expect(setCustomProperties).toHaveBeenCalledWith({
       charWidth: '5px',
-      titleBarHeight: '0px',
+      titleBarHeight: 23,
       viewportHeight: 'calc(100vh - var(--title-bar-height)',
     });
+  });
+
+  it('should pass on other theme properties', () => {
+    setTheme({
+      charWidth: 5,
+      isTitleBarVisible: false,
+      theme: {
+        titleBarHeight: 23,
+        anotherThemeVariable: 'red',
+      },
+    });
+    expect(setCustomProperties).toHaveBeenCalledWith(expect.objectContaining({
+      anotherThemeVariable: 'red',
+    }));
+  });
+});
+
+describe('isFullscreen', () => {
+  it('should returns the equality of the inner and screen height', () => {
+    window.innerHeight = 10;
+    window.screen.height = 20;
+    expect(isFullscreen()).toBe(false);
+
+    window.innerHeight = 10;
+    window.screen.height = 10;
+    expect(isFullscreen()).toBe(true);
   });
 });
 
@@ -255,7 +251,6 @@ describe('App mapStateToProps', () => {
   it('mapStateToProps returns props based on state', () => {
     expect(mapStateToProps({
       config: {
-        charWidth: 10,
         isBrowserVisible: true,
         isTreeViewVisible: true,
         isTitleBarVisible: true,
@@ -264,7 +259,7 @@ describe('App mapStateToProps', () => {
       },
       panes: [],
     })).toEqual({
-      charWidth: 10,
+      charWidth: 5,
       isBrowserVisible: true,
       isTreeViewVisible: true,
       isTitleBarVisible: true,
@@ -272,5 +267,20 @@ describe('App mapStateToProps', () => {
       theme: {},
       panes: [],
     });
+  });
+});
+
+describe('mapDispatchToProps', () => {
+  it('should provide various functions as props', () => {
+    const funcs = Object.keys(mapDispatchToProps());
+    expect(funcs).toEqual(['setTheme', 'isFullscreen', 'showTitleBar']);
+  });
+
+  it('should provide a showTitleBar function that wraps updateConfig', () => {
+    const dispatch = jest.fn();
+    const { showTitleBar } = mapDispatchToProps(dispatch);
+    showTitleBar(true);
+    expect(updateConfig).toHaveBeenCalledWith({ isTitleBarVisible: true });
+    expect(dispatch).toHaveBeenCalled();
   });
 });

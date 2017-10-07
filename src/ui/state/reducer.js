@@ -4,13 +4,7 @@ import { combineReducers } from 'redux';
 import fixedKeys from 'ui/fixed-keys';
 import * as types from 'ui/state/types';
 
-const defaults = {
-  command: '',
-  config: {},
-  panes: [],
-};
-
-export function configReducer (state = defaults.config, action) {
+export function configReducer (state = {}, action) {
   const { type, ...values } = action;
   switch (type) {
     case types.UPDATE_CONFIG: {
@@ -31,7 +25,7 @@ export function configReducer (state = defaults.config, action) {
   }
 }
 
-export function panesReducer (state = defaults.panes, action) {
+export function panesReducer (state = [], action) {
   const { type, ...values } = action;
   switch (type) {
     case types.CREATE_PANE: {
@@ -64,7 +58,7 @@ export function panesReducer (state = defaults.panes, action) {
   }
 }
 
-export function commandReducer (state = defaults.command, action) {
+export function commandReducer (state = '', action) {
   const { type, value } = action;
   switch (type) {
     case types.UPDATE_COMMAND: {

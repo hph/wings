@@ -9,7 +9,7 @@ exports[`App can render many things at once when so configured 1`] = `
   />
   <CommandBar />
   <div
-    className="panes"
+    className="main"
   >
     <TreeView />
     <Pane
@@ -30,7 +30,7 @@ exports[`App defaults to rendering a logo in an empty state 1`] = `
   className="root"
 >
   <div
-    className="panes"
+    className="main"
   >
     <Logo />
   </div>
@@ -42,7 +42,7 @@ exports[`App renders a Browser when so configured 1`] = `
   className="root"
 >
   <div
-    className="panes"
+    className="main"
   >
     <Logo />
     <Browser />
@@ -56,7 +56,7 @@ exports[`App renders a CommandBar when so configured 1`] = `
 >
   <CommandBar />
   <div
-    className="panes"
+    className="main"
   >
     <Logo />
   </div>
@@ -68,7 +68,7 @@ exports[`App renders a Pane when so configured 1`] = `
   className="root"
 >
   <div
-    className="panes"
+    className="main"
   >
     <Pane
       isFirst={true}
@@ -86,7 +86,7 @@ exports[`App renders a TitleBar when so configured 1`] = `
     label="Wings"
   />
   <div
-    className="panes"
+    className="main"
   >
     <Logo />
   </div>
@@ -98,7 +98,7 @@ exports[`App renders a TreeView when so configured 1`] = `
   className="root"
 >
   <div
-    className="panes"
+    className="main"
   >
     <TreeView />
     <Logo />
@@ -111,7 +111,7 @@ exports[`App renders multiple instances of Pane when so configured 1`] = `
   className="root"
 >
   <div
-    className="panes"
+    className="main"
   >
     <Pane
       isFirst={true}

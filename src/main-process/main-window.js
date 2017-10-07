@@ -18,7 +18,7 @@ export default function createWindow (mainWindow, config) {
     protocol: 'file:',
     slashes: true,
     hash: JSON.stringify({
-      config: config.editor,
+      ...config.editor,
       filename: process.argv[isAsar ? 1 : 2],
     }),
   }));
@@ -42,7 +42,7 @@ export default function createWindow (mainWindow, config) {
   // or after the configured timeout, whichever comes first.
   mainWindow.once('ready-to-show', maybeShow);
   ipcMain.once('root-mounted', maybeShow);
-  setTimeout(show, config.editor.showTimeoutMs);
+  setTimeout(show, config.window.showTimeoutMs);
 
   mainWindow.once('closed', () => {
     mainWindow = null; // eslint-disable-line no-param-reassign

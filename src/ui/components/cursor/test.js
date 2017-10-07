@@ -3,6 +3,10 @@ import renderer from 'react-test-renderer';
 
 import { Cursor, mapStateToProps } from './index';
 
+jest.mock('ui/utils', () => ({
+  computeFontDimensions: jest.fn(() => ({ width: 5, height: 21 })),
+}));
+
 describe('Cursor', () => {
   const createSnapshot = (passedProps = {}) => {
     const props = {
@@ -47,6 +51,7 @@ describe('Cursor mapStateToProps', () => {
     charWidth: 5,
     isUserTyping: false,
     mode: 'normal',
+    theme: {},
   };
   const paneId = 1;
   const panes = [{
@@ -94,31 +99,44 @@ describe('Cursor mapStateToProps', () => {
 
   it('should determine a left position based on the column and character width', () => {
     expect(mapStateToProps({ config, panes }, { paneId }).left).toEqual(0);
+
     expect(mapStateToProps({
-      config: {
-        ...config,
-        charWidth: 7,
-      },
+      config,
       panes: [{
         ...panes[0],
         column: 1,
       }],
-    }, { paneId }).left).toEqual(7);
+    }, { paneId }).left).toEqual(5);
+
+    expect(mapStateToProps({
+      config,
+      panes: [{
+        ...panes[0],
+        column: 2,
+      }],
+    }, { paneId }).left).toEqual(10);
   });
 
   it('should determine a top position based on the row, first visible row and character height', () => {
     expect(mapStateToProps({ config, panes }, { paneId }).top).toEqual(0);
+
     expect(mapStateToProps({
-      config: {
-        ...config,
-        charheight: 20,
-      },
+      config,
       panes: [{
         ...panes[0],
         row: 1,
         lines: ['a', 'b'],
       }],
-    }, { paneId }).top).toEqual(20);
+    }, { paneId }).top).toEqual(21);
+
+    expect(mapStateToProps({
+      config,
+      panes: [{
+        ...panes[0],
+        row: 2,
+        lines: ['a', 'b', 'c'],
+      }],
+    }, { paneId }).top).toEqual(42);
   });
 
   it('should determine whether to pulsate based on isUserTyping', () => {

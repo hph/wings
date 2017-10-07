@@ -8,46 +8,32 @@ import {
   Browser,
   CommandBar,
   Logo,
+  Pane,
   TitleBar,
   TreeView,
-  Pane,
 } from 'ui/components';
 import { updateConfig } from 'ui/state/actions';
+import { charSizes } from 'ui/state/selectors';
 import css from './styles.css';
 
 export class App extends Component {
   constructor (props) {
     super(props);
-    this.setCustomProperties();
+    props.setTheme(props);
   }
 
   componentDidMount () {
-    // Determine whether the titlebar should be shown or hidden on resize.
     window.addEventListener('resize', this.onResize);
   }
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.theme !== this.props.theme) {
-      this.setCustomProperties();
+      this.props.setTheme(nextProps);
     }
   }
 
   onResize = () => {
     this.showOrHideTitleBar(new Date().getTime());
-  };
-
-  setCustomProperties () {
-    const { charWidth, isTitleBarVisible, theme } = this.props;
-    setCustomProperties({
-      ...theme,
-      charWidth: `${ charWidth }px`,
-      titleBarHeight: isTitleBarVisible ? theme.titleBarHeight : '0px',
-      viewportHeight: 'calc(100vh - var(--title-bar-height)',
-    });
-  }
-
-  windowIsFullscreen = () => {
-    return window.innerHeight === window.screen.height;
   };
 
   showOrHideTitleBar = (start) => {
@@ -56,10 +42,14 @@ export class App extends Component {
       return;
     }
 
-    const isTitleBarVisible = !this.windowIsFullscreen();
+    const isTitleBarVisible = !this.props.isFullscreen();
     if (isTitleBarVisible !== this.props.isTitleBarVisible) {
-      this.props.updateConfig({ isTitleBarVisible });
-      this.setCustomProperties();
+      this.props.showTitleBar(isTitleBarVisible);
+      this.props.setTheme({
+        isTitleBarVisible,
+        charWidth: this.props.charWidth,
+        theme: this.props.theme,
+      });
     }
 
     window.requestAnimationFrame(this.showOrHideTitleBar.bind(this, start));
@@ -70,7 +60,7 @@ export class App extends Component {
       <div className={css.root}>
         {this.props.isTitleBarVisible && <TitleBar label="Wings" />}
         {this.props.isCommandBarVisible && <CommandBar />}
-        <div className={css.panes}>
+        <div className={css.main}>
           {this.props.isTreeViewVisible && <TreeView />}
           {_.isEmpty(this.props.panes) ? <Logo /> : (
             _.map(this.props.panes, ({ id }, index) => (
@@ -88,16 +78,32 @@ App.propTypes = {
   charWidth: PropTypes.number.isRequired,
   isBrowserVisible: PropTypes.bool.isRequired,
   isCommandBarVisible: PropTypes.bool.isRequired,
+  isFullscreen: PropTypes.func.isRequired,
   isTitleBarVisible: PropTypes.bool.isRequired,
   isTreeViewVisible: PropTypes.bool.isRequired,
-  theme: PropTypes.object.isRequired,
-  updateConfig: PropTypes.func.isRequired,
   panes: PropTypes.array.isRequired,
+  setTheme: PropTypes.func.isRequired,
+  showTitleBar: PropTypes.func.isRequired,
+  theme: PropTypes.object.isRequired,
+};
+
+export const setTheme = ({ charWidth, isTitleBarVisible, theme }) => {
+  setCustomProperties({
+    ...theme,
+    charWidth: `${ charWidth }px`,
+    titleBarHeight: isTitleBarVisible ? theme.titleBarHeight : '0px',
+    viewportHeight: 'calc(100vh - var(--title-bar-height)',
+  });
+};
+
+export const isFullscreen = () => {
+  return window.innerHeight === window.screen.height;
 };
 
 export function mapStateToProps (state) {
+  const { charWidth } = charSizes(state);
   return {
-    charWidth: state.config.charWidth,
+    charWidth,
     isBrowserVisible: state.config.isBrowserVisible,
     isCommandBarVisible: state.config.mode === 'ex',
     isTitleBarVisible: state.config.isTitleBarVisible,
@@ -107,4 +113,12 @@ export function mapStateToProps (state) {
   };
 }
 
-export default connect(mapStateToProps, { updateConfig })(App);
+export function mapDispatchToProps (dispatch) {
+  return {
+    setTheme,
+    isFullscreen,
+    showTitleBar: isTitleBarVisible => dispatch(updateConfig({ isTitleBarVisible })),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

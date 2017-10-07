@@ -3,11 +3,11 @@ window:
   height: 600
   minWidth: 320
   minHeight: 320
+  showTimeoutMs: 1000
 editor:
   shiftWidth: 2
   showLineNumbers: true
   relativeLineNumbers: true
-  showTimeoutMs: 1000
   theme:
     fontFamily: "'SF Mono', Monaco, 'Andale Mono', 'Lucida Console', Courier, monospace"
     fontSize: 14px

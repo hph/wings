@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 import PropTypes from 'prop-types';
 
-import { paneById } from 'ui/state/selectors';
+import { charSizes, paneById } from 'ui/state/selectors';
 import css from './styles.css';
 
 const cx = classnames.bind(css);
@@ -28,12 +28,13 @@ export function mapStateToProps (state, props) {
   const { config } = state;
   const pane = paneById(state, props);
   const block = config.mode !== 'insert';
+  const { charHeight, charWidth } = charSizes(state);
   return {
     block,
     character: block ? pane.lines[pane.row][pane.column] || ' ' : '',
-    left: pane.column * config.charWidth,
+    left: pane.column * charWidth,
     pulsate: !config.isUserTyping,
-    top: (pane.row - pane.firstVisibleRow) * config.charHeight,
+    top: (pane.row - pane.firstVisibleRow) * charHeight,
   };
 }
 

@@ -7,13 +7,13 @@ import { reduce } from 'bluebird';
  * Calculate the dimensions of characters in the monospaced font
  * as defined by the configuration object.
  */
-export function computeFontDimensions (config) {
+export function computeFontDimensions ({ fontFamily, fontSize, lineHeight }) {
   const testString = 'The quick brown fox jumps over the lazy dog';
   const el = document.createElement('span');
   el.innerText = testString;
-  el.style.lineHeight = config.theme.lineHeight;
-  el.style.fontFamily = config.theme.fontFamily;
-  el.style.fontSize = config.theme.fontSize;
+  el.style.lineHeight = lineHeight;
+  el.style.fontFamily = fontFamily;
+  el.style.fontSize = fontSize;
   el.style.whiteSpace = 'nowrap';
   el.style.position = 'absolute';
   el.style.top = 0;
