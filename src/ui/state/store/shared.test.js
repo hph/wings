@@ -2,7 +2,7 @@ import { readFile } from 'fs-extra';
 
 import createConfigureStore from 'ui/state/store/configure-store';
 import configureStore, {
-  configDefaults,
+  getConfigDefaults,
   getPreloadedState,
   getText,
 } from 'ui/state/store/shared';
@@ -13,10 +13,16 @@ jest.mock('fs-extra', () => ({
 
 jest.mock('ui/state/store/configure-store', () => jest.fn());
 
+// eslint-disable-next-line fp/no-mutating-methods
+Object.defineProperty(process, 'cwd', {
+  value: () => 'fake-dir',
+});
+
 describe('store configDefaults', () => {
   it('should return a specific object', () => {
-    expect(configDefaults).toEqual({
+    expect(getConfigDefaults()).toEqual({
       mode: 'normal',
+      cwd: 'fake-dir',
       isBrowserVisible: false,
       isTreeViewVisible: false,
       isTitleBarVisible: true,
@@ -50,7 +56,7 @@ describe('store configureStore', () => {
     expect(createConfigureStore).not.toHaveBeenCalled();
     configureStore();
     expect(createConfigureStore).toHaveBeenCalledWith({
-      configDefaults,
+      configDefaults: getConfigDefaults(),
       getPreloadedState,
       getText,
     });
