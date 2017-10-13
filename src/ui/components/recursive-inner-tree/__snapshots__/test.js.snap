@@ -14,6 +14,7 @@ exports[`RecursiveInnerTree renders a set of dirctories and files 1`] = `
     <span
       className="directory"
       onClick={[Function]}
+      title="/foo"
     >
       <span
         className="triangle right"
@@ -25,6 +26,7 @@ exports[`RecursiveInnerTree renders a set of dirctories and files 1`] = `
     <span
       className="file"
       onClick={[Function]}
+      title="bar.txt"
     >
       bar.txt
     </span>
@@ -33,6 +35,7 @@ exports[`RecursiveInnerTree renders a set of dirctories and files 1`] = `
     <span
       className="file"
       onClick={[Function]}
+      title="baz.txt"
     >
       baz.txt
     </span>
@@ -48,6 +51,7 @@ exports[`RecursiveInnerTree renders a set of dirctories and files 2`] = `
     <span
       className="directory"
       onClick={[Function]}
+      title="/foo"
     >
       <span
         className="triangle down"
@@ -62,6 +66,7 @@ exports[`RecursiveInnerTree renders a set of dirctories and files 2`] = `
     <span
       className="file"
       onClick={[Function]}
+      title="bar.txt"
     >
       bar.txt
     </span>
@@ -70,6 +75,7 @@ exports[`RecursiveInnerTree renders a set of dirctories and files 2`] = `
     <span
       className="file"
       onClick={[Function]}
+      title="baz.txt"
     >
       baz.txt
     </span>
