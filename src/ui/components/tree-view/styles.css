@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   min-width: 240px;
+  max-width: 25vw;
   height: 100%;
   white-space: nowrap;
   border-right: 1px solid var(--secondary-background-color);
