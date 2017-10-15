@@ -1,9 +1,12 @@
 .root {
-  padding: 0 5px;
   color: var(--secondary-color);
   background-color: var(--secondary-background-color);
   text-align: right;
   z-index: 1;
+}
+
+.root > div {
+  padding: 0 5px;
 }
 
 .root.overlay {
