@@ -37,7 +37,7 @@ export class LineNumbers extends Component {
       <div
         className={classes}
         ref={this.props.innerRef}
-        onClick={this.setActiveLine}
+        onMouseDown={this.setActiveLine}
       >
         {_.map(numbers, ([actualLine, displayedLine]) => (
           <div key={displayedLine} data-line={actualLine}>

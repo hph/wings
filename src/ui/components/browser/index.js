@@ -76,7 +76,7 @@ export class Browser extends Component {
           value={this.state.navLocation}
           onChange={this.setNavLocation}
           onKeyDown={this.navigate}
-          onClick={this.onNavigationClick}
+          onMouseDown={this.onNavigationClick}
           autoFocus
         />
         {this.state.error && (

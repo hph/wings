@@ -67,7 +67,7 @@ describe('Browser', () => {
   it('should call a function to stop user input focus on click', () => {
     const userInputFocus = jest.fn();
     const { tree } = createTree({ userInputFocus });
-    tree.children[0].props.onClick();
+    tree.children[0].props.onMouseDown();
 
     expect(userInputFocus).toHaveBeenCalledWith(false);
   });

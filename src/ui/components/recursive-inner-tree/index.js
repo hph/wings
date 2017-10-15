@@ -70,7 +70,7 @@ export class RecursiveInnerTree extends Component {
           <div key={directory}>
             <span
               className={css.directory}
-              onClick={this.toggleDirectory(directory)}
+              onMouseDown={this.toggleDirectory(directory)}
               title={directory}
             >
               <span className={this.state[directory] ? down : right} />
@@ -88,7 +88,7 @@ export class RecursiveInnerTree extends Component {
           <div key={file}>
             <span
               className={css.file}
-              onClick={this.openFile(file)}
+              onMouseDown={this.openFile(file)}
               title={file}
             >
               {file}

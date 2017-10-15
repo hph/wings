@@ -3,7 +3,7 @@
 exports[`LineNumbers adds an overlay class when firstVisibleChar is larger than 0 1`] = `
 <div
   className="root overlay"
-  onClick={[Function]}
+  onMouseDown={[Function]}
 >
   <div
     data-line={0}
@@ -16,7 +16,7 @@ exports[`LineNumbers adds an overlay class when firstVisibleChar is larger than 
 exports[`LineNumbers allows passing in an external classname 1`] = `
 <div
   className="root custom-classname"
-  onClick={[Function]}
+  onMouseDown={[Function]}
 >
   <div
     data-line={0}
@@ -29,7 +29,7 @@ exports[`LineNumbers allows passing in an external classname 1`] = `
 exports[`LineNumbers renders at least one line even when empty 1`] = `
 <div
   className="root"
-  onClick={[Function]}
+  onMouseDown={[Function]}
 >
   <div
     data-line={0}
@@ -42,7 +42,7 @@ exports[`LineNumbers renders at least one line even when empty 1`] = `
 exports[`LineNumbers renders line numbers 1`] = `
 <div
   className="root"
-  onClick={[Function]}
+  onMouseDown={[Function]}
 >
   <div
     data-line={0}
@@ -65,7 +65,7 @@ exports[`LineNumbers renders line numbers 1`] = `
 exports[`LineNumbers renders relative line numbers when so configured 1`] = `
 <div
   className="root"
-  onClick={[Function]}
+  onMouseDown={[Function]}
 >
   <div
     data-line={0}
@@ -98,7 +98,7 @@ exports[`LineNumbers renders relative line numbers when so configured 1`] = `
 exports[`LineNumbers should only render at most as many lines as are visible in the viewport 1`] = `
 <div
   className="root"
-  onClick={[Function]}
+  onMouseDown={[Function]}
 >
   <div
     data-line={0}
@@ -156,7 +156,7 @@ exports[`LineNumbers should only render at most as many lines as are visible in 
 exports[`LineNumbers starts off at the first visible line 1`] = `
 <div
   className="root"
-  onClick={[Function]}
+  onMouseDown={[Function]}
 >
   <div
     data-line={2}
@@ -179,7 +179,7 @@ exports[`LineNumbers starts off at the first visible line 1`] = `
 exports[`LineNumbers starts off at the first visible line with relative line numbers 1`] = `
 <div
   className="root"
-  onClick={[Function]}
+  onMouseDown={[Function]}
 >
   <div
     data-line={2}
@@ -202,7 +202,7 @@ exports[`LineNumbers starts off at the first visible line with relative line num
 exports[`LineNumbers starts zero-indexed when using relative line numbers 1`] = `
 <div
   className="root"
-  onClick={[Function]}
+  onMouseDown={[Function]}
 >
   <div
     data-line={0}
