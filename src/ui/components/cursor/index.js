@@ -9,19 +9,21 @@ import css from './styles.css';
 const cx = classnames.bind(css);
 
 export function Cursor (props) {
-  const { block, character, top, left } = props;
+  const { abscissa, block, character, ordinate } = props;
   const pulsate = props.pulsate && !block;
   const classes = cx('root', { block, pulsate });
-  const styles = { top, left };
+  const styles = {
+    WebkitTransform: `translate3d(${ abscissa }px, ${ ordinate }px, 0)`,
+  };
   return <div className={classes} style={styles}>{character}</div>;
 }
 
 Cursor.propTypes = {
+  abscissa: PropTypes.number.isRequired,
   block: PropTypes.bool.isRequired,
   character: PropTypes.string.isRequired,
-  left: PropTypes.number.isRequired,
+  ordinate: PropTypes.number.isRequired,
   pulsate: PropTypes.bool.isRequired,
-  top: PropTypes.number.isRequired,
 };
 
 export function mapStateToProps (state, props) {
@@ -31,10 +33,10 @@ export function mapStateToProps (state, props) {
   const { charHeight, charWidth } = charSizes(state);
   return {
     block,
+    abscissa: pane.column * charWidth,
     character: block ? pane.lines[pane.row][pane.column] || ' ' : '',
-    left: pane.column * charWidth,
+    ordinate: (pane.row - pane.firstVisibleRow) * charHeight,
     pulsate: !config.isUserTyping,
-    top: (pane.row - pane.firstVisibleRow) * charHeight,
   };
 }
 

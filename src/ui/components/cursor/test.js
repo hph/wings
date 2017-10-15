@@ -10,11 +10,11 @@ jest.mock('ui/utils', () => ({
 describe('Cursor', () => {
   const createSnapshot = (passedProps = {}) => {
     const props = {
+      abscissa: 0,
       block: true,
       character: ' ',
-      left: 0,
+      ordinate: 0,
       pulsate: false,
-      top: 0,
       ...passedProps,
     };
     expect(renderer.create(<Cursor {...props} />).toJSON()).toMatchSnapshot();
@@ -41,6 +41,13 @@ describe('Cursor', () => {
     createSnapshot({
       character: 'a',
       block: true,
+    });
+  });
+
+  it('should render the cursor in a position as determined by the abscissa and ordinate', () => {
+    createSnapshot({
+      abscissa: 42,
+      ordinate: 13,
     });
   });
 });
@@ -97,8 +104,8 @@ describe('Cursor mapStateToProps', () => {
     }, { paneId }).character).toEqual('');
   });
 
-  it('should determine a left position based on the column and character width', () => {
-    expect(mapStateToProps({ config, panes }, { paneId }).left).toEqual(0);
+  it('should determine the abscissa based on the column and character width', () => {
+    expect(mapStateToProps({ config, panes }, { paneId }).abscissa).toEqual(0);
 
     expect(mapStateToProps({
       config,
@@ -106,7 +113,7 @@ describe('Cursor mapStateToProps', () => {
         ...panes[0],
         column: 1,
       }],
-    }, { paneId }).left).toEqual(5);
+    }, { paneId }).abscissa).toEqual(5);
 
     expect(mapStateToProps({
       config,
@@ -114,11 +121,11 @@ describe('Cursor mapStateToProps', () => {
         ...panes[0],
         column: 2,
       }],
-    }, { paneId }).left).toEqual(10);
+    }, { paneId }).abscissa).toEqual(10);
   });
 
-  it('should determine a top position based on the row, first visible row and character height', () => {
-    expect(mapStateToProps({ config, panes }, { paneId }).top).toEqual(0);
+  it('should determine the ordinate based on the row, first visible row and character height', () => {
+    expect(mapStateToProps({ config, panes }, { paneId }).ordinate).toEqual(0);
 
     expect(mapStateToProps({
       config,
@@ -127,7 +134,7 @@ describe('Cursor mapStateToProps', () => {
         row: 1,
         lines: ['a', 'b'],
       }],
-    }, { paneId }).top).toEqual(21);
+    }, { paneId }).ordinate).toEqual(21);
 
     expect(mapStateToProps({
       config,
@@ -136,7 +143,7 @@ describe('Cursor mapStateToProps', () => {
         row: 2,
         lines: ['a', 'b', 'c'],
       }],
-    }, { paneId }).top).toEqual(42);
+    }, { paneId }).ordinate).toEqual(42);
   });
 
   it('should determine whether to pulsate based on isUserTyping', () => {
