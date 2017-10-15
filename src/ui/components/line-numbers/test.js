@@ -2,7 +2,12 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import { updateConfig, updatePane } from 'ui/state/actions';
-import { LineNumbers, mapDispatchToProps, mapStateToProps } from './index';
+import {
+  LineNumbers,
+  mapDispatchToProps,
+  mapStateToProps,
+  setActiveLine,
+} from './index';
 
 jest.mock('ui/utils', () => ({
   // Used by charSizes in mapStateToProps.
@@ -103,7 +108,7 @@ describe('LineNumbers', () => {
 
   it('setActiveLine should be called on click', () => {
     const lineNumbers = new LineNumbers(defaultProps);
-    lineNumbers.setActiveLine({
+    lineNumbers.onClickLine({
       target: {
         dataset: {
           line: '7',
@@ -112,7 +117,7 @@ describe('LineNumbers', () => {
     });
     expect(defaultProps.setActiveLine).toHaveBeenCalledWith(7);
 
-    lineNumbers.setActiveLine({
+    lineNumbers.onClickLine({
       target: {
         dataset: {},
       },
@@ -157,6 +162,43 @@ describe('LineNumbers mapStateToProps', () => {
   });
 });
 
+describe('LineNumbers setActiveLine', () => {
+  const currentPaneId = 0;
+  const dispatch = jest.fn();
+  const getState = jest.fn(() => ({ config: { currentPaneId } }));
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return a thunk', () => {
+    setActiveLine(0, 1)(dispatch, getState);
+    expect(dispatch).toHaveBeenCalled();
+  });
+
+  it('should dispatch an action to update the position in the pane', () => {
+    const row = 3;
+    const paneId = 7;
+    setActiveLine(row, paneId)(dispatch, getState);
+    expect(updatePane).toHaveBeenCalledWith(paneId, {
+      row,
+      column: 0,
+    });
+  });
+
+  it('should dispatch an action to update the current pane as required', () => {
+    const row = 3;
+    setActiveLine(row, currentPaneId)(dispatch, getState);
+    expect(updateConfig).not.toHaveBeenCalled();
+
+    const paneId = 1;
+    setActiveLine(row, paneId)(dispatch, getState);
+    expect(updateConfig).toHaveBeenCalledWith({
+      currentPaneId: paneId,
+    });
+  });
+});
+
 describe('LineNumbers mapDispatchToProps', () => {
   const dispatch = jest.fn();
   const props = { paneId: 1 };
@@ -166,24 +208,9 @@ describe('LineNumbers mapDispatchToProps', () => {
   });
 
   it('should return an object with a function to set the active line', () => {
-    expect(mapDispatchToProps(dispatch, props).setActiveLine).toBeDefined();
-  });
-
-  it('setActiveLine should set the position in the pane when called', () => {
-    const { setActiveLine } = mapDispatchToProps(dispatch, props);
-    const row = 3;
-    setActiveLine(row);
-    expect(updatePane).toHaveBeenCalledWith(props.paneId, {
-      row,
-      column: 0,
-    });
-  });
-
-  it('setActiveLine should mark the pane as the current pane when called', () => {
-    const { setActiveLine } = mapDispatchToProps(dispatch, props);
-    setActiveLine(3);
-    expect(updateConfig).toHaveBeenCalledWith({
-      currentPaneId: props.paneId,
-    });
+    const result = mapDispatchToProps(dispatch, props);
+    expect(result.setActiveLine).toBeDefined();
+    result.setActiveLine(0);
+    expect(dispatch).toHaveBeenCalled();
   });
 });

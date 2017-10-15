@@ -11,7 +11,7 @@ import css from './styles.css';
 const cx = classnames.bind(css);
 
 export class LineNumbers extends Component {
-  setActiveLine = ({ target }) => {
+  onClickLine = ({ target }) => {
     const line = target.dataset.line || this.props.totalLines - 1;
     this.props.setActiveLine(parseInt(line, 10));
   };
@@ -37,7 +37,7 @@ export class LineNumbers extends Component {
       <div
         className={classes}
         ref={this.props.innerRef}
-        onMouseDown={this.setActiveLine}
+        onMouseDown={this.onClickLine}
       >
         {_.map(numbers, ([actualLine, displayedLine]) => (
           <div key={displayedLine} data-line={actualLine}>
@@ -76,12 +76,15 @@ export function mapStateToProps (state, props) {
   };
 }
 
-export function mapDispatchToProps (dispatch, { paneId }) {
-  const setActiveLine = row => {
-    dispatch(updatePane(paneId, { row, column: 0 }));
+export const setActiveLine = (row, paneId) => (dispatch, getState) => {
+  if (getState().config.currentPaneId !== paneId) {
     dispatch(updateConfig({ currentPaneId: paneId }));
-  };
-  return { setActiveLine };
-}
+  }
+  dispatch(updatePane(paneId, { row, column: 0 }));
+};
+
+export const mapDispatchToProps = (dispatch, { paneId }) => ({
+  setActiveLine: row => dispatch(setActiveLine(row, paneId)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LineNumbers);
