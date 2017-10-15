@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 import _ from 'lodash';
 
-import { paneById } from 'ui/state/selectors';
+import { charSizes, paneById } from 'ui/state/selectors';
 import css from './styles.css';
 
 const cx = classnames.bind(css);
@@ -46,6 +46,7 @@ LineNumbers.propTypes = {
 
 export function mapStateToProps (state, props) {
   const pane = paneById(state, props);
+  const { charHeight } = charSizes(state);
   return {
     className: props.className,
     currentLine: pane.row,
@@ -54,7 +55,7 @@ export function mapStateToProps (state, props) {
     innerRef: props.innerRef,
     relative: state.config.relativeLineNumbers,
     totalLines: pane.lines.length,
-    visibleLines: _.ceil(pane.height / state.config.charHeight),
+    visibleLines: _.ceil(pane.height / charHeight),
   };
 }
 

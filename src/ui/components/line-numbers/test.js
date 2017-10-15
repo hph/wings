@@ -3,6 +3,11 @@ import renderer from 'react-test-renderer';
 
 import { LineNumbers, mapStateToProps } from './index';
 
+jest.mock('ui/utils', () => ({
+  // Used by charSizes in mapStateToProps.
+  computeFontDimensions: jest.fn(() => ({ width: 5, height: 20 })),
+}));
+
 describe('LineNumbers', () => {
   const createSnapshot = (passedProps = {}) => {
     const props = {
@@ -72,13 +77,22 @@ describe('LineNumbers', () => {
       relative: true,
     });
   });
+
+  it('should only render at most as many lines as are visible in the viewport', () => {
+    createSnapshot({
+      currentLine: 0,
+      totalLines: 100,
+      firstVisibleLine: 0,
+      visibleLines: 10,
+    });
+  });
 });
 
 describe('LineNumbers mapStateToProps', () => {
   const paneId = 1;
   const innerRef = jest.fn();
   const config = {
-    charHeight: 20,
+    theme: {},
     relativeLineNumbers: false,
   };
   const panes = [{
