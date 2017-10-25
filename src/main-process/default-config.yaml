@@ -16,6 +16,7 @@ editor:
     secondaryColor: '#586e75'
     primaryBackgroundColor: '#002b36'
     secondaryBackgroundColor: '#073642'
+    negativeColor: '#dc322f'
     cursorColor: '#d33682'
     directoryTriangleColor: '#268bd2'
     titleBarHeight: 23px

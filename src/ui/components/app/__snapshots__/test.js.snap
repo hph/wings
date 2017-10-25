@@ -7,10 +7,10 @@ exports[`App can render many things at once when so configured 1`] = `
   <TitleBar
     label="Wings"
   />
-  <CommandBar />
   <div
     className="main"
   >
+    <CommandBar />
     <TreeView />
     <Pane
       isFirst={true}
@@ -54,10 +54,10 @@ exports[`App renders a CommandBar when so configured 1`] = `
 <div
   className="root"
 >
-  <CommandBar />
   <div
     className="main"
   >
+    <CommandBar />
     <Logo />
   </div>
 </div>
@@ -121,6 +121,42 @@ exports[`App renders multiple instances of Pane when so configured 1`] = `
       isFirst={false}
       paneId={2}
     />
+  </div>
+</div>
+`;
+
+exports[`App showOrHideTitleBar should render an error boundary when there is an error 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="main"
+  >
+    <Logo />
+  </div>
+</div>
+`;
+
+exports[`App showOrHideTitleBar should render an error boundary when there is an error 2`] = `
+<div
+  className="root"
+>
+  <div
+    className="root"
+  >
+    <div
+      className="type"
+    >
+      Error
+    </div>
+    <div>
+      an error
+    </div>
+    <div
+      className="info"
+    >
+      some stack info
+    </div>
   </div>
 </div>
 `;

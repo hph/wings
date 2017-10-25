@@ -202,6 +202,28 @@ describe('App showOrHideTitleBar', () => {
     app.showOrHideTitleBar(new Date().getTime());
     expect(props.setTheme).toHaveBeenCalledWith(props);
   });
+
+  it('should render an error boundary when componentDidCatch is fired', () => {
+    const app = new App(defaultProps);
+    app.setState = jest.fn();
+    const error = new Error('some error');
+    const info = { componentStack: 'some info' };
+    app.componentDidCatch(error, info);
+    expect(app.setState).toHaveBeenCalledWith({
+      error,
+      errorStack: info.componentStack,
+    });
+  });
+
+  it('should render an error boundary when there is an error', () => {
+    const component = renderer.create(<App {...defaultProps} />);
+    expect(component.toJSON()).toMatchSnapshot();
+    component.getInstance().setState({
+      error: new Error('an error'),
+      errorStack: 'some stack info',
+    });
+    expect(component.toJSON()).toMatchSnapshot();
+  });
 });
 
 describe('setTheme', () => {

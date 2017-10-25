@@ -1,12 +1,13 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import setCustomProperties from 'dynamic-css-properties';
+import _ from 'lodash';
 
 import {
   Browser,
   CommandBar,
+  ErrorBoundary,
   Logo,
   Pane,
   TitleBar,
@@ -20,6 +21,7 @@ export class App extends Component {
   constructor (props) {
     super(props);
     props.setTheme(props);
+    this.state = {};
   }
 
   componentDidMount () {
@@ -30,6 +32,11 @@ export class App extends Component {
     if (nextProps.theme !== this.props.theme) {
       this.props.setTheme(nextProps);
     }
+  }
+
+  // eslint-disable-next-line react/sort-comp
+  componentDidCatch (error, info) {
+    this.setState({ error, errorStack: info.componentStack });
   }
 
   onResize = () => {
@@ -59,16 +66,24 @@ export class App extends Component {
     return (
       <div className={css.root}>
         {this.props.isTitleBarVisible && <TitleBar label="Wings" />}
-        {this.props.isCommandBarVisible && <CommandBar />}
-        <div className={css.main}>
-          {this.props.isTreeViewVisible && <TreeView />}
-          {_.isEmpty(this.props.panes) ? <Logo /> : (
-            _.map(this.props.panes, ({ id }, index) => (
-              <Pane paneId={id} key={id} isFirst={index === 0} />
-            ))
-          )}
-          {this.props.isBrowserVisible && <Browser />}
-        </div>
+        {this.state.error ? (
+          <ErrorBoundary
+            type={this.state.error.name}
+            message={this.state.error.message}
+            info={this.state.errorStack}
+          />
+        ) : (
+          <div className={css.main}>
+            {this.props.isCommandBarVisible && <CommandBar />}
+            {this.props.isTreeViewVisible && <TreeView />}
+            {_.isEmpty(this.props.panes) ? <Logo /> : (
+              _.map(this.props.panes, ({ id }, index) => (
+                <Pane paneId={id} key={id} isFirst={index === 0} />
+              ))
+            )}
+            {this.props.isBrowserVisible && <Browser />}
+          </div>
+        )}
       </div>
     );
   }

@@ -1,6 +1,7 @@
 export App from 'ui/components/app';
 export Browser from 'ui/components/browser';
 export CommandBar from 'ui/components/command-bar';
+export ErrorBoundary from 'ui/components/error-boundary';
 export Cursor from 'ui/components/cursor';
 export LineNumbers from 'ui/components/line-numbers';
 export Logo from 'ui/components/logo';

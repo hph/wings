@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.type {
+  color: var(--negative-color);
+  font-size: 1.2rem;
+}
+
+.info {
+  color: var(--secondary-color);
+  overflow: auto;
+  white-space: pre-line;
+}

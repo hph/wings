@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorBoundary should render an error message with the provided props 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="type"
+  >
+    Error type
+  </div>
+  <div>
+    The error message
+  </div>
+  <div
+    className="info"
+  >
+    Some info about where the error originated
+  </div>
+</div>
+`;
