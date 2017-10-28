@@ -15,6 +15,7 @@
   white-space: nowrap;
   color: var(--secondary-color);
   background-color: var(--secondary-background-color);
+  -webkit-app-region: drag;
 }
 
 .scroll-wrapper {
