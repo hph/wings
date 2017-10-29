@@ -1,0 +1,701 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Line should render children if no tokens are provided 1`] = `
+<div>
+  Hello, world!
+</div>
+`;
+
+exports[`Line should render tokens if provided 1`] = `
+<div>
+  <Token
+    type="declaration"
+  >
+    const
+  </Token>
+  <Token
+    type={undefined}
+  >
+     
+  </Token>
+  <Token
+    type="name"
+  >
+    foo
+  </Token>
+  <Token
+    type="operator"
+  >
+    =
+  </Token>
+  <Token
+    type="value"
+  >
+    'bar'
+  </Token>
+  <Token
+    type="comment"
+  >
+    ;
+  </Token>
+</div>
+`;
+
+exports[`tokenizer collectTokens should output "from" as the appropriate token 1`] = `
+Array [
+  Object {
+    "type": "module",
+    "value": "import",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "name",
+    "value": "React",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "module",
+    "value": "from",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "value",
+    "value": "'react'",
+  },
+  Object {
+    "type": "comment",
+    "value": ";",
+  },
+]
+`;
+
+exports[`tokenizer collectTokens should output "let" as the appropriate token 1`] = `
+Array [
+  Object {
+    "type": "declaration",
+    "value": "let",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "name",
+    "value": "foo",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "operator",
+    "value": "=",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "value",
+    "value": "'bar'",
+  },
+  Object {
+    "type": "comment",
+    "value": ";",
+  },
+]
+`;
+
+exports[`tokenizer collectTokens should output the appropriate token for template tags 1`] = `
+Array [
+  Object {
+    "type": "value",
+    "value": "\`",
+  },
+  Object {
+    "type": "value",
+    "value": "foo",
+  },
+  Object {
+    "type": "value",
+    "value": "\`",
+  },
+]
+`;
+
+exports[`tokenizer collectTokens should output the appropriate tokens for JSX tags 1`] = `
+Array [
+  Object {
+    "type": "declaration",
+    "value": "const",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "name",
+    "value": "Foo",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "operator",
+    "value": "=",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "other",
+    "value": "(",
+  },
+  Object {
+    "type": "other",
+    "value": ")",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "operator",
+    "value": "=>",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "jsx",
+    "value": "<",
+  },
+  Object {
+    "type": "jsx",
+    "value": "div",
+  },
+  Object {
+    "type": "jsx",
+    "value": ">",
+  },
+  Object {
+    "type": "name",
+    "value": "foo",
+  },
+  Object {
+    "type": "jsx",
+    "value": "<",
+  },
+  Object {
+    "type": "operator",
+    "value": "/",
+  },
+  Object {
+    "type": "jsx",
+    "value": "div",
+  },
+  Object {
+    "type": "jsx",
+    "value": ">",
+  },
+  Object {
+    "type": "comment",
+    "value": ";",
+  },
+]
+`;
+
+exports[`tokenizer collectTokens should output the appropriate tokens for RegEx patterns 1`] = `
+Array [
+  Object {
+    "type": "declaration",
+    "value": "const",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "name",
+    "value": "pattern",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "operator",
+    "value": "=",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "value",
+    "value": "/pat/",
+  },
+  Object {
+    "type": "comment",
+    "value": ";",
+  },
+]
+`;
+
+exports[`tokenizer collectTokens should output the appropriate tokens for a more complex program 1`] = `
+Array [
+  Object {
+    "type": "module",
+    "value": "import",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "name",
+    "value": "React",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "module",
+    "value": "from",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "value",
+    "value": "'react'",
+  },
+  Object {
+    "type": "comment",
+    "value": ";",
+  },
+  Object {
+    "value": "  ",
+  },
+  Object {
+    "type": "module",
+    "value": "export",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "keyword",
+    "value": "default",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "keyword",
+    "value": "class",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "name",
+    "value": "SomeComponent",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "keyword",
+    "value": "extends",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "name",
+    "value": "React",
+  },
+  Object {
+    "type": "other",
+    "value": ".",
+  },
+  Object {
+    "type": "name",
+    "value": "Component",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "other",
+    "value": "{",
+  },
+  Object {
+    "value": "   ",
+  },
+  Object {
+    "type": "name",
+    "value": "state",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "operator",
+    "value": "=",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "other",
+    "value": "{",
+  },
+  Object {
+    "value": "     ",
+  },
+  Object {
+    "type": "name",
+    "value": "isMounted",
+  },
+  Object {
+    "type": "operator",
+    "value": ":",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "value",
+    "value": "false",
+  },
+  Object {
+    "type": "other",
+    "value": ",",
+  },
+  Object {
+    "value": "   ",
+  },
+  Object {
+    "type": "other",
+    "value": "}",
+  },
+  Object {
+    "type": "comment",
+    "value": ";",
+  },
+  Object {
+    "value": "    ",
+  },
+  Object {
+    "type": "name",
+    "value": "componentDidMount",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "other",
+    "value": "(",
+  },
+  Object {
+    "type": "other",
+    "value": ")",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "other",
+    "value": "{",
+  },
+  Object {
+    "value": "     ",
+  },
+  Object {
+    "type": "name",
+    "value": "console",
+  },
+  Object {
+    "type": "other",
+    "value": ".",
+  },
+  Object {
+    "type": "name",
+    "value": "log",
+  },
+  Object {
+    "type": "other",
+    "value": "(",
+  },
+  Object {
+    "type": "value",
+    "value": "'Mounted!'",
+  },
+  Object {
+    "type": "other",
+    "value": ")",
+  },
+  Object {
+    "type": "comment",
+    "value": ";",
+  },
+  Object {
+    "value": "     ",
+  },
+  Object {
+    "type": "keyword",
+    "value": "this",
+  },
+  Object {
+    "type": "other",
+    "value": ".",
+  },
+  Object {
+    "type": "name",
+    "value": "setSTate",
+  },
+  Object {
+    "type": "other",
+    "value": "(",
+  },
+  Object {
+    "type": "other",
+    "value": "{",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "name",
+    "value": "isMounted",
+  },
+  Object {
+    "type": "operator",
+    "value": ":",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "value",
+    "value": "true",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "other",
+    "value": "}",
+  },
+  Object {
+    "type": "other",
+    "value": ")",
+  },
+  Object {
+    "type": "comment",
+    "value": ";",
+  },
+  Object {
+    "value": "   ",
+  },
+  Object {
+    "type": "other",
+    "value": "}",
+  },
+  Object {
+    "value": "    ",
+  },
+  Object {
+    "type": "name",
+    "value": "render",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "other",
+    "value": "(",
+  },
+  Object {
+    "type": "other",
+    "value": ")",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "other",
+    "value": "{",
+  },
+  Object {
+    "value": "     ",
+  },
+  Object {
+    "type": "keyword",
+    "value": "return",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "other",
+    "value": "(",
+  },
+  Object {
+    "value": "       ",
+  },
+  Object {
+    "type": "jsx",
+    "value": "<",
+  },
+  Object {
+    "type": "jsx",
+    "value": "div",
+  },
+  Object {
+    "type": "jsx",
+    "value": ">",
+  },
+  Object {
+    "type": "name",
+    "value": "Component ",
+  },
+  Object {
+    "type": "other",
+    "value": "{",
+  },
+  Object {
+    "type": "other",
+    "value": "!",
+  },
+  Object {
+    "type": "keyword",
+    "value": "this",
+  },
+  Object {
+    "type": "other",
+    "value": ".",
+  },
+  Object {
+    "type": "name",
+    "value": "state",
+  },
+  Object {
+    "type": "other",
+    "value": ".",
+  },
+  Object {
+    "type": "name",
+    "value": "isMounted",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "operator",
+    "value": "&&",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "value",
+    "value": "'not'",
+  },
+  Object {
+    "type": "other",
+    "value": "}",
+  },
+  Object {
+    "type": "name",
+    "value": " mounted.",
+  },
+  Object {
+    "type": "jsx",
+    "value": "<",
+  },
+  Object {
+    "type": "operator",
+    "value": "/",
+  },
+  Object {
+    "type": "jsx",
+    "value": "div",
+  },
+  Object {
+    "type": "jsx",
+    "value": ">",
+  },
+  Object {
+    "value": "     ",
+  },
+  Object {
+    "type": "other",
+    "value": ")",
+  },
+  Object {
+    "type": "comment",
+    "value": ";",
+  },
+  Object {
+    "value": "   ",
+  },
+  Object {
+    "type": "other",
+    "value": "}",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "other",
+    "value": "}",
+  },
+]
+`;
+
+exports[`tokenizer collectTokens should output the appropriate tokens for comments 1`] = `
+Array [
+  Object {
+    "type": "declaration",
+    "value": "const",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "name",
+    "value": "foo",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "operator",
+    "value": "=",
+  },
+  Object {
+    "value": " ",
+  },
+  Object {
+    "type": "value",
+    "value": "'bar'",
+  },
+  Object {
+    "type": "comment",
+    "value": ";",
+  },
+  Object {
+    "type": "comment",
+    "value": " // yep!",
+  },
+]
+`;
+
+exports[`tokenizer collectTokens should output the appropriate tokens for comments 2`] = `
+Array [
+  Object {
+    "type": "comment",
+    "value": "/* This is a comment */",
+  },
+]
+`;

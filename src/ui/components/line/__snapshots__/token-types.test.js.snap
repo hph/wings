@@ -1,0 +1,1518 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getType should return a static value for _break 1`] = `
+Object {
+  "name": "_break",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _case 1`] = `
+Object {
+  "name": "_case",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _catch 1`] = `
+Object {
+  "name": "_catch",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _class 1`] = `
+Object {
+  "name": "_class",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _const 1`] = `
+Object {
+  "name": "_const",
+  "type": "declaration",
+}
+`;
+
+exports[`getType should return a static value for _continue 1`] = `
+Object {
+  "name": "_continue",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _debugger 1`] = `
+Object {
+  "name": "_debugger",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _default 1`] = `
+Object {
+  "name": "_default",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _delete 1`] = `
+Object {
+  "name": "_delete",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _do 1`] = `
+Object {
+  "name": "_do",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _else 1`] = `
+Object {
+  "name": "_else",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _export 1`] = `
+Object {
+  "name": "_export",
+  "type": "module",
+}
+`;
+
+exports[`getType should return a static value for _extends 1`] = `
+Object {
+  "name": "_extends",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _false 1`] = `
+Object {
+  "name": "_false",
+  "type": "value",
+}
+`;
+
+exports[`getType should return a static value for _finally 1`] = `
+Object {
+  "name": "_finally",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _for 1`] = `
+Object {
+  "name": "_for",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _from 1`] = `
+Object {
+  "name": "_from",
+  "type": "module",
+}
+`;
+
+exports[`getType should return a static value for _function 1`] = `
+Object {
+  "name": "_function",
+  "type": "declaration",
+}
+`;
+
+exports[`getType should return a static value for _if 1`] = `
+Object {
+  "name": "_if",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _import 1`] = `
+Object {
+  "name": "_import",
+  "type": "module",
+}
+`;
+
+exports[`getType should return a static value for _in 1`] = `
+Object {
+  "name": "_in",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _instanceof 1`] = `
+Object {
+  "name": "_instanceof",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _let 1`] = `
+Object {
+  "name": "_let",
+  "type": "declaration",
+}
+`;
+
+exports[`getType should return a static value for _new 1`] = `
+Object {
+  "name": "_new",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _null 1`] = `
+Object {
+  "name": "_null",
+  "type": "value",
+}
+`;
+
+exports[`getType should return a static value for _return 1`] = `
+Object {
+  "name": "_return",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _super 1`] = `
+Object {
+  "name": "_super",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _switch 1`] = `
+Object {
+  "name": "_switch",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _this 1`] = `
+Object {
+  "name": "_this",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _throw 1`] = `
+Object {
+  "name": "_throw",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _true 1`] = `
+Object {
+  "name": "_true",
+  "type": "value",
+}
+`;
+
+exports[`getType should return a static value for _try 1`] = `
+Object {
+  "name": "_try",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _typeof 1`] = `
+Object {
+  "name": "_typeof",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _var 1`] = `
+Object {
+  "name": "_var",
+  "type": "declaration",
+}
+`;
+
+exports[`getType should return a static value for _void 1`] = `
+Object {
+  "name": "_void",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _while 1`] = `
+Object {
+  "name": "_while",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for _with 1`] = `
+Object {
+  "name": "_with",
+  "type": "keyword",
+}
+`;
+
+exports[`getType should return a static value for arrow 1`] = `
+Object {
+  "name": "arrow",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for assign 1`] = `
+Object {
+  "name": "assign",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for backQuote 1`] = `
+Object {
+  "name": "backQuote",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for bitShift 1`] = `
+Object {
+  "name": "bitShift",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for bitwiseAND 1`] = `
+Object {
+  "name": "bitwiseAND",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for bitwiseOR 1`] = `
+Object {
+  "name": "bitwiseOR",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for bitwiseXOR 1`] = `
+Object {
+  "name": "bitwiseXOR",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for braceL 1`] = `
+Object {
+  "name": "braceL",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for braceR 1`] = `
+Object {
+  "name": "braceR",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for bracketL 1`] = `
+Object {
+  "name": "bracketL",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for bracketR 1`] = `
+Object {
+  "name": "bracketR",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for colon 1`] = `
+Object {
+  "name": "colon",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for comma 1`] = `
+Object {
+  "name": "comma",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for comment 1`] = `
+Object {
+  "name": "comment",
+  "type": "comment",
+}
+`;
+
+exports[`getType should return a static value for dollarBraceL 1`] = `
+Object {
+  "name": "dollarBraceL",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for dot 1`] = `
+Object {
+  "name": "dot",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for ellipsis 1`] = `
+Object {
+  "name": "ellipsis",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for eof 1`] = `
+Object {
+  "name": "eof",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for eq 1`] = `
+Object {
+  "name": "eq",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for equality 1`] = `
+Object {
+  "name": "equality",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for incDec 1`] = `
+Object {
+  "name": "incDec",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for invalidTemplate 1`] = `
+Object {
+  "name": "invalidTemplate",
+  "type": "value",
+}
+`;
+
+exports[`getType should return a static value for jsxName 1`] = `
+Object {
+  "name": "jsxName",
+  "type": "jsx",
+}
+`;
+
+exports[`getType should return a static value for jsxTagEnd 1`] = `
+Object {
+  "name": "jsxTagEnd",
+  "type": "jsx",
+}
+`;
+
+exports[`getType should return a static value for jsxTagStart 1`] = `
+Object {
+  "name": "jsxTagStart",
+  "type": "jsx",
+}
+`;
+
+exports[`getType should return a static value for jsxText 1`] = `
+Object {
+  "name": "jsxText",
+  "type": "name",
+}
+`;
+
+exports[`getType should return a static value for logicalAND 1`] = `
+Object {
+  "name": "logicalAND",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for logicalOR 1`] = `
+Object {
+  "name": "logicalOR",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for modulo 1`] = `
+Object {
+  "name": "modulo",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for name 1`] = `
+Object {
+  "name": "name",
+  "type": "name",
+}
+`;
+
+exports[`getType should return a static value for num 1`] = `
+Object {
+  "name": "num",
+  "type": "value",
+}
+`;
+
+exports[`getType should return a static value for parenL 1`] = `
+Object {
+  "name": "parenL",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for parenR 1`] = `
+Object {
+  "name": "parenR",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for plusMin 1`] = `
+Object {
+  "name": "plusMin",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for prefix 1`] = `
+Object {
+  "name": "prefix",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for question 1`] = `
+Object {
+  "name": "question",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for regexp 1`] = `
+Object {
+  "name": "regexp",
+  "type": "value",
+}
+`;
+
+exports[`getType should return a static value for relational 1`] = `
+Object {
+  "name": "relational",
+  "type": "other",
+}
+`;
+
+exports[`getType should return a static value for semi 1`] = `
+Object {
+  "name": "semi",
+  "type": "comment",
+}
+`;
+
+exports[`getType should return a static value for slash 1`] = `
+Object {
+  "name": "slash",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for star 1`] = `
+Object {
+  "name": "star",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for starstar 1`] = `
+Object {
+  "name": "starstar",
+  "type": "operator",
+}
+`;
+
+exports[`getType should return a static value for string 1`] = `
+Object {
+  "name": "string",
+  "type": "value",
+}
+`;
+
+exports[`getType should return a static value for template 1`] = `
+Object {
+  "name": "template",
+  "type": "value",
+}
+`;
+
+exports[`tokenTypes should have a static value 1`] = `
+Object {
+  "_break": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "break",
+    "label": "break",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_case": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "case",
+    "label": "case",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_catch": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "catch",
+    "label": "catch",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_class": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "class",
+    "label": "class",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": [Function],
+  },
+  "_const": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "const",
+    "label": "const",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_continue": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "continue",
+    "label": "continue",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_debugger": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "debugger",
+    "label": "debugger",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_default": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "default",
+    "label": "default",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_delete": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "delete",
+    "label": "delete",
+    "postfix": false,
+    "prefix": true,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "_do": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": true,
+    "keyword": "do",
+    "label": "do",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_else": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "else",
+    "label": "else",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_export": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "export",
+    "label": "export",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_extends": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "extends",
+    "label": "extends",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_false": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "false",
+    "label": "false",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "_finally": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "finally",
+    "label": "finally",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_for": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": true,
+    "keyword": "for",
+    "label": "for",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_from": Object {
+    "keyword": "from",
+    "label": "from",
+  },
+  "_function": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "function",
+    "label": "function",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": [Function],
+  },
+  "_if": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "if",
+    "label": "if",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_import": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "import",
+    "label": "import",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_in": TokenType {
+    "beforeExpr": true,
+    "binop": 7,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "in",
+    "label": "in",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_instanceof": TokenType {
+    "beforeExpr": true,
+    "binop": 7,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "instanceof",
+    "label": "instanceof",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_let": Object {
+    "keyword": "let",
+    "label": "let",
+  },
+  "_new": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "new",
+    "label": "new",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "_null": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "null",
+    "label": "null",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "_return": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "return",
+    "label": "return",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_super": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "super",
+    "label": "super",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "_switch": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "switch",
+    "label": "switch",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_this": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "this",
+    "label": "this",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "_throw": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "throw",
+    "label": "throw",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_true": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "true",
+    "label": "true",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "_try": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "try",
+    "label": "try",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_typeof": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "typeof",
+    "label": "typeof",
+    "postfix": false,
+    "prefix": true,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "_var": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "var",
+    "label": "var",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_void": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "void",
+    "label": "void",
+    "postfix": false,
+    "prefix": true,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "_while": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": true,
+    "keyword": "while",
+    "label": "while",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "_with": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": "with",
+    "label": "with",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "arrow": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "=>",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "assign": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": true,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "_=",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "backQuote": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "\`",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": [Function],
+  },
+  "bitShift": TokenType {
+    "beforeExpr": true,
+    "binop": 8,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "<</>>/>>>",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "bitwiseAND": TokenType {
+    "beforeExpr": true,
+    "binop": 5,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "&",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "bitwiseOR": TokenType {
+    "beforeExpr": true,
+    "binop": 3,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "|",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "bitwiseXOR": TokenType {
+    "beforeExpr": true,
+    "binop": 4,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "^",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "braceL": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "{",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": [Function],
+  },
+  "braceR": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "}",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": [Function],
+  },
+  "bracketL": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "[",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "bracketR": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "]",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "colon": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": ":",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "comma": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": ",",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "comment": Object {},
+  "dollarBraceL": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "\${",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": [Function],
+  },
+  "dot": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": ".",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "ellipsis": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "...",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "eof": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "eof",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "eq": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": true,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "=",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "equality": TokenType {
+    "beforeExpr": true,
+    "binop": 6,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "==/!=/===/!==",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "incDec": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "++/--",
+    "postfix": true,
+    "prefix": true,
+    "startsExpr": true,
+    "updateContext": [Function],
+  },
+  "invalidTemplate": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "invalidTemplate",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "jsxName": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "jsxName",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "jsxTagEnd": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "jsxTagEnd",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": [Function],
+  },
+  "jsxTagStart": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "jsxTagStart",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": [Function],
+  },
+  "jsxText": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "jsxText",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "logicalAND": TokenType {
+    "beforeExpr": true,
+    "binop": 2,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "&&",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "logicalOR": TokenType {
+    "beforeExpr": true,
+    "binop": 1,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "||",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "modulo": TokenType {
+    "beforeExpr": true,
+    "binop": 10,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "%",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "name": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "name",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": [Function],
+  },
+  "num": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "num",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "parenL": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "(",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": [Function],
+  },
+  "parenR": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": ")",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": [Function],
+  },
+  "plusMin": TokenType {
+    "beforeExpr": true,
+    "binop": 9,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "+/-",
+    "postfix": false,
+    "prefix": true,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "prefix": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "!/~",
+    "postfix": false,
+    "prefix": true,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "question": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "?",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "regexp": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "regexp",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "relational": TokenType {
+    "beforeExpr": true,
+    "binop": 7,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "</>/<=/>=",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "semi": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": ";",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "slash": TokenType {
+    "beforeExpr": true,
+    "binop": 10,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "/",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "star": TokenType {
+    "beforeExpr": true,
+    "binop": 10,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "*",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": [Function],
+  },
+  "starstar": TokenType {
+    "beforeExpr": true,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "**",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+  "string": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "string",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": true,
+    "updateContext": null,
+  },
+  "template": TokenType {
+    "beforeExpr": false,
+    "binop": null,
+    "isAssign": false,
+    "isLoop": false,
+    "keyword": undefined,
+    "label": "template",
+    "postfix": false,
+    "prefix": false,
+    "startsExpr": false,
+    "updateContext": null,
+  },
+}
+`;

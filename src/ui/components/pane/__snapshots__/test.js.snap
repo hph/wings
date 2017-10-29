@@ -39,21 +39,21 @@ exports[`Pane only renders visible lines 1`] = `
       }
     }
   >
-    <div>
+    <Line>
       0
-    </div>
-    <div>
+    </Line>
+    <Line>
       1
-    </div>
-    <div>
+    </Line>
+    <Line>
       2
-    </div>
-    <div>
+    </Line>
+    <Line>
       3
-    </div>
-    <div>
+    </Line>
+    <Line>
       4
-    </div>
+    </Line>
   </div>
 </div>
 `;
@@ -195,12 +195,12 @@ exports[`Pane renders lines of code 1`] = `
       }
     }
   >
-    <div>
+    <Line>
       hello, world!
-    </div>
-    <div>
+    </Line>
+    <Line>
       this is just marvellous!
-    </div>
+    </Line>
   </div>
 </div>
 `;
@@ -223,21 +223,21 @@ exports[`Pane starts rendering lines from the first visible row as configured 1`
       }
     }
   >
-    <div>
+    <Line>
       10
-    </div>
-    <div>
+    </Line>
+    <Line>
       11
-    </div>
-    <div>
+    </Line>
+    <Line>
       12
-    </div>
-    <div>
+    </Line>
+    <Line>
       13
-    </div>
-    <div>
+    </Line>
+    <Line>
       14
-    </div>
+    </Line>
   </div>
 </div>
 `;

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Token should render children in a span 1`] = `
+<span
+  className="undefined"
+>
+  token
+</span>
+`;
+
+exports[`Token should set a className prop based on the type 1`] = `
+<span
+  className="comment"
+>
+  token
+</span>
+`;

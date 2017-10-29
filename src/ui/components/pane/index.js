@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import { Cursor, LineNumbers } from 'ui/components';
+import { Cursor, Line, LineNumbers } from 'ui/components';
 import { updateConfig, updatePane, userInputFocus } from 'ui/state/actions';
 import { charSizes, paneById } from 'ui/state/selectors';
 import css from './styles.css';
@@ -105,7 +105,7 @@ export class Pane extends Component {
           onMouseDown={this.onTextClick}
           style={{ left: textLeft }}
         >
-          {_.map(lines, (line, index) => <div key={index}>{line}</div>)}
+          {_.map(lines, (line, index) => <Line key={index}>{line}</Line>)}
           {this.props.currentPaneId === this.props.paneId && (
             <Cursor paneId={this.props.paneId} />
           )}

@@ -1,0 +1,29 @@
+.comment {
+  color: var(--syntax-comment);
+}
+
+.name,
+.other {
+  color: var(--syntax-name);
+}
+
+.module {
+  color: var(--syntax-module);
+}
+
+.declaration {
+  color: var(--syntax-declaration);
+}
+
+.keyword,
+.operator {
+  color: var(--syntax-keyword);
+}
+
+.jsx {
+  color: var(--syntax-jsx);
+}
+
+.value {
+  color: var(--syntax-value);
+}

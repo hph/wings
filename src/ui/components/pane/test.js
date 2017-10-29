@@ -8,6 +8,7 @@ jest.mock('ui/utils', () => ({
   computeFontDimensions: jest.fn(() => ({ width: 5, height: 21 })),
 }));
 jest.mock('ui/components/cursor', () => 'Cursor');
+jest.mock('ui/components/line', () => 'Line');
 jest.mock('ui/components/line-numbers', () => 'LineNumbers');
 
 function createNodeMock (element) {

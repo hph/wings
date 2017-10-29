@@ -20,6 +20,13 @@ editor:
     cursorColor: '#d33682'
     directoryTriangleColor: '#268bd2'
     titleBarHeight: 23px
+    syntaxComment: '#586e75'
+    syntaxDeclaration: '#b58900'
+    syntaxJsx: '#268bd2'
+    syntaxKeyword: '#859900'
+    syntaxModule: '#cb4b16'
+    syntaxName: '#93a1a1'
+    syntaxValue: '#2aa198'
   commands:
     w: saveCurrentFile
     q: exitCurrentFileOrApp
