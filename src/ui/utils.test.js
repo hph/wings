@@ -10,29 +10,25 @@ import {
   updateFrom,
 } from './utils';
 
-const noMatchPaths = [
-  '/',
-  '/foo/bar',
-  '/Users/most-likely-not-the-user',
-];
+const noMatchPaths = ['/', '/foo/bar', '/Users/most-likely-not-the-user'];
 const homedir = process.env.HOME;
 const matchPaths = [
   [homedir, '~'],
-  [`${ homedir }/`, '~/'],
-  [`${ homedir }/something`, '~/something'],
+  [`${homedir}/`, '~/'],
+  [`${homedir}/something`, '~/something'],
 ];
-const root = `${ tmpdir() }/root`;
+const root = `${tmpdir()}/root`;
 
 beforeAll(() => {
   fs.mkdirSync(root);
-  fs.mkdirSync(`${ root }/foo`);
-  fs.mkdirSync(`${ root }/bar`);
-  fs.mkdirSync(`${ root }/bar/unlisted-directory`);
+  fs.mkdirSync(`${root}/foo`);
+  fs.mkdirSync(`${root}/bar`);
+  fs.mkdirSync(`${root}/bar/unlisted-directory`);
 
   const touch = path => fs.closeSync(fs.openSync(path, 'w'));
-  touch(`${ root }/file`);
-  touch(`${ root }/foo/unlisted-file-1`);
-  touch(`${ root }/bar/unlisted-directory/unlisted-file-2`);
+  touch(`${root}/file`);
+  touch(`${root}/foo/unlisted-file-1`);
+  touch(`${root}/bar/unlisted-directory/unlisted-file-2`);
 });
 
 afterAll(() => {
@@ -57,8 +53,8 @@ describe('expandPath', () => {
   });
 
   it('replaces the tilde with the home directory when applicable', () => {
-    // eslint-disable-next-line fp/no-mutating-methods
-    [...matchPaths].map(paths => paths.reverse())
+    [...matchPaths]
+      .map(paths => paths.reverse()) // eslint-disable-line fp/no-mutating-methods
       .forEach(([collapsed, original]) => {
         expect(expandPath(collapsed)).toEqual(original);
       });
@@ -82,7 +78,7 @@ describe('computeFontDimensions', () => {
 
 describe('listContents', () => {
   it('throws when the directory does not exist', () => {
-    return listContents(`${ root }/not-there`)
+    return listContents(`${root}/not-there`)
       .then(() => expect(true).toBe(false)) // This will never run.
       .catch(error => expect(error.code).toEqual('ENOENT'));
   });
@@ -91,13 +87,8 @@ describe('listContents', () => {
     return listContents(root).then(results => {
       expect(results).toEqual({
         path: root,
-        files: [
-          'file',
-        ],
-        directories: [
-          'bar',
-          'foo',
-        ],
+        files: ['file'],
+        directories: ['bar', 'foo'],
       });
     });
   });

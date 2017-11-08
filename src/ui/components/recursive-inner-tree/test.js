@@ -40,7 +40,8 @@ describe('RecursiveInnerTree', () => {
     expect(tree).toMatchSnapshot();
 
     const stopPropagation = jest.fn();
-    return instance.toggleDirectory('/foo')({ stopPropagation })
+    return instance
+      .toggleDirectory('/foo')({ stopPropagation })
       .then(() => {
         expect(stopPropagation).toHaveBeenCalled();
         tree = component.toJSON();
@@ -85,11 +86,14 @@ describe('RecursiveInnerTree', () => {
     const stopPropagation = jest.fn();
     recursiveInnerTree.setState = jest.fn();
     recursiveInnerTree.state = {};
-    return recursiveInnerTree.toggleDirectory('/home')({ stopPropagation })
+    return recursiveInnerTree
+      .toggleDirectory('/home')({ stopPropagation })
       .then(() => {
         expect(stopPropagation).toHaveBeenCalled();
         expect(listContents).toHaveBeenCalledWith('/home');
-        expect(recursiveInnerTree.setState).toHaveBeenCalledWith({ '/home': '<results>' });
+        expect(recursiveInnerTree.setState).toHaveBeenCalledWith({
+          '/home': '<results>',
+        });
       });
   });
 
@@ -103,7 +107,8 @@ describe('RecursiveInnerTree', () => {
       createPane,
     });
     const stopPropagation = jest.fn();
-    return recursiveInnerTree.openFile('/file.txt')({ stopPropagation })
+    return recursiveInnerTree
+      .openFile('/file.txt')({ stopPropagation })
       .then(() => {
         expect(stopPropagation).toHaveBeenCalled();
         expect(readFile).toHaveBeenCalled();

@@ -3,8 +3,8 @@ import renderer from 'react-test-renderer';
 
 import { Browser, withScheme } from './index';
 
-function createNodeMockCreator (methods = {}) {
-  return (element) => {
+function createNodeMockCreator(methods = {}) {
+  return element => {
     if (element.type === 'input') {
       return {
         select: () => {},
@@ -31,7 +31,9 @@ describe('Browser', () => {
       ...passedProps,
     };
     const createNodeMock = createNodeMockCreator(mockMethods);
-    const component = renderer.create(<Browser {...props} />, { createNodeMock });
+    const component = renderer.create(<Browser {...props} />, {
+      createNodeMock,
+    });
     return {
       component,
       tree: component.toJSON(),
@@ -60,7 +62,9 @@ describe('Browser', () => {
 
     expect(addEventListener.mock.calls.length).toBe(3);
     expect(addEventListener.mock.calls[0][0]).toEqual('will-navigate');
-    expect(addEventListener.mock.calls[1][0]).toEqual('did-get-redirect-request');
+    expect(addEventListener.mock.calls[1][0]).toEqual(
+      'did-get-redirect-request',
+    );
     expect(addEventListener.mock.calls[2][0]).toEqual('did-fail-load');
   });
 
@@ -136,10 +140,16 @@ describe('Browser', () => {
     browser.onDidGetRedirectRequest({ newURL: '', isMainFrame: true });
     expect(browser.setState).not.toHaveBeenCalled();
 
-    browser.onDidGetRedirectRequest({ newURL: 'example.com', isMainFrame: false });
+    browser.onDidGetRedirectRequest({
+      newURL: 'example.com',
+      isMainFrame: false,
+    });
     expect(browser.setState).not.toHaveBeenCalled();
 
-    browser.onDidGetRedirectRequest({ newURL: 'example.com', isMainFrame: true });
+    browser.onDidGetRedirectRequest({
+      newURL: 'example.com',
+      isMainFrame: true,
+    });
     expect(browser.setState).toHaveBeenCalledWith({
       navLocation: 'example.com',
     });

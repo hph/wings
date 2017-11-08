@@ -11,19 +11,20 @@ export const getConfigDefaults = () => ({
   cwd: process.cwd(),
 });
 
-export function getPreloadedState () {
+export function getPreloadedState() {
   return JSON.parse(window.location.hash.slice(1));
 }
 
-export function getText (filename) {
+export function getText(filename) {
   if (!filename) {
     return Promise.resolve();
   }
   return readFile(filename, { encoding: 'utf-8' });
 }
 
-export default () => configureStore({
-  getPreloadedState,
-  getText,
-  configDefaults: getConfigDefaults(),
-});
+export default () =>
+  configureStore({
+    getPreloadedState,
+    getText,
+    configDefaults: getConfigDefaults(),
+  });

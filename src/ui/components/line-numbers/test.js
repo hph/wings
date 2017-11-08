@@ -36,7 +36,9 @@ describe('LineNumbers', () => {
       ...defaultProps,
       ...passedProps,
     };
-    expect(renderer.create(<LineNumbers {...props} />).toJSON()).toMatchSnapshot();
+    expect(
+      renderer.create(<LineNumbers {...props} />).toJSON(),
+    ).toMatchSnapshot();
   };
 
   beforeEach(() => {
@@ -122,7 +124,9 @@ describe('LineNumbers', () => {
         dataset: {},
       },
     });
-    expect(defaultProps.setActiveLine).toHaveBeenCalledWith(defaultProps.totalLines - 1);
+    expect(defaultProps.setActiveLine).toHaveBeenCalledWith(
+      defaultProps.totalLines - 1,
+    );
   });
 });
 
@@ -133,15 +137,17 @@ describe('LineNumbers mapStateToProps', () => {
     theme: {},
     relativeLineNumbers: false,
   };
-  const panes = [{
-    id: paneId,
-    column: 0,
-    row: 0,
-    lines: ['a', 'b', 'c'],
-    height: 800,
-    firstVisibleColumn: 0,
-    firstVisibleRow: 1,
-  }];
+  const panes = [
+    {
+      id: paneId,
+      column: 0,
+      row: 0,
+      lines: ['a', 'b', 'c'],
+      height: 800,
+      firstVisibleColumn: 0,
+      firstVisibleRow: 1,
+    },
+  ];
   const props = {
     paneId,
     innerRef,

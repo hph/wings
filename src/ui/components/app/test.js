@@ -45,7 +45,7 @@ describe('App', () => {
     jest.clearAllMocks();
   });
 
-  const createSnapshot = (passedProps) => {
+  const createSnapshot = passedProps => {
     const props = {
       ...defaultProps,
       ...passedProps,
@@ -113,7 +113,10 @@ describe('App', () => {
     const app = new App(defaultProps);
     app.componentDidMount();
 
-    expect(window.addEventListener).toHaveBeenCalledWith('resize', app.onResize);
+    expect(window.addEventListener).toHaveBeenCalledWith(
+      'resize',
+      app.onResize,
+    );
   });
 
   it('calls setTheme in componentWillReceiveProps when the theme changes', () => {
@@ -251,9 +254,11 @@ describe('setTheme', () => {
         anotherThemeVariable: 'red',
       },
     });
-    expect(setCustomProperties).toHaveBeenCalledWith(expect.objectContaining({
-      anotherThemeVariable: 'red',
-    }));
+    expect(setCustomProperties).toHaveBeenCalledWith(
+      expect.objectContaining({
+        anotherThemeVariable: 'red',
+      }),
+    );
   });
 });
 
@@ -271,16 +276,18 @@ describe('isFullscreen', () => {
 
 describe('App mapStateToProps', () => {
   it('mapStateToProps returns props based on state', () => {
-    expect(mapStateToProps({
-      config: {
-        isBrowserVisible: true,
-        isTreeViewVisible: true,
-        isTitleBarVisible: true,
-        mode: 'normal',
-        theme: {},
-      },
-      panes: [],
-    })).toEqual({
+    expect(
+      mapStateToProps({
+        config: {
+          isBrowserVisible: true,
+          isTreeViewVisible: true,
+          isTitleBarVisible: true,
+          mode: 'normal',
+          theme: {},
+        },
+        panes: [],
+      }),
+    ).toEqual({
       charWidth: 5,
       isBrowserVisible: true,
       isTreeViewVisible: true,

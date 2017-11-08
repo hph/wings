@@ -9,7 +9,7 @@ import {
  * Create an invisible input element outside the viewport and
  * append it to the body.
  */
-export function createElement () {
+export function createElement() {
   const input = document.createElement('input');
   input.style.position = 'absolute';
   input.style.top = '-1000px';
@@ -22,7 +22,7 @@ export function createElement () {
  * Attach event handlers to the provided elements and dispatch
  * actions as appropriate.
  */
-export function attachEventListeners (element, dispatch) {
+export function attachEventListeners(element, dispatch) {
   element.focus();
   element.addEventListener('blur', element.focus);
 
@@ -35,7 +35,7 @@ export function attachEventListeners (element, dispatch) {
     replacePrevious: false,
   };
 
-  element.addEventListener('keydown', (event) => {
+  element.addEventListener('keydown', event => {
     if (event.metaKey && event.key === 'v') {
       return;
     }
@@ -53,7 +53,7 @@ export function attachEventListeners (element, dispatch) {
     }
   });
 
-  element.addEventListener('paste', (event) => {
+  element.addEventListener('paste', event => {
     const value = event.clipboardData.getData('text').split('\n');
     dispatch({ ...defaults, value });
   });
@@ -82,7 +82,7 @@ export function attachEventListeners (element, dispatch) {
  * to capture all user input and retain focus at all times, as well as dealing
  * with normal and composed key values ("´" + "a" = "á" is one such example).
  */
-export default function userInputMiddleware ({ getState, dispatch }) {
+export default function userInputMiddleware({ getState, dispatch }) {
   const input = createElement();
   attachEventListeners(input, dispatch);
 

@@ -25,13 +25,23 @@ describe('configReducer', () => {
     it('should toggle the boolean value of isTreeViewVisible', () => {
       const action = { type: types.TOGGLE_TREE_VIEW };
 
-      expect(configReducer({
-        isTreeViewVisible: false,
-      }, action)).toEqual({ isTreeViewVisible: true });
+      expect(
+        configReducer(
+          {
+            isTreeViewVisible: false,
+          },
+          action,
+        ),
+      ).toEqual({ isTreeViewVisible: true });
 
-      expect(configReducer({
-        isTreeViewVisible: true,
-      }, action)).toEqual({ isTreeViewVisible: false });
+      expect(
+        configReducer(
+          {
+            isTreeViewVisible: true,
+          },
+          action,
+        ),
+      ).toEqual({ isTreeViewVisible: false });
     });
   });
 });
@@ -53,10 +63,7 @@ describe('panesReducer', () => {
         width: 0,
         height: 0,
         filename: action.filename,
-        lines: [
-          'hello',
-          'world!',
-        ],
+        lines: ['hello', 'world!'],
       });
     });
 
@@ -80,10 +87,7 @@ describe('panesReducer', () => {
   });
 
   describe('UPDATE_PANE', () => {
-    const state = [
-      { id: 1 },
-      { id: 2 },
-    ];
+    const state = [{ id: 1 }, { id: 2 }];
     const newValues = {
       key: 'value',
       another: 'value',
@@ -101,10 +105,7 @@ describe('panesReducer', () => {
   });
 
   describe('DESTROY_PANE', () => {
-    const state = [
-      { id: 1 },
-      { id: 2 },
-    ];
+    const state = [{ id: 1 }, { id: 2 }];
 
     expect(panesReducer(state, { type: types.DESTROY_PANE, id: 2 })).toEqual([
       { id: 1 },

@@ -9,8 +9,10 @@ import { safeLoad } from 'js-yaml';
  * Read and resolve the user's config file as JSON if there is one,
  * otherwise resolve an empty object.
  */
-function getUserConfig () {
-  return readFile(path.join(os.homedir(), '.wings.conf.yaml'), { encoding: 'utf-8' })
+function getUserConfig() {
+  return readFile(path.join(os.homedir(), '.wings.conf.yaml'), {
+    encoding: 'utf-8',
+  })
     .then(contents => safeLoad(contents))
     .catch(() => ({})); // A missing user config file is completely acceptable.
 }
@@ -18,16 +20,17 @@ function getUserConfig () {
 /**
  * Read and resolve the default config as JSON.
  */
-function getDefaultConfig () {
-  return readFile(path.join(__dirname, 'default-config.yaml'), { encoding: 'utf-8' })
-    .then(contents => safeLoad(contents));
+function getDefaultConfig() {
+  return readFile(path.join(__dirname, 'default-config.yaml'), {
+    encoding: 'utf-8',
+  }).then(contents => safeLoad(contents));
 }
 
 /**
  * Resolve the application config object, which is composed of default
  * settings and any custom settings defined by the user.
  */
-export default function getConfig () {
+export default function getConfig() {
   return props({
     defaultConfig: getDefaultConfig(),
     userConfig: getUserConfig(),

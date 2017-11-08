@@ -6,7 +6,7 @@ import getConfig from './config';
 
 const tmp = tmpdir();
 const userConfigPath = path.join(homedir(), '.wings.conf.yaml');
-const tmpUserConfigPath = `${ tmp }/wings-conf`;
+const tmpUserConfigPath = `${tmp}/wings-conf`;
 
 describe('getConfig', () => {
   if (!process.env.CI) {
@@ -28,7 +28,8 @@ describe('getConfig', () => {
   });
 
   it('returns user-defined config values and falls back to defaults', () => {
-    return fs.writeFile(userConfigPath, 'window:\n  width: test-value')
+    return fs
+      .writeFile(userConfigPath, 'window:\n  width: test-value')
       .then(getConfig)
       .then(config => {
         expect(config.isDefault).toBe(false);

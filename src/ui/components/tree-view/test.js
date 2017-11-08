@@ -6,7 +6,7 @@ import { TreeView, mapStateToProps } from './index';
 jest.mock('../recursive-inner-tree', () => 'RecursiveInnerTree');
 
 describe('TreeView', () => {
-  const createSnapshot = (passedProps) => {
+  const createSnapshot = passedProps => {
     const props = {
       cwd: '~/Code',
       ...passedProps,

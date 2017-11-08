@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 import { insertAt, updateFrom } from 'ui/utils';
 
-function upOrDown ({ column, row, lines, prevMaxColumn }, direction) {
+function upOrDown({ column, row, lines, prevMaxColumn }, direction) {
   const nextMaxColumn = _.max([0, lines[row + direction].length - 1]);
   let nextColumn = nextMaxColumn;
   let nextPrevMaxColumn = prevMaxColumn;
@@ -18,7 +18,7 @@ function upOrDown ({ column, row, lines, prevMaxColumn }, direction) {
   };
 }
 
-export function insert ({ column, row, lines, value }) {
+export function insert({ column, row, lines, value }) {
   if (_.isArray(value)) {
     const line = lines[row];
     const before = line.substring(0, column);
@@ -29,17 +29,18 @@ export function insert ({ column, row, lines, value }) {
     // Any text in the current line in front of the cursor must be prepended to
     // the first pasted line and any text in the current line under and after
     // the cursor must be appended to the last pasted line.
-    valueCopy[0] = `${ before }${ valueCopy[0] || '' }`;
-    valueCopy[lastIndex] = `${ valueCopy[lastIndex] || '' }${ after }`;
+    valueCopy[0] = `${before}${valueCopy[0] || ''}`;
+    valueCopy[lastIndex] = `${valueCopy[lastIndex] || ''}${after}`;
 
     const newLines = [
       ..._.slice(lines, 0, row), // Spread anything before the current line.
       ...valueCopy,
       ..._.slice(lines, row + 1), // Spread anything after the current line.
     ];
-    const newColumn = lastIndex === 0
-      ? column + value[lastIndex].length
-      : value[lastIndex].length;
+    const newColumn =
+      lastIndex === 0
+        ? column + value[lastIndex].length
+        : value[lastIndex].length;
     const newRow = row + _.max([0, valueCopy.length - 1]);
 
     return {
@@ -54,14 +55,14 @@ export function insert ({ column, row, lines, value }) {
   };
 }
 
-export function replace ({ column, row, lines, value }) {
+export function replace({ column, row, lines, value }) {
   const newLine = updateFrom(lines[row], value, column - 1, column);
   return {
     lines: insertAt(lines, newLine, row),
   };
 }
 
-export function indent ({ column, row, lines, shiftWidth }) {
+export function indent({ column, row, lines, shiftWidth }) {
   const spaces = _.pad(' ', shiftWidth);
   return {
     lines: insertAt(lines, insertAt(lines[row], spaces, column), row),
@@ -69,7 +70,7 @@ export function indent ({ column, row, lines, shiftWidth }) {
   };
 }
 
-export function joinLineAbove ({ row, lines }) {
+export function joinLineAbove({ row, lines }) {
   if (row === 0) {
     return {
       lines,
@@ -85,7 +86,7 @@ export function joinLineAbove ({ row, lines }) {
   };
 }
 
-export function joinLineBelow ({ row, column, lines }) {
+export function joinLineBelow({ row, column, lines }) {
   if (row === lines.length - 1) {
     return {
       column,
@@ -95,8 +96,13 @@ export function joinLineBelow ({ row, column, lines }) {
   }
   const line = lines[row];
   const nextLine = lines[row + 1];
-  const delimiter = (line === '' || _.last(line) === ' ' ||
-                     nextLine === '' || _.first(nextLine) === ' ') ? '' : ' ';
+  const delimiter =
+    line === '' ||
+    _.last(line) === ' ' ||
+    nextLine === '' ||
+    _.first(nextLine) === ' '
+      ? ''
+      : ' ';
   const joinedLine = line + delimiter + nextLine;
   const newLines = updateFrom(lines, joinedLine, row, row + 2);
   return {
@@ -106,7 +112,7 @@ export function joinLineBelow ({ row, column, lines }) {
   };
 }
 
-export function removeBefore ({ column, row, lines }) {
+export function removeBefore({ column, row, lines }) {
   const newLine = updateFrom(lines[row], '', column - 1, column);
   const newLines = insertAt(lines, newLine, row);
   return {
@@ -115,14 +121,14 @@ export function removeBefore ({ column, row, lines }) {
   };
 }
 
-export function remove (options) {
+export function remove(options) {
   if (options.column === 0) {
     return joinLineAbove(options);
   }
   return removeBefore(options);
 }
 
-export function removeAt ({ column, row, lines }) {
+export function removeAt({ column, row, lines }) {
   const newLine = updateFrom(lines[row], '', column, column + 1);
   return {
     row,
@@ -131,14 +137,14 @@ export function removeAt ({ column, row, lines }) {
   };
 }
 
-export function removeFromCursor ({ column, row, lines }) {
+export function removeFromCursor({ column, row, lines }) {
   const newLine = updateFrom(lines[row], '', column, lines[row].length);
   return {
     lines: insertAt(lines, newLine, row),
   };
 }
 
-export function splitLines ({ column, row, lines }) {
+export function splitLines({ column, row, lines }) {
   const line = lines[row];
   const asTwoLines = [line.substring(0, column), line.substring(column)];
   const newLines = updateFrom(lines, asTwoLines, row, row + 1);
@@ -149,33 +155,35 @@ export function splitLines ({ column, row, lines }) {
   };
 }
 
-export function moveAfterEnd ({ row, lines }) {
+export function moveAfterEnd({ row, lines }) {
   return {
     column: lines[row].length,
     prevMaxColumn: 0,
   };
 }
 
-export function moveDown (options) {
-  return options.row < options.lines.length - 1 ? upOrDown(options, 1) : options;
+export function moveDown(options) {
+  return options.row < options.lines.length - 1
+    ? upOrDown(options, 1)
+    : options;
 }
 
-export function moveLeft ({ column }) {
+export function moveLeft({ column }) {
   return {
     column: column === 0 ? 0 : column - 1,
     prevMaxColumn: 0,
   };
 }
 
-export function moveRight ({ column, row, lines }) {
+export function moveRight({ column, row, lines }) {
   return {
     column: column < lines[row].length - 1 ? column + 1 : column,
     prevMaxColumn: 0,
   };
 }
 
-export function moveRightMaybeAfterEnd ({ column, row, lines }) {
-  if ((column === 0 && lines[row] === '') || (column > lines[row].length)) {
+export function moveRightMaybeAfterEnd({ column, row, lines }) {
+  if ((column === 0 && lines[row] === '') || column > lines[row].length) {
     return {
       column,
       prevMaxColumn: 0,
@@ -187,14 +195,14 @@ export function moveRightMaybeAfterEnd ({ column, row, lines }) {
   };
 }
 
-export function moveToFirstNonWhitespace ({ row, lines }) {
+export function moveToFirstNonWhitespace({ row, lines }) {
   return {
     column: lines[row].search(/\S|$/),
     prevMaxColumn: 0,
   };
 }
 
-export function moveToStart (options) {
+export function moveToStart(options) {
   return {
     ...options,
     column: 0,
@@ -202,18 +210,18 @@ export function moveToStart (options) {
   };
 }
 
-export function moveToEnd ({ row, lines }) {
+export function moveToEnd({ row, lines }) {
   return {
     column: _.max([0, lines[row].length - 1]),
     prevMaxColumn: 0,
   };
 }
 
-export function moveUp (options) {
+export function moveUp(options) {
   return options.row === 0 ? options : upOrDown(options, -1);
 }
 
-export function newLineAbove ({ row, lines }) {
+export function newLineAbove({ row, lines }) {
   return {
     lines: updateFrom(lines, ['', lines[row]], row, row + 1),
     column: 0,
@@ -221,7 +229,7 @@ export function newLineAbove ({ row, lines }) {
   };
 }
 
-export function newLineBelow ({ row, lines }) {
+export function newLineBelow({ row, lines }) {
   return {
     lines: updateFrom(lines, [lines[row], ''], row, row + 1),
     column: 0,
@@ -230,21 +238,21 @@ export function newLineBelow ({ row, lines }) {
   };
 }
 
-export function goToFirstLine () {
+export function goToFirstLine() {
   return {
     column: 0,
     row: 0,
   };
 }
 
-export function goToLastLine ({ lines }) {
+export function goToLastLine({ lines }) {
   return {
     column: 0,
     row: lines.length - 1,
   };
 }
 
-export function nextWord ({ column, row, lines }) {
+export function nextWord({ column, row, lines }) {
   const getNext = (col, offset, newLine = false) => {
     if (!_.isString(lines[row + offset])) {
       return { column, row };
@@ -254,7 +262,10 @@ export function nextWord ({ column, row, lines }) {
     const nextWordIndex = string.search(pattern);
     if (nextWordIndex > -1) {
       return {
-        column: _.max([0, newLine ? nextWordIndex - 1 : nextWordIndex + col + 1]),
+        column: _.max([
+          0,
+          newLine ? nextWordIndex - 1 : nextWordIndex + col + 1,
+        ]),
         row: row + offset,
         prevMaxColumn: 0,
       };
@@ -264,7 +275,7 @@ export function nextWord ({ column, row, lines }) {
   return getNext(column, 0);
 }
 
-function matchingBracketDown ({ column, row, lines, cursorChar, oppositeChar }) {
+function matchingBracketDown({ column, row, lines, cursorChar, oppositeChar }) {
   let sameCharCount = 0;
   for (let i = 0; i < lines.length; i++) {
     let line = lines[row + i];
@@ -289,7 +300,7 @@ function matchingBracketDown ({ column, row, lines, cursorChar, oppositeChar }) 
   return {};
 }
 
-function matchingBracketUp ({ column, row, lines, cursorChar, oppositeChar }) {
+function matchingBracketUp({ column, row, lines, cursorChar, oppositeChar }) {
   let sameCharCount = 0;
   for (let i = row; i > -1; i--) {
     let line = lines[i];
@@ -314,7 +325,7 @@ function matchingBracketUp ({ column, row, lines, cursorChar, oppositeChar }) {
   return {};
 }
 
-export function goToMatchingBracket ({ column, row, lines }) {
+export function goToMatchingBracket({ column, row, lines }) {
   const openingChars = '([{';
   const closingChars = ')]}';
   const cursorChar = lines[row][column];

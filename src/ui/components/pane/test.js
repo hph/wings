@@ -11,7 +11,7 @@ jest.mock('ui/components/cursor', () => 'Cursor');
 jest.mock('ui/components/line', () => 'Line');
 jest.mock('ui/components/line-numbers', () => 'LineNumbers');
 
-function createNodeMock (element) {
+function createNodeMock(element) {
   if (element.type === 'div') {
     return {
       offsetWidth: 0,
@@ -76,10 +76,7 @@ describe('Pane', () => {
 
   it('renders lines of code', () => {
     createSnapshot({
-      lines: [
-        'hello, world!',
-        'this is just marvellous!',
-      ],
+      lines: ['hello, world!', 'this is just marvellous!'],
     });
   });
 
@@ -102,13 +99,13 @@ describe('Pane', () => {
 
   it('width is determined by the number of splits', () => {
     const createComponent = splits => {
-      return renderer.create(
-        <Pane {...defaultProps} splits={splits} />, { createNodeMock },
-      ).toJSON();
+      return renderer
+        .create(<Pane {...defaultProps} splits={splits} />, { createNodeMock })
+        .toJSON();
     };
     expect(createComponent(1).props.style).toEqual({ width: '100%' });
     expect(createComponent(2).props.style).toEqual({ width: '50%' });
-    expect(createComponent(3).props.style).toEqual({ width: `${ 100 / 3 }%` });
+    expect(createComponent(3).props.style).toEqual({ width: `${100 / 3}%` });
   });
 
   it('renders a border when it is not the first and there are no line numbers', () => {
@@ -227,10 +224,7 @@ describe('Pane', () => {
     };
     const props = {
       paneId: 1,
-      lines: [
-        'hello, world!',
-        'how are you doing?',
-      ],
+      lines: ['hello, world!', 'how are you doing?'],
       firstVisibleRow: 0,
       mode: 'normal',
       charWidth: 5,
@@ -305,11 +299,7 @@ describe('Pane', () => {
       const newProps = {
         ...props,
         updatePane: jest.fn(),
-        lines: [
-          'hello, world!',
-          'this line is long',
-          'and so is this one',
-        ],
+        lines: ['hello, world!', 'this line is long', 'and so is this one'],
       };
       const newEvent = {
         ...event,
@@ -336,9 +326,7 @@ describe('Pane', () => {
       const newProps = {
         ...props,
         updatePane: jest.fn(),
-        lines: [
-          'hello, world!',
-        ],
+        lines: ['hello, world!'],
       };
       const newEvent = {
         ...event,
@@ -360,10 +348,7 @@ describe('Pane', () => {
       const newProps = {
         ...props,
         updatePane: jest.fn(),
-        lines: [
-          'hi!',
-          'this line will be focused when we click below it',
-        ],
+        lines: ['hi!', 'this line will be focused when we click below it'],
       };
       const newEvent = {
         ...event,
@@ -373,7 +358,10 @@ describe('Pane', () => {
       };
       new Pane(newProps).onTextClick(newEvent);
 
-      expect(newProps.updatePane).toHaveBeenCalledWith(1, { column: 2, row: 1 });
+      expect(newProps.updatePane).toHaveBeenCalledWith(1, {
+        column: 2,
+        row: 1,
+      });
     });
   });
 });

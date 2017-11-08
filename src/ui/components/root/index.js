@@ -6,7 +6,7 @@ import { App } from 'ui/components';
 import { configureStore } from 'ui/state';
 
 export default class Root extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {};
 
@@ -18,12 +18,12 @@ export default class Root extends Component {
     webFrame.setVisualZoomLevelLimits(1, 1);
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     // Notify Electron that the app is ready and the window can be shown.
     ipcRenderer.send('root-mounted', true);
   }
 
-  render () {
+  render() {
     const { store } = this.state;
     return store ? (
       <Provider store={store}>

@@ -7,9 +7,7 @@ const ErrorBoundary = ({ info, message, type }) => (
   <div className={css.root}>
     <div className={css.type}>{type}</div>
     <div>{message}</div>
-    <div className={css.info}>
-      {info}
-    </div>
+    <div className={css.info}>{info}</div>
   </div>
 );
 

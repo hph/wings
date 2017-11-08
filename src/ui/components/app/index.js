@@ -18,24 +18,24 @@ import { charSizes } from 'ui/state/selectors';
 import css from './styles.css';
 
 export class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     props.setTheme(props);
     this.state = {};
   }
 
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener('resize', this.onResize);
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.theme !== this.props.theme) {
       this.props.setTheme(nextProps);
     }
   }
 
   // eslint-disable-next-line react/sort-comp
-  componentDidCatch (error, info) {
+  componentDidCatch(error, info) {
     this.setState({ error, errorStack: info.componentStack });
   }
 
@@ -43,7 +43,7 @@ export class App extends Component {
     this.showOrHideTitleBar(new Date().getTime());
   };
 
-  showOrHideTitleBar = (start) => {
+  showOrHideTitleBar = start => {
     const now = new Date().getTime();
     if (now - start > 150) {
       return;
@@ -62,7 +62,7 @@ export class App extends Component {
     window.requestAnimationFrame(this.showOrHideTitleBar.bind(this, start));
   };
 
-  render () {
+  render() {
     return (
       <div className={css.root}>
         {this.props.isTitleBarVisible && <TitleBar label="Wings" />}
@@ -76,7 +76,9 @@ export class App extends Component {
           <div className={css.main}>
             {this.props.isCommandBarVisible && <CommandBar />}
             {this.props.isTreeViewVisible && <TreeView />}
-            {_.isEmpty(this.props.panes) ? <Logo /> : (
+            {_.isEmpty(this.props.panes) ? (
+              <Logo />
+            ) : (
               _.map(this.props.panes, ({ id }, index) => (
                 <Pane paneId={id} key={id} isFirst={index === 0} />
               ))
@@ -105,7 +107,7 @@ App.propTypes = {
 export const setTheme = ({ charWidth, isTitleBarVisible, theme }) => {
   setCustomProperties({
     ...theme,
-    charWidth: `${ charWidth }px`,
+    charWidth: `${charWidth}px`,
     titleBarHeight: isTitleBarVisible ? theme.titleBarHeight : '0px',
     viewportHeight: 'calc(100vh - var(--title-bar-height)',
   });
@@ -115,7 +117,7 @@ export const isFullscreen = () => {
   return window.innerHeight === window.screen.height;
 };
 
-export function mapStateToProps (state) {
+export function mapStateToProps(state) {
   const { charWidth } = charSizes(state);
   return {
     charWidth,
@@ -128,11 +130,12 @@ export function mapStateToProps (state) {
   };
 }
 
-export function mapDispatchToProps (dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     setTheme,
     isFullscreen,
-    showTitleBar: isTitleBarVisible => dispatch(updateConfig({ isTitleBarVisible })),
+    showTitleBar: isTitleBarVisible =>
+      dispatch(updateConfig({ isTitleBarVisible })),
   };
 }
 

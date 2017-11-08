@@ -40,15 +40,15 @@ describe('tokenizer', () => {
 
   describe('collectTokens', () => {
     it('should return an empty array in the event of an error', () => {
-      expect(collectTokens('const foo = \'')).toEqual([]);
+      expect(collectTokens("const foo = '")).toEqual([]);
     });
 
     it('should output "let" as the appropriate token', () => {
-      expect(collectTokens('let foo = \'bar\';')).toMatchSnapshot();
+      expect(collectTokens("let foo = 'bar';")).toMatchSnapshot();
     });
 
     it('should output "from" as the appropriate token', () => {
-      expect(collectTokens('import React from \'react\';')).toMatchSnapshot();
+      expect(collectTokens("import React from 'react';")).toMatchSnapshot();
     });
 
     it('should output the appropriate token for template tags', () => {
@@ -56,7 +56,9 @@ describe('tokenizer', () => {
     });
 
     it('should output the appropriate tokens for JSX tags', () => {
-      expect(collectTokens('const Foo = () => <div>foo</div>;')).toMatchSnapshot();
+      expect(
+        collectTokens('const Foo = () => <div>foo</div>;'),
+      ).toMatchSnapshot();
     });
 
     it('should output the appropriate tokens for RegEx patterns', () => {
@@ -64,7 +66,7 @@ describe('tokenizer', () => {
     });
 
     it('should output the appropriate tokens for comments', () => {
-      expect(collectTokens('const foo = \'bar\'; // yep!')).toMatchSnapshot();
+      expect(collectTokens("const foo = 'bar'; // yep!")).toMatchSnapshot();
       expect(collectTokens('/* This is a comment */')).toMatchSnapshot();
     });
 
@@ -100,7 +102,7 @@ describe('Line', () => {
       },
       {
         type: 'value',
-        value: '\'bar\'',
+        value: "'bar'",
       },
       {
         type: 'comment',
@@ -108,42 +110,49 @@ describe('Line', () => {
       },
     ];
     expect(
-      renderer.create(
-        <Line tokens={tokens}>
-          {'const foo = \'bar\';'}
-        </Line>,
-      ).toJSON(),
+      renderer
+        .create(<Line tokens={tokens}>{"const foo = 'bar';"}</Line>)
+        .toJSON(),
     ).toMatchSnapshot();
   });
 });
 
 describe('mapTokens', () => {
   it('should collect tokens from children and provide them as a prop', () => {
-    const props = mapTokens({ children: 'const foo = \'bar\';' });
+    const props = mapTokens({ children: "const foo = 'bar';" });
     expect(props).toEqual({
-      children: 'const foo = \'bar\';',
-      tokens: [{
-        type: 'declaration',
-        value: 'const',
-      }, {
-        value: ' ',
-      }, {
-        type: 'name',
-        value: 'foo',
-      }, {
-        value: ' ',
-      }, {
-        type: 'operator',
-        value: '=',
-      }, {
-        value: ' ',
-      }, {
-        type: 'value',
-        value: '\'bar\'',
-      }, {
-        type: 'comment',
-        value: ';',
-      }],
+      children: "const foo = 'bar';",
+      tokens: [
+        {
+          type: 'declaration',
+          value: 'const',
+        },
+        {
+          value: ' ',
+        },
+        {
+          type: 'name',
+          value: 'foo',
+        },
+        {
+          value: ' ',
+        },
+        {
+          type: 'operator',
+          value: '=',
+        },
+        {
+          value: ' ',
+        },
+        {
+          type: 'value',
+          value: "'bar'",
+        },
+        {
+          type: 'comment',
+          value: ';',
+        },
+      ],
     });
   });
 });

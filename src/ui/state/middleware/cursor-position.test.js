@@ -7,7 +7,7 @@ jest.mock('ui/state/selectors', () => ({
 }));
 
 describe('cursorPositionMiddleware', () => {
-  const runMiddleware = (providedGetState) => {
+  const runMiddleware = providedGetState => {
     const next = jest.fn();
     const getState = providedGetState || (() => ({ config: {}, panes: [] }));
     const action = { type: types.UPDATE_PANE };
@@ -55,14 +55,16 @@ describe('cursorPositionMiddleware', () => {
     const currentPaneId = 1;
     const getState = () => ({
       config: { currentPaneId },
-      panes: [{
-        id: currentPaneId,
-        column: 0,
-        row: 0,
-        // This ensures that the test fails if next is not called before
-        // all the computations, since new action will be returned.
-        firstVisibleRow: 100,
-      }],
+      panes: [
+        {
+          id: currentPaneId,
+          column: 0,
+          row: 0,
+          // This ensures that the test fails if next is not called before
+          // all the computations, since new action will be returned.
+          firstVisibleRow: 100,
+        },
+      ],
     });
     const next = jest.fn();
     const action = {
@@ -85,13 +87,15 @@ describe('cursorPositionMiddleware', () => {
         isTitleBarVisible: false,
         charHeight: 20,
       },
-      panes: [{
-        id: currentPaneId,
-        column: 0,
-        row: 10,
-        firstVisibleRow: 10,
-        height: 800,
-      }],
+      panes: [
+        {
+          id: currentPaneId,
+          column: 0,
+          row: 10,
+          firstVisibleRow: 10,
+          height: 800,
+        },
+      ],
     });
     const next = jest.fn();
     const action = {
@@ -117,13 +121,15 @@ describe('cursorPositionMiddleware', () => {
         isTitleBarVisible: false,
         charHeight: 20,
       },
-      panes: [{
-        id: currentPaneId,
-        column: 0,
-        row: 10,
-        firstVisibleRow: 0,
-        height: 800,
-      }],
+      panes: [
+        {
+          id: currentPaneId,
+          column: 0,
+          row: 10,
+          firstVisibleRow: 0,
+          height: 800,
+        },
+      ],
     });
     const next = jest.fn();
     const action = {
@@ -153,13 +159,15 @@ describe('cursorPositionMiddleware', () => {
           titleBarHeight: 23,
         },
       },
-      panes: [{
-        id: currentPaneId,
-        column: 0,
-        row: 10,
-        firstVisibleRow: 0,
-        height: 800,
-      }],
+      panes: [
+        {
+          id: currentPaneId,
+          column: 0,
+          row: 10,
+          firstVisibleRow: 0,
+          height: 800,
+        },
+      ],
     });
     const next = jest.fn();
     const action = {
@@ -185,13 +193,15 @@ describe('cursorPositionMiddleware', () => {
         currentPaneId,
         charWidth: 5,
       },
-      panes: [{
-        id: currentPaneId,
-        column: 10,
-        row: 0,
-        firstVisibleColumn: 10,
-        width: 600,
-      }],
+      panes: [
+        {
+          id: currentPaneId,
+          column: 10,
+          row: 0,
+          firstVisibleColumn: 10,
+          width: 600,
+        },
+      ],
     });
     const next = jest.fn();
     const action = {
@@ -216,13 +226,15 @@ describe('cursorPositionMiddleware', () => {
         currentPaneId,
         charWidth: 5,
       },
-      panes: [{
-        id: currentPaneId,
-        column: 10,
-        row: 0,
-        firstVisibleColumn: 0,
-        width: 600,
-      }],
+      panes: [
+        {
+          id: currentPaneId,
+          column: 10,
+          row: 0,
+          firstVisibleColumn: 0,
+          width: 600,
+        },
+      ],
     });
     const next = jest.fn();
     const action = {

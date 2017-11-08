@@ -8,9 +8,7 @@ const defaultProps = {
 };
 
 const createSnapshot = (props = defaultProps) => {
-  expect(
-    renderer.create(<CommandBar {...props} />).toJSON(),
-  ).toMatchSnapshot();
+  expect(renderer.create(<CommandBar {...props} />).toJSON()).toMatchSnapshot();
 };
 
 describe('CommandBar', () => {

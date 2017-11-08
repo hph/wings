@@ -6,9 +6,8 @@ import { computeFontDimensions } from 'ui/utils';
 export const currentPane = createSelector(
   state => state.panes,
   state => state.config.currentPaneId,
-  (panes, currentPaneId) => currentPaneId
-    ? _.find(panes, ({ id }) => id === currentPaneId)
-    : panes[0],
+  (panes, currentPaneId) =>
+    currentPaneId ? _.find(panes, ({ id }) => id === currentPaneId) : panes[0],
 );
 
 export const paneById = createSelector(

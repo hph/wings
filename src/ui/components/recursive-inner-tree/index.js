@@ -17,7 +17,7 @@ export class RecursiveInnerTree extends Component {
     files: [],
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       directories: props.directories,
@@ -25,11 +25,11 @@ export class RecursiveInnerTree extends Component {
     };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.loadPath(this.props.path);
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.path !== this.props.path) {
       this.loadPath(nextProps.path);
     }
@@ -46,10 +46,11 @@ export class RecursiveInnerTree extends Component {
     if (this.state[directory]) {
       this.setState({ [directory]: null });
     } else {
-      return listContents(joinPaths(this.props.path, directory))
-        .then(results => {
+      return listContents(joinPaths(this.props.path, directory)).then(
+        results => {
           this.setState({ [directory]: results });
-        });
+        },
+      );
     }
   };
 
@@ -61,7 +62,7 @@ export class RecursiveInnerTree extends Component {
     });
   };
 
-  render () {
+  render() {
     const right = cx('triangle', 'right');
     const down = cx('triangle', 'down');
     return (
@@ -74,7 +75,7 @@ export class RecursiveInnerTree extends Component {
               title={directory}
             >
               <span className={this.state[directory] ? down : right} />
-              {`${ directory }/`}
+              {`${directory}/`}
             </span>
             {this.state[directory] && (
               <RecursiveInnerTree

@@ -10,7 +10,8 @@ describe('createElement', () => {
   });
 
   it('sets various style properties', () => {
-    expect(createElement().style._values).toEqual({ // eslint-disable-line no-underscore-dangle
+    // eslint-disable-next-line no-underscore-dangle
+    expect(createElement().style._values).toEqual({
       position: 'absolute',
       top: '-1000px',
       opacity: '0',
@@ -19,7 +20,9 @@ describe('createElement', () => {
 
   it('should append the input to the body', () => {
     const element = createElement();
-    expect(document.body.children[document.body.children.length - 1]).toBe(element);
+    expect(document.body.children[document.body.children.length - 1]).toBe(
+      element,
+    );
   });
 });
 
@@ -38,7 +41,10 @@ describe('attachEventListeners', () => {
       element.addEventListener = jest.fn();
       attachEventListeners(element);
 
-      expect(element.addEventListener).toHaveBeenCalledWith('blur', element.focus);
+      expect(element.addEventListener).toHaveBeenCalledWith(
+        'blur',
+        element.focus,
+      );
     });
   });
 
@@ -248,7 +254,7 @@ describe('attachEventListeners', () => {
 jest.mock('./handle-user-input', () => jest.fn());
 
 describe('userInputMiddleware', () => {
-  const runMiddleware = (action) => {
+  const runMiddleware = action => {
     // eslint-disable-next-line global-require
     const handleUserInput = require('./handle-user-input');
 
@@ -268,9 +274,11 @@ describe('userInputMiddleware', () => {
   };
 
   it('delegates to handleUserInput when receiving USER_INPUT actions and resumes', () => {
-    const { handleUserInput, action, getState, dispatch, next } = runMiddleware({
-      type: types.USER_INPUT,
-    });
+    const { handleUserInput, action, getState, dispatch, next } = runMiddleware(
+      {
+        type: types.USER_INPUT,
+      },
+    );
 
     expect(handleUserInput).toHaveBeenCalledWith({
       action,

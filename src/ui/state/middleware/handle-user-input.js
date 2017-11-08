@@ -6,8 +6,8 @@ import { updateConfig, updateCommand, updatePane } from 'ui/state/actions';
 import { currentPane } from 'ui/state/selectors';
 
 let stoppedTypingTimer;
-export default function handleUserInput ({ action, getState, dispatch }) {
-  function onStoppedTyping () {
+export default function handleUserInput({ action, getState, dispatch }) {
+  function onStoppedTyping() {
     dispatch(updateConfig({ isUserTyping: false }));
   }
 
@@ -29,7 +29,7 @@ export default function handleUserInput ({ action, getState, dispatch }) {
     enterExMode: 'ex',
     enterInsertMode: 'insert',
   };
-  _.forEach(handlers, (handler) => {
+  _.forEach(handlers, handler => {
     if (!handler && config.mode === 'insert' && !fixedKeys.has(payload.value)) {
       // Inserting a character.
       const command = replacePrevious ? commands.replace : commands.insert;
@@ -42,14 +42,16 @@ export default function handleUserInput ({ action, getState, dispatch }) {
       }
       clearTimeout(stoppedTypingTimer);
       stoppedTypingTimer = setTimeout(onStoppedTyping, 500);
-    } else if (_.has(configHandlers, handler)) { // Changing modes.
+    } else if (_.has(configHandlers, handler)) {
+      // Changing modes.
       const newMode = configHandlers[handler];
       dispatch(updateConfig({ mode: newMode }));
       if (config.mode === 'insert' && newMode === 'normal') {
         const column = _.max([0, pane.column - 1]);
         dispatch(updatePane(pane.id, { column }));
       }
-    } else if (handler) { // Executing a command.
+    } else if (handler) {
+      // Executing a command.
       dispatch(updatePane(pane.id, commands[handler](payload)));
     } else if (config.mode === 'ex') {
       dispatch(updateCommand({ value }));

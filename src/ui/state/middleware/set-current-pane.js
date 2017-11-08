@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { CREATE_PANE, DESTROY_PANE } from 'ui/state/types';
 import { updateConfig } from 'ui/state/actions';
 
-export default function setCurrentPane ({ getState, dispatch }) {
+export default function setCurrentPane({ getState, dispatch }) {
   return next => action => {
     if (action.type === CREATE_PANE) {
       setTimeout(() => {

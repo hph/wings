@@ -86,14 +86,13 @@ export const collectTokens = string => {
 
 export const Line = ({ children, tokens }) => (
   <div>
-    {tokens.length === 0 ? children : tokens.map((token, index) => (
-      <Token
-        key={index.toString()}
-        type={token.type}
-      >
-        {token.value}
-      </Token>
-    ))}
+    {tokens.length === 0
+      ? children
+      : tokens.map((token, index) => (
+          <Token key={index.toString()} type={token.type}>
+            {token.value}
+          </Token>
+        ))}
   </div>
 );
 
@@ -107,7 +106,4 @@ export const mapTokens = props => ({
   tokens: collectTokens(props.children),
 });
 
-export default compose(
-  pure,
-  mapProps(mapTokens),
-)(Line);
+export default compose(pure, mapProps(mapTokens))(Line);

@@ -8,14 +8,18 @@ import css from './styles.css';
 
 const cx = classnames.bind(css);
 
-export function Cursor (props) {
+export function Cursor(props) {
   const { abscissa, block, character, ordinate } = props;
   const pulsate = props.pulsate && !block;
   const classes = cx('root', { block, pulsate });
   const styles = {
-    WebkitTransform: `translate3d(${ abscissa }px, ${ ordinate }px, 0)`,
+    WebkitTransform: `translate3d(${abscissa}px, ${ordinate}px, 0)`,
   };
-  return <div className={classes} style={styles}>{character}</div>;
+  return (
+    <div className={classes} style={styles}>
+      {character}
+    </div>
+  );
 }
 
 Cursor.propTypes = {
@@ -26,7 +30,7 @@ Cursor.propTypes = {
   pulsate: PropTypes.bool.isRequired,
 };
 
-export function mapStateToProps (state, props) {
+export function mapStateToProps(state, props) {
   const { config } = state;
   const pane = paneById(state, props);
   const block = config.mode !== 'insert';

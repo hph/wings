@@ -1,12 +1,7 @@
 {
   "parser": "babel-eslint",
   "extends": "airbnb",
-  "plugins": [
-    "fp",
-    "import",
-    "jsx-a11y",
-    "react"
-  ],
+  "plugins": ["fp", "import", "jsx-a11y", "react"],
   "env": {
     "browser": true,
     "node": true,
@@ -25,6 +20,7 @@
     "fp/no-mutating-methods": 2,
     "import/no-named-as-default": 0,
     "import/prefer-default-export": 0,
+    "indent": 0,
     "jsx-a11y/no-autofocus": 0,
     "jsx-a11y/no-static-element-interactions": 0,
     "jsx-quotes": [2, "prefer-double"],
@@ -32,12 +28,10 @@
     "no-mixed-operators": [2, { "allowSamePrecedence": true }],
     "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
     "no-return-assign": 0,
-    "quotes": [2, "single"],
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": [1, { "extensions": ["js"] }],
+    "react/jsx-indent": 0,
     "react/no-did-mount-set-state": 0,
-    "react/prefer-stateless-function": 2,
-    "space-before-function-paren": [2, "always"],
-    "template-curly-spacing": [2, "always"]
+    "react/prefer-stateless-function": 2
   }
 }

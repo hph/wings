@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import css from './styles.css';
 
-export function CommandBar ({ command }) {
+export function CommandBar({ command }) {
   return (
     <div className={css.root}>
       <div className={css.container}>
@@ -20,7 +20,7 @@ CommandBar.propTypes = {
   command: PropTypes.string.isRequired,
 };
 
-export function mapStateToProps ({ command }) {
+export function mapStateToProps({ command }) {
   return { command };
 }
 

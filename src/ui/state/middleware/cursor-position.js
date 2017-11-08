@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { charSizes, currentPane } from 'ui/state/selectors';
 import * as types from 'ui/state/types';
 
-export default function cursorPositionMiddleware ({ getState }) {
+export default function cursorPositionMiddleware({ getState }) {
   return next => action => {
     if (action.type !== types.UPDATE_PANE) {
       return next(action);
@@ -35,7 +35,8 @@ export default function cursorPositionMiddleware ({ getState }) {
     if (action.row < pane.firstVisibleRow) {
       actionCopy.firstVisibleRow = action.row;
     } else if (action.row > lastVisibleRow) {
-      actionCopy.firstVisibleRow = pane.firstVisibleRow + action.row - lastVisibleRow;
+      actionCopy.firstVisibleRow =
+        pane.firstVisibleRow + action.row - lastVisibleRow;
     }
 
     const numChars = _.floor(pane.width / charWidth) - 1;
@@ -43,7 +44,8 @@ export default function cursorPositionMiddleware ({ getState }) {
     if (action.column < pane.firstVisibleColumn) {
       actionCopy.firstVisibleColumn = action.column;
     } else if (action.column > lastVisibleColumn) {
-      actionCopy.firstVisibleColumn = pane.firstVisibleColumn + action.column - lastVisibleColumn;
+      actionCopy.firstVisibleColumn =
+        pane.firstVisibleColumn + action.column - lastVisibleColumn;
     }
 
     return next(actionCopy);

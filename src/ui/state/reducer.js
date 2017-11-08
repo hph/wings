@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 import fixedKeys from 'ui/fixed-keys';
 import * as types from 'ui/state/types';
 
-export function configReducer (state = {}, action) {
+export function configReducer(state = {}, action) {
   const { type, ...values } = action;
   switch (type) {
     case types.UPDATE_CONFIG: {
@@ -21,28 +21,35 @@ export function configReducer (state = {}, action) {
       };
     }
 
-    default: return state;
+    default:
+      return state;
   }
 }
 
-export function panesReducer (state = [], action) {
+export function panesReducer(state = [], action) {
   const { type, ...values } = action;
   switch (type) {
     case types.CREATE_PANE: {
       const lines = (action.text || '').split('\n').slice(0, -1);
-      return [...state, _.defaults({ ..._.omit(values, ['text']) }, {
-        lines: _.isEmpty(lines) ? [''] : lines,
-        column: 0,
-        row: 0,
-        firstVisibleRow: 0,
-        firstVisibleColumn: 0,
-        width: window.screen.width,
-        height: window.screen.height,
-      })];
+      return [
+        ...state,
+        _.defaults(
+          { ..._.omit(values, ['text']) },
+          {
+            lines: _.isEmpty(lines) ? [''] : lines,
+            column: 0,
+            row: 0,
+            firstVisibleRow: 0,
+            firstVisibleColumn: 0,
+            width: window.screen.width,
+            height: window.screen.height,
+          },
+        ),
+      ];
     }
 
     case types.UPDATE_PANE: {
-      return _.map(state, (pane) => {
+      return _.map(state, pane => {
         if (pane.id === action.id) {
           return _.defaults({ ...values }, pane);
         }
@@ -54,17 +61,18 @@ export function panesReducer (state = [], action) {
       return _.reject(state, ({ id }) => id === values.id);
     }
 
-    default: return state;
+    default:
+      return state;
   }
 }
 
-export function commandReducer (state = '', action) {
+export function commandReducer(state = '', action) {
   const { type, value } = action;
   switch (type) {
     case types.UPDATE_COMMAND: {
       if (fixedKeys.has(value)) {
         if (value === 'Space') {
-          return `${ state } `;
+          return `${state} `;
         } else if (value === 'Backspace') {
           return state.substring(0, state.length - 1);
         } else if (value === 'Enter') {
@@ -75,7 +83,8 @@ export function commandReducer (state = '', action) {
       return state + value;
     }
 
-    default: return state;
+    default:
+      return state;
   }
 }
 

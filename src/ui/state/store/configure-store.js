@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 import createStore from 'ui/state/store';
 
-export default function configureStore ({
+export default function configureStore({
   configDefaults,
   getPreloadedState,
   getText,

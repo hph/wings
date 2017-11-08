@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { userInputFocus } from 'ui/state/actions';
 import css from './styles.css';
 
-export function withScheme (url) {
+export function withScheme(url) {
   return url.match(/^https?:\/\//) ? url : url.replace('', 'http://');
 }
 
@@ -16,14 +16,17 @@ export class Browser extends Component {
     navLocation: 'http://google.com',
   };
 
-  componentDidMount () {
+  componentDidMount() {
     setTimeout(() => this.navigation.select());
 
     // Keep the navigation location in sync with internal webview navigation.
     this.webview.addEventListener('will-navigate', this.onWillNavigate);
 
     // Keep the navigation location in sync with redirects from the server.
-    this.webview.addEventListener('did-get-redirect-request', this.onDidGetRedirectRequest);
+    this.webview.addEventListener(
+      'did-get-redirect-request',
+      this.onDidGetRedirectRequest,
+    );
 
     // Show an error message when one is received.
     this.webview.addEventListener('did-fail-load', this.onDidFailLoad);
@@ -66,12 +69,12 @@ export class Browser extends Component {
     }
   };
 
-  render () {
+  render() {
     return (
       <div className={css.root}>
         <input
           className={css.navigation}
-          ref={node => this.navigation = node}
+          ref={node => (this.navigation = node)}
           type="text"
           value={this.state.navLocation}
           onChange={this.setNavLocation}
@@ -86,7 +89,7 @@ export class Browser extends Component {
         )}
         <webview
           className={css.webview}
-          ref={node => this.webview = node}
+          ref={node => (this.webview = node)}
           src={this.state.location}
         />
       </div>

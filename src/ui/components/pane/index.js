@@ -12,33 +12,45 @@ import css from './styles.css';
 const cx = classnames.bind(css);
 
 export class Pane extends Component {
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener('resize', this.onResize);
     this.onResize();
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.splits !== this.props.splits) {
       this.onResize();
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('resize', this.onResize);
   }
 
-  onTextClick = (event) => {
+  onTextClick = event => {
     const { clientX, clientY, currentTarget, target } = event;
-    const { charWidth, charHeight, firstVisibleRow, lines, paneId, mode } = this.props;
+    const {
+      charWidth,
+      charHeight,
+      firstVisibleRow,
+      lines,
+      paneId,
+      mode,
+    } = this.props;
 
-    const clickX = _.floor(_.max([0, clientX - currentTarget.offsetLeft]) / charWidth);
-    const clickY = _.floor(_.max([0, clientY - currentTarget.offsetTop]) / charHeight);
+    const clickX = _.floor(
+      _.max([0, clientX - currentTarget.offsetLeft]) / charWidth,
+    );
+    const clickY = _.floor(
+      _.max([0, clientY - currentTarget.offsetTop]) / charHeight,
+    );
 
     // If the targets are the same then it means that the user
     // clicked below the last line in the pane.
-    const row = currentTarget === target
-      ? _.max([0, lines.length - 1])
-      : clickY + firstVisibleRow;
+    const row =
+      currentTarget === target
+        ? _.max([0, lines.length - 1])
+        : clickY + firstVisibleRow;
 
     const maxLengthOffset = mode === 'insert' ? 0 : -1;
     const column = _.min([
@@ -65,18 +77,18 @@ export class Pane extends Component {
     });
   }, 16.7);
 
-  wrapperRef = node => this.wrapperEl = node;
+  wrapperRef = node => (this.wrapperEl = node);
 
-  numbersRef = node => this.numbersEl = node;
+  numbersRef = node => (this.numbersEl = node);
 
-  render () {
+  render() {
     const rootClasses = cx('root', 'overlay');
     const textClasses = cx('text', {
       border: !this.props.showLineNumbers && !this.props.isFirst,
     });
     const textLeft = -this.props.firstVisibleColumn * this.props.charWidth;
     const wrapperStyles = {
-      width: `${ 100 / this.props.splits }%`,
+      width: `${100 / this.props.splits}%`,
     };
 
     const numLines = _.ceil(this.props.height / this.props.charHeight);
@@ -87,11 +99,7 @@ export class Pane extends Component {
     );
 
     return (
-      <div
-        className={rootClasses}
-        ref={this.wrapperRef}
-        style={wrapperStyles}
-      >
+      <div className={rootClasses} ref={this.wrapperRef} style={wrapperStyles}>
         {this.props.showLineNumbers && (
           <LineNumbers
             className={css.numbers}
@@ -101,7 +109,7 @@ export class Pane extends Component {
         )}
         <div
           className={textClasses}
-          ref={node => this.textEl = node}
+          ref={node => (this.textEl = node)}
           onMouseDown={this.onTextClick}
           style={{ left: textLeft }}
         >
@@ -134,7 +142,7 @@ Pane.propTypes = {
   paneId: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
 };
 
-export function mapStateToProps (state, props) {
+export function mapStateToProps(state, props) {
   const pane = paneById(state, props);
   return {
     ...charSizes(state),
@@ -152,4 +160,8 @@ export function mapStateToProps (state, props) {
   };
 }
 
-export default connect(mapStateToProps, { updateConfig, updatePane, userInputFocus })(Pane);
+export default connect(mapStateToProps, {
+  updateConfig,
+  updatePane,
+  userInputFocus,
+})(Pane);

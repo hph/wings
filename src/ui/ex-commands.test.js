@@ -29,11 +29,13 @@ describe('ex-commands', () => {
       isBrowserVisible: true,
       currentPaneId: 1,
     },
-    panes: [{
-      id: 1,
-      filename: 'foo.txt',
-      lines: ['hello!'],
-    }],
+    panes: [
+      {
+        id: 1,
+        filename: 'foo.txt',
+        lines: ['hello!'],
+      },
+    ],
     command: '',
   };
 
@@ -47,7 +49,10 @@ describe('ex-commands', () => {
 
     it('should save the current pane to a new file', () => {
       const { writeFile } = require('fs-extra'); // eslint-disable-line global-require
-      exCommands.saveCurrentFile({ state: defaultState, args: ['new-foo.txt'] });
+      exCommands.saveCurrentFile({
+        state: defaultState,
+        args: ['new-foo.txt'],
+      });
 
       expect(writeFile).toHaveBeenCalledWith('new-foo.txt', 'hello!\n');
     });
@@ -86,16 +91,18 @@ describe('ex-commands', () => {
     it('should save and then exit', () => {
       const { writeFile } = require('fs-extra'); // eslint-disable-line global-require
       const dispatch = jest.fn();
-      return exCommands.saveAndExit({
-        dispatch,
-        args: [],
-        state: defaultState,
-      }).then(() => {
-        // An approximation - it's hard to set up mocks for the internal use of
-        // saveCurrentFile and exitCurrentFileOrApp inside saveAndExit.
-        expect(writeFile).toHaveBeenCalled();
-        expect(dispatch).toHaveBeenCalled();
-      });
+      return exCommands
+        .saveAndExit({
+          dispatch,
+          args: [],
+          state: defaultState,
+        })
+        .then(() => {
+          // An approximation - it's hard to set up mocks for the internal use of
+          // saveCurrentFile and exitCurrentFileOrApp inside saveAndExit.
+          expect(writeFile).toHaveBeenCalled();
+          expect(dispatch).toHaveBeenCalled();
+        });
     });
   });
 
@@ -104,41 +111,53 @@ describe('ex-commands', () => {
       const { readFile } = require('fs-extra'); // eslint-disable-line global-require
       const { createPane } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
-      return exCommands.openFile({
-        dispatch,
-        args: ['myfile.txt'],
-      }).then(() => {
-        expect(readFile).toHaveBeenCalledWith('myfile.txt', { encoding: 'utf-8' });
-        expect(createPane).toHaveBeenCalled();
-        expect(dispatch).toHaveBeenCalled();
-      });
+      return exCommands
+        .openFile({
+          dispatch,
+          args: ['myfile.txt'],
+        })
+        .then(() => {
+          expect(readFile).toHaveBeenCalledWith('myfile.txt', {
+            encoding: 'utf-8',
+          });
+          expect(createPane).toHaveBeenCalled();
+          expect(dispatch).toHaveBeenCalled();
+        });
     });
 
     it('should also open new files', () => {
       const { readFile } = require('fs-extra'); // eslint-disable-line global-require
       const { createPane } = require('./state/actions'); // eslint-disable-line global-require
       // Emulate an error being thrown by fs, the effect is the same.
-      const dispatch = jest.fn(() => { throw new Error(); });
-      return exCommands.openFile({
-        dispatch,
-        args: ['myfile.txt'],
-      }).catch(() => {
-        expect(readFile).toHaveBeenCalledWith('myfile.txt', { encoding: 'utf-8' });
-        expect(createPane).toHaveBeenCalled();
-        expect(dispatch).toHaveBeenCalled();
+      const dispatch = jest.fn(() => {
+        throw new Error();
       });
+      return exCommands
+        .openFile({
+          dispatch,
+          args: ['myfile.txt'],
+        })
+        .catch(() => {
+          expect(readFile).toHaveBeenCalledWith('myfile.txt', {
+            encoding: 'utf-8',
+          });
+          expect(createPane).toHaveBeenCalled();
+          expect(dispatch).toHaveBeenCalled();
+        });
     });
 
     it('should open a new unnamed file if no filename is provided', () => {
       const { createPane } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
-      return exCommands.openFile({
-        dispatch,
-        args: [''],
-      }).then(() => {
-        expect(createPane).toHaveBeenCalledWith('unnamed', '');
-        expect(dispatch).toHaveBeenCalled();
-      });
+      return exCommands
+        .openFile({
+          dispatch,
+          args: [''],
+        })
+        .then(() => {
+          expect(createPane).toHaveBeenCalledWith('unnamed', '');
+          expect(dispatch).toHaveBeenCalled();
+        });
     });
   });
 

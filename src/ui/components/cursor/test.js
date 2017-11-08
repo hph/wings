@@ -61,99 +61,155 @@ describe('Cursor mapStateToProps', () => {
     theme: {},
   };
   const paneId = 1;
-  const panes = [{
-    id: paneId,
-    column: 0,
-    firstVisibleRow: 0,
-    lines: ['a'],
-    row: 0,
-  }];
+  const panes = [
+    {
+      id: paneId,
+      column: 0,
+      firstVisibleRow: 0,
+      lines: ['a'],
+      row: 0,
+    },
+  ];
 
   it('should determine whether to render a block or a line based on the mode', () => {
     expect(mapStateToProps({ config, panes }, { paneId }).block).toEqual(true);
-    expect(mapStateToProps({
-      config: {
-        ...config,
-        mode: 'insert',
-      },
-      panes,
-    }, { paneId }).block).toEqual(false);
+    expect(
+      mapStateToProps(
+        {
+          config: {
+            ...config,
+            mode: 'insert',
+          },
+          panes,
+        },
+        { paneId },
+      ).block,
+    ).toEqual(false);
   });
 
   it('should show the character under the cursor in normal mode', () => {
-    expect(mapStateToProps({ config, panes }, { paneId }).character).toEqual('a');
+    expect(mapStateToProps({ config, panes }, { paneId }).character).toEqual(
+      'a',
+    );
   });
 
   it('should default to a space if no character is matched in normal mode', () => {
-    expect(mapStateToProps({
-      config,
-      panes: [{
-        ...panes[0],
-        column: 1,
-      }],
-    }, { paneId }).character).toEqual(' ');
+    expect(
+      mapStateToProps(
+        {
+          config,
+          panes: [
+            {
+              ...panes[0],
+              column: 1,
+            },
+          ],
+        },
+        { paneId },
+      ).character,
+    ).toEqual(' ');
   });
 
   it('should return an empty string for the character in insert mode', () => {
-    expect(mapStateToProps({
-      config: {
-        ...config,
-        mode: 'insert',
-      },
-      panes,
-    }, { paneId }).character).toEqual('');
+    expect(
+      mapStateToProps(
+        {
+          config: {
+            ...config,
+            mode: 'insert',
+          },
+          panes,
+        },
+        { paneId },
+      ).character,
+    ).toEqual('');
   });
 
   it('should determine the abscissa based on the column and character width', () => {
     expect(mapStateToProps({ config, panes }, { paneId }).abscissa).toEqual(0);
 
-    expect(mapStateToProps({
-      config,
-      panes: [{
-        ...panes[0],
-        column: 1,
-      }],
-    }, { paneId }).abscissa).toEqual(5);
+    expect(
+      mapStateToProps(
+        {
+          config,
+          panes: [
+            {
+              ...panes[0],
+              column: 1,
+            },
+          ],
+        },
+        { paneId },
+      ).abscissa,
+    ).toEqual(5);
 
-    expect(mapStateToProps({
-      config,
-      panes: [{
-        ...panes[0],
-        column: 2,
-      }],
-    }, { paneId }).abscissa).toEqual(10);
+    expect(
+      mapStateToProps(
+        {
+          config,
+          panes: [
+            {
+              ...panes[0],
+              column: 2,
+            },
+          ],
+        },
+        { paneId },
+      ).abscissa,
+    ).toEqual(10);
   });
 
   it('should determine the ordinate based on the row, first visible row and character height', () => {
     expect(mapStateToProps({ config, panes }, { paneId }).ordinate).toEqual(0);
 
-    expect(mapStateToProps({
-      config,
-      panes: [{
-        ...panes[0],
-        row: 1,
-        lines: ['a', 'b'],
-      }],
-    }, { paneId }).ordinate).toEqual(21);
+    expect(
+      mapStateToProps(
+        {
+          config,
+          panes: [
+            {
+              ...panes[0],
+              row: 1,
+              lines: ['a', 'b'],
+            },
+          ],
+        },
+        { paneId },
+      ).ordinate,
+    ).toEqual(21);
 
-    expect(mapStateToProps({
-      config,
-      panes: [{
-        ...panes[0],
-        row: 2,
-        lines: ['a', 'b', 'c'],
-      }],
-    }, { paneId }).ordinate).toEqual(42);
+    expect(
+      mapStateToProps(
+        {
+          config,
+          panes: [
+            {
+              ...panes[0],
+              row: 2,
+              lines: ['a', 'b', 'c'],
+            },
+          ],
+        },
+        { paneId },
+      ).ordinate,
+    ).toEqual(42);
   });
 
   it('should determine whether to pulsate based on isUserTyping', () => {
-    expect(mapStateToProps({ config, panes }, { paneId }).pulsate).toEqual(true);
-    expect(mapStateToProps({
-      config: {
-        ...config,
-        isUserTyping: true,
-      },
-      panes,
-    }, { paneId }).pulsate).toEqual(false);
+    expect(mapStateToProps({ config, panes }, { paneId }).pulsate).toEqual(
+      true,
+    );
+    expect(
+      mapStateToProps(
+        {
+          config: {
+            ...config,
+            isUserTyping: true,
+          },
+          panes,
+        },
+        { paneId },
+      ).pulsate,
+    ).toEqual(false);
   });
 });

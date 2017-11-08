@@ -34,7 +34,7 @@ describe('store configDefaults', () => {
 describe('store getPreloadedState', () => {
   it('should return an object passed in as the hash in the window location', () => {
     const state = { example: true };
-    window.location.hash = `#${ JSON.stringify(state) }`;
+    window.location.hash = `#${JSON.stringify(state)}`;
     expect(getPreloadedState()).toEqual(state);
   });
 });

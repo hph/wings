@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import css from './styles.css';
 
 export default class TitleBar extends PureComponent {
-  render () {
+  render() {
     return <div className={css.root}>{this.props.label}</div>;
   }
 }

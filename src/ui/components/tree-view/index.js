@@ -6,9 +6,9 @@ import { RecursiveInnerTree } from 'ui/components';
 import { collapsePath } from 'ui/utils';
 import css from './styles.css';
 
-export function TreeView ({ cwd }) {
+export function TreeView({ cwd }) {
   const postfix = cwd === '/' ? '' : '/';
-  const qualifiedCwd = `${ collapsePath(cwd) }${ postfix }`;
+  const qualifiedCwd = `${collapsePath(cwd)}${postfix}`;
   return (
     <div className={css.root}>
       <div className={css.path} title={qualifiedCwd}>
@@ -25,7 +25,7 @@ TreeView.propTypes = {
   cwd: PropTypes.string.isRequired,
 };
 
-export function mapStateToProps ({ config }) {
+export function mapStateToProps({ config }) {
   return {
     cwd: config.cwd,
   };

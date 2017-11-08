@@ -14,11 +14,13 @@ describe('command bar middleware', () => {
         x: 'saveAndExit',
       },
     },
-    panes: [{
-      id: 1,
-      filename: 'foo.txt',
-      lines: ['hello!'],
-    }],
+    panes: [
+      {
+        id: 1,
+        filename: 'foo.txt',
+        lines: ['hello!'],
+      },
+    ],
     command: '',
   };
   const createMiddleware = (state = defaultState, value = 'Enter') => {
@@ -35,12 +37,15 @@ describe('command bar middleware', () => {
 
   it('should execute the next middleware if the type does not match', () => {
     const { getState, middleware, next } = createMiddleware();
-    const invalidActions = [{
-      type: 'NOT_UPDATE_COMMAND',
-    }, {
-      type: types.UPDATE_COMMAND,
-      value: 'not Enter',
-    }];
+    const invalidActions = [
+      {
+        type: 'NOT_UPDATE_COMMAND',
+      },
+      {
+        type: types.UPDATE_COMMAND,
+        value: 'not Enter',
+      },
+    ];
     invalidActions.forEach(invalidAction => {
       middleware(invalidAction);
       expect(getState).not.toHaveBeenCalled();
@@ -49,10 +54,13 @@ describe('command bar middleware', () => {
   });
 
   it('should execute the next middleware if no handler is found', () => {
-    const { action, dispatch, middleware, next } = createMiddleware({
-      ...defaultState,
-      command: 'not-a-command',
-    }, 'Enter');
+    const { action, dispatch, middleware, next } = createMiddleware(
+      {
+        ...defaultState,
+        command: 'not-a-command',
+      },
+      'Enter',
+    );
     middleware(action);
 
     expect(next).toHaveBeenCalledWith(action);
@@ -62,10 +70,13 @@ describe('command bar middleware', () => {
   it('should delegate to the handler if one is found', () => {
     const { saveAndExit } = require('../../ex-commands'); // eslint-disable-line global-require
 
-    const { action, dispatch, middleware, next } = createMiddleware({
-      ...defaultState,
-      command: 'x',
-    }, 'Enter');
+    const { action, dispatch, middleware, next } = createMiddleware(
+      {
+        ...defaultState,
+        command: 'x',
+      },
+      'Enter',
+    );
     middleware(action);
 
     expect(next).toHaveBeenCalledWith(action);

@@ -9,10 +9,8 @@ import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 
 const packageJson = require('../package');
 
-function devProd (inDevelopment, inProduction) {
-  return process.env.NODE_ENV === 'production'
-    ? inProduction
-    : inDevelopment;
+function devProd(inDevelopment, inProduction) {
+  return process.env.NODE_ENV === 'production' ? inProduction : inDevelopment;
 }
 
 const commonConfig = {
@@ -41,9 +39,7 @@ const commonConfig = {
             'stage-0',
             'react',
           ],
-          plugins: [
-            'lodash',
-          ],
+          plugins: ['lodash'],
         },
       },
       {
@@ -61,15 +57,18 @@ const commonConfig = {
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new LodashModuleReplacementPlugin(),
-    ...devProd([
-      new webpack.NamedModulesPlugin(),
-      new webpack.NoEmitOnErrorsPlugin(),
-    ], [
-      new BabelMinifyPlugin({}, {
-        comments: false,
-        sourceMap: true,
-      }),
-    ]),
+    ...devProd(
+      [new webpack.NamedModulesPlugin(), new webpack.NoEmitOnErrorsPlugin()],
+      [
+        new BabelMinifyPlugin(
+          {},
+          {
+            comments: false,
+            sourceMap: true,
+          },
+        ),
+      ],
+    ),
   ],
 };
 
@@ -96,7 +95,9 @@ const uiConfig = {
                 modules: true,
                 getLocalIdent: (context, localIdentName, localName) => {
                   const path = context.context;
-                  return `${ path.slice(path.lastIndexOf('/') + 1) }-${ localName }`;
+                  return `${path.slice(path.lastIndexOf('/') + 1)}-${
+                    localName
+                  }`;
                 },
               },
             },
@@ -128,11 +129,8 @@ const mainProcessConfig = {
   node: false,
   plugins: [
     ...commonConfig.plugins,
-    new CopyPlugin([
-      { from: './main-process/default-config.yaml' },
-    ]),
+    new CopyPlugin([{ from: './main-process/default-config.yaml' }]),
   ],
 };
-
 
 export default [uiConfig, mainProcessConfig];

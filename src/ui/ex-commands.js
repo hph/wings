@@ -12,14 +12,14 @@ import {
   userInputFocus,
 } from 'ui/state/actions';
 
-export function saveCurrentFile ({ args, state }) {
+export function saveCurrentFile({ args, state }) {
   const pane = currentPane(state);
   const filename = args.join(' ') || pane.filename;
-  const text = `${ pane.lines.join('\n') }\n`;
+  const text = `${pane.lines.join('\n')}\n`;
   return fs.writeFile(filename, text);
 }
 
-export function exitCurrentFileOrApp ({ dispatch, state }) {
+export function exitCurrentFileOrApp({ dispatch, state }) {
   const pane = currentPane(state);
   if (pane) {
     dispatch(destroyPane(pane.id));
@@ -28,17 +28,17 @@ export function exitCurrentFileOrApp ({ dispatch, state }) {
   }
 }
 
-export function saveAndExit ({ args, dispatch, state }) {
-  return saveCurrentFile({ args, state })
-    .then(() => {
-      exitCurrentFileOrApp({ dispatch, state });
-    });
+export function saveAndExit({ args, dispatch, state }) {
+  return saveCurrentFile({ args, state }).then(() => {
+    exitCurrentFileOrApp({ dispatch, state });
+  });
 }
 
-export function openFile ({ args, dispatch }) {
+export function openFile({ args, dispatch }) {
   const file = args.join(' ').trim();
   if (file) {
-    return fs.readFile(file, { encoding: 'utf-8' })
+    return fs
+      .readFile(file, { encoding: 'utf-8' })
       .then(contents => {
         dispatch(createPane(file, contents));
       })
@@ -51,7 +51,7 @@ export function openFile ({ args, dispatch }) {
   return Promise.resolve();
 }
 
-export function changeDirectory ({ args, dispatch }) {
+export function changeDirectory({ args, dispatch }) {
   const directory = path.resolve(expandPath(args[0]));
   try {
     process.chdir(directory);
@@ -63,7 +63,7 @@ export function changeDirectory ({ args, dispatch }) {
   dispatch(updateConfig({ cwd: directory }));
 }
 
-export function toggleBrowser ({ state, dispatch }) {
+export function toggleBrowser({ state, dispatch }) {
   const isBrowserVisible = !state.config.isBrowserVisible;
   dispatch(updateConfig({ isBrowserVisible }));
   if (isBrowserVisible) {
@@ -71,6 +71,6 @@ export function toggleBrowser ({ state, dispatch }) {
   }
 }
 
-export function toggleTreeView ({ dispatch }) {
+export function toggleTreeView({ dispatch }) {
   dispatch(toggleTreeViewAction());
 }

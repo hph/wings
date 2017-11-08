@@ -11,6 +11,8 @@ describe('ErrorBoundary', () => {
   };
 
   it('should render an error message with the provided props', () => {
-    expect(renderer.create(<ErrorBoundary {...defaultProps} />).toJSON()).toMatchSnapshot();
+    expect(
+      renderer.create(<ErrorBoundary {...defaultProps} />).toJSON(),
+    ).toMatchSnapshot();
   });
 });
