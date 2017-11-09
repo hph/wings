@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`menu template should have a static value 1`] = `
+Array [
+  Object {
+    "label": "Edit",
+    "submenu": Array [
+      Object {
+        "role": "copy",
+      },
+      Object {
+        "role": "paste",
+      },
+    ],
+  },
+  Object {
+    "label": "View",
+    "submenu": Array [
+      Object {
+        "role": "reload",
+      },
+      Object {
+        "role": "toggledevtools",
+      },
+      Object {
+        "role": "togglefullscreen",
+      },
+    ],
+  },
+]
+`;

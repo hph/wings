@@ -3,6 +3,8 @@ import url from 'url';
 import path from 'path';
 import { BrowserWindow, ipcMain } from 'electron';
 
+import setApplicationMenu from './menu';
+
 const isAsar = process.mainModule.filename.indexOf('app.asar') > -1;
 
 export default function createWindow(mainWindow, config) {
@@ -28,6 +30,7 @@ export default function createWindow(mainWindow, config) {
 
   const show = _.once(() => {
     mainWindow.show();
+    setApplicationMenu();
     if (process.env.NODE_ENV === 'development') {
       mainWindow.webContents.openDevTools({ detach: true });
     }
