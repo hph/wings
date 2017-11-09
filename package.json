@@ -17,7 +17,7 @@
     "format": "yarn prettier --write",
     "test": "jest",
     "test:ci":
-      "yarn prettier -- --list-different && yarn lint && yarn test -- --coverage && cat ./coverage/lcov.info | coveralls",
+      "yarn prettier --list-different && yarn lint && yarn test --coverage && cat ./coverage/lcov.info | coveralls",
     "start": "electron build/main-process.js"
   },
   "dependencies": {
