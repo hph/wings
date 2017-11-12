@@ -3,19 +3,21 @@ import url from 'url';
 import path from 'path';
 import { BrowserWindow, ipcMain } from 'electron';
 
-import setApplicationMenu from './menu';
+import setApplicationMenu from 'main-process/menu';
 
-const isAsar = process.mainModule.filename.indexOf('app.asar') > -1;
+export const isAsar = () =>
+  process.mainModule.filename.indexOf('app.asar') > -1;
 
-export default function createWindow(mainWindow, config) {
-  // eslint-disable-next-line no-param-reassign
-  mainWindow = new BrowserWindow({
+export const createBrowserWindow = config => {
+  return new BrowserWindow({
     ...config.window,
     backgroundColor: config.editor.theme.primaryBackgroundColor,
     titleBarStyle: 'hidden',
     show: false,
   });
+};
 
+export const loadApplication = (mainWindow, config) => {
   mainWindow.loadURL(
     url.format({
       pathname: path.join(__dirname, 'index.html'),
@@ -23,24 +25,26 @@ export default function createWindow(mainWindow, config) {
       slashes: true,
       hash: JSON.stringify({
         ...config.editor,
-        filename: process.argv[isAsar ? 1 : 2],
+        filename: process.argv[isAsar() ? 1 : 2],
       }),
     }),
   );
+};
 
-  const show = _.once(() => {
-    mainWindow.show();
-    setApplicationMenu();
-    if (process.env.NODE_ENV === 'development') {
-      mainWindow.webContents.openDevTools({ detach: true });
-    }
-  });
+export const showWindow = _.once(mainWindow => {
+  mainWindow.show();
+  setApplicationMenu();
+  if (process.env.NODE_ENV === 'development') {
+    mainWindow.webContents.openDevTools({ detach: true });
+  }
+});
 
+export const attachEventListeners = (mainWindow, config) => {
   let readyCount = 0;
   const maybeShow = () => {
     readyCount += 1;
     if (readyCount >= 2) {
-      show();
+      showWindow(mainWindow);
     }
   };
 
@@ -48,9 +52,16 @@ export default function createWindow(mainWindow, config) {
   // or after the configured timeout, whichever comes first.
   mainWindow.once('ready-to-show', maybeShow);
   ipcMain.once('root-mounted', maybeShow);
-  setTimeout(show, config.window.showTimeoutMs);
+  setTimeout(showWindow.bind(null, mainWindow), config.window.showTimeoutMs);
 
   mainWindow.once('closed', () => {
     mainWindow = null; // eslint-disable-line no-param-reassign
   });
+};
+
+export default function createWindow(mainWindow, config) {
+  mainWindow = createBrowserWindow(config); // eslint-disable-line no-param-reassign
+  loadApplication(mainWindow, config);
+  attachEventListeners(mainWindow, config);
+  return mainWindow;
 }
