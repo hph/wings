@@ -21,7 +21,7 @@ Wings is heavily inspired by
 a subset of its commands, in addition to some new features. At this time there
 is no proper documentation or even a list of features, but you can explore the
 keys section of the [default
-config](https://github.com/hph/wings/blob/master/src/main-process/default-config.yaml)
+config](https://github.com/hph/wings/blob/master/src/main-process/default-config.json)
 to learn more.
 
 ## Development

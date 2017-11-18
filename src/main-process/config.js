@@ -3,17 +3,16 @@ import os from 'os';
 import path from 'path';
 import { props } from 'bluebird';
 import { readFile } from 'fs-extra';
-import { safeLoad } from 'js-yaml';
 
 /**
  * Read and resolve the user's config file as JSON if there is one,
  * otherwise resolve an empty object.
  */
 function getUserConfig() {
-  return readFile(path.join(os.homedir(), '.wings.conf.yaml'), {
+  return readFile(path.join(os.homedir(), '.wings.conf.json'), {
     encoding: 'utf-8',
   })
-    .then(contents => safeLoad(contents))
+    .then(JSON.parse)
     .catch(() => ({})); // A missing user config file is completely acceptable.
 }
 
@@ -21,9 +20,9 @@ function getUserConfig() {
  * Read and resolve the default config as JSON.
  */
 function getDefaultConfig() {
-  return readFile(path.join(__dirname, 'default-config.yaml'), {
+  return readFile(path.join(__dirname, 'default-config.json'), {
     encoding: 'utf-8',
-  }).then(contents => safeLoad(contents));
+  }).then(JSON.parse);
 }
 
 /**

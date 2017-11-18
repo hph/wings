@@ -137,7 +137,7 @@ const mainProcessConfig = {
   node: false,
   plugins: [
     ...commonConfig.plugins,
-    new CopyPlugin([{ from: './main-process/default-config.yaml' }]),
+    new CopyPlugin([{ from: './main-process/default-config.json' }]),
   ],
 };
 

@@ -5,7 +5,7 @@ import fs from 'fs-extra';
 import getConfig from './config';
 
 const tmp = tmpdir();
-const userConfigPath = path.join(homedir(), '.wings.conf.yaml');
+const userConfigPath = path.join(homedir(), '.wings.conf.json');
 const tmpUserConfigPath = `${tmp}/wings-conf`;
 
 describe('getConfig', () => {
@@ -29,7 +29,10 @@ describe('getConfig', () => {
 
   it('returns user-defined config values and falls back to defaults', () => {
     return fs
-      .writeFile(userConfigPath, 'window:\n  width: test-value')
+      .writeFile(
+        userConfigPath,
+        JSON.stringify({ window: { width: 'test-value' } }),
+      )
       .then(getConfig)
       .then(config => {
         expect(config.isDefault).toBe(false);

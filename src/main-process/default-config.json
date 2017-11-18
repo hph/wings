@@ -1,0 +1,99 @@
+{
+   "window": {
+      "width": 800,
+      "height": 600,
+      "minWidth": 320,
+      "minHeight": 320,
+      "showTimeoutMs": 1000
+   },
+   "editor": {
+      "shiftWidth": 2,
+      "showLineNumbers": true,
+      "relativeLineNumbers": true,
+      "theme": {
+         "fontFamily": "'SF Mono', Monaco, 'Andale Mono', 'Lucida Console', Courier, monospace",
+         "fontSize": "14px",
+         "lineHeight": "1.5em",
+         "primaryColor": "#93a1a1",
+         "secondaryColor": "#586e75",
+         "primaryBackgroundColor": "#002b36",
+         "secondaryBackgroundColor": "#073642",
+         "negativeColor": "#dc322f",
+         "cursorColor": "#d33682",
+         "directoryTriangleColor": "#268bd2",
+         "titleBarHeight": "23px",
+         "syntaxComment": "#586e75",
+         "syntaxDeclaration": "#b58900",
+         "syntaxJsx": "#268bd2",
+         "syntaxKeyword": "#859900",
+         "syntaxModule": "#cb4b16",
+         "syntaxName": "#93a1a1",
+         "syntaxValue": "#2aa198"
+      },
+      "commands": {
+         "w": "saveCurrentFile",
+         "q": "exitCurrentFileOrApp",
+         "x": "saveAndExit",
+         "o": "openFile",
+         "cd": "changeDirectory",
+         "t": "toggleTreeView",
+         "b": "toggleBrowser"
+      },
+      "keys": {
+         "ex": {
+            "Escape": "exitMode"
+         },
+         "insert": {
+            "Backspace": "remove",
+            "Enter": "splitLines",
+            "Escape": "exitMode",
+            "Tab": "indent"
+         },
+         "normal": {
+            "0": "moveToStart",
+            ":": "enterExMode",
+            "i": "enterInsertMode",
+            "I": [
+               "enterInsertMode",
+               "moveToFirstNonWhitespace"
+            ],
+            "a": [
+               "enterInsertMode",
+               "moveRightMaybeAfterEnd"
+            ],
+            "A": [
+               "enterInsertMode",
+               "moveAfterEnd"
+            ],
+            "o": [
+               "enterInsertMode",
+               "newLineBelow"
+            ],
+            "O": [
+               "enterInsertMode",
+               "newLineAbove"
+            ],
+            "J": "joinLineBelow",
+            "x": "removeAt",
+            "D": [
+               "removeFromCursor",
+               "moveLeft"
+            ],
+            "C": [
+               "enterInsertMode",
+               "removeFromCursor"
+            ],
+            "W": "nextWord",
+            "^": "moveToFirstNonWhitespace",
+            "$": "moveToEnd",
+            "h": "moveLeft",
+            "j": "moveDown",
+            "k": "moveUp",
+            "l": "moveRight",
+            "g": "goToFirstLine",
+            "G": "goToLastLine",
+            "%": "goToMatchingBracket"
+         }
+      }
+   }
+}
