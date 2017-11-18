@@ -19,6 +19,10 @@
     "consistent-return": 0,
     "fp/no-mutating-methods": 2,
     "import/no-named-as-default": 0,
+    "import/no-unresolved": [
+      2,
+      { "ignore": ["webpack-environment-specific-relative-modules"] }
+    ],
     "import/prefer-default-export": 0,
     "indent": 0,
     "jsx-a11y/no-autofocus": 0,

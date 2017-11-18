@@ -97,7 +97,8 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.css$": "identity-obj-proxy"
+      "\\.css$": "identity-obj-proxy",
+      "webpack-environment-specific-relative-module": "./development"
     },
     "transform": {
       "^.+\\.js$": "babel-jest",

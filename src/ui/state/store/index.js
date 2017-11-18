@@ -1,4 +1,3 @@
-const file =
-  process.env.NODE_ENV === 'production' ? 'production' : 'development'; // Also use this store in the test environment.
-// eslint-disable-next-line import/no-dynamic-require
-module.exports = require(`./${file}`).default;
+// Load the development or production module depending on the desired build target.
+// eslint-disable-next-line import/no-extraneous-dependencies
+module.exports = require('webpack-environment-specific-relative-module').default;

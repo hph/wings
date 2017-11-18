@@ -50,6 +50,14 @@ const commonConfig = {
   },
   resolve: {
     extensions: ['.css', '.js', '.json'],
+    alias: {
+      // Load a file based on NODE_ENV. This enables dynamic imports without
+      // including all possible modules in the production bundle.
+      'webpack-environment-specific-relative-module': devProd(
+        './development',
+        './production',
+      ),
+    },
   },
   plugins: [
     new webpack.EnvironmentPlugin({
