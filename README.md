@@ -11,7 +11,7 @@ certainly of no direct use to anyone else.
 
 The latest Mac release is available for download
 [here](https://github.com/hph/wings/releases). Note that releases are built
-infrequently and that You can also [build the
+infrequently and that you can also [build the
 app](https://github.com/hph/wings#building-for-production) yourself.
 
 ## Usage
