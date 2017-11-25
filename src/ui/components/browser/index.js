@@ -17,7 +17,7 @@ export class Browser extends Component {
   };
 
   componentDidMount() {
-    setTimeout(() => this.navigation.select());
+    setImmediate(() => this.navigation.select());
 
     // Keep the navigation location in sync with internal webview navigation.
     this.webview.addEventListener('will-navigate', this.onWillNavigate);
