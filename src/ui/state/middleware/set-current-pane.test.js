@@ -17,7 +17,7 @@ describe('setCurrentPane', () => {
 
     middleware(next)(action);
 
-    expect(updateConfig.mock.calls.length).toBe(1);
+    expect(updateConfig.mock.calls).toHaveLength(1);
     expect(updateConfig.mock.calls[0][0]).toEqual({ currentPaneId: 1 });
     expect(next).toHaveBeenCalled();
   });
@@ -29,7 +29,7 @@ describe('setCurrentPane', () => {
 
     middleware(next)(action);
 
-    expect(updateConfig.mock.calls.length).toBe(2);
+    expect(updateConfig.mock.calls).toHaveLength(2);
     expect(updateConfig.mock.calls[1][0]).toEqual({ currentPaneId: 10 });
     expect(next).toHaveBeenCalled();
   });
@@ -41,7 +41,7 @@ describe('setCurrentPane', () => {
 
     middleware(next)(action);
 
-    expect(updateConfig.mock.calls.length).toBe(2);
+    expect(updateConfig.mock.calls).toHaveLength(2);
     expect(next).toHaveBeenCalled();
   });
 });

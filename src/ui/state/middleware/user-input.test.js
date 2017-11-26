@@ -191,7 +191,7 @@ describe('attachEventListeners', () => {
       handlers.compositionupdate({ data: 'a' });
       handlers.compositionupdate({ data: 'a' });
 
-      expect(dispatch.mock.calls.length).toBe(1);
+      expect(dispatch.mock.calls).toHaveLength(1);
       expect(dispatch).toHaveBeenCalledWith({
         ...defaults,
         value: 'a',
@@ -204,7 +204,7 @@ describe('attachEventListeners', () => {
       handlers.compositionupdate({ data: 'a' });
       handlers.compositionupdate({ data: 'b' });
 
-      expect(dispatch.mock.calls.length).toBe(2);
+      expect(dispatch.mock.calls).toHaveLength(2);
       expect(dispatch).toHaveBeenCalledWith({
         ...defaults,
         value: 'a',
@@ -220,7 +220,7 @@ describe('attachEventListeners', () => {
       handlers.compositionupdate({ data: '´' });
       handlers.compositionupdate({ data: 'á' });
 
-      expect(dispatch.mock.calls.length).toBe(2);
+      expect(dispatch.mock.calls).toHaveLength(2);
       expect(dispatch).toHaveBeenCalledWith({
         ...defaults,
         value: '´',
@@ -237,7 +237,7 @@ describe('attachEventListeners', () => {
       handlers.compositionupdate({ data: '´' });
       handlers.compositionupdate({ data: '´s' });
 
-      expect(dispatch.mock.calls.length).toBe(2);
+      expect(dispatch.mock.calls).toHaveLength(2);
       expect(dispatch).toHaveBeenCalledWith({
         ...defaults,
         value: '´',

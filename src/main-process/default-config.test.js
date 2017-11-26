@@ -10,7 +10,7 @@ describe('default config', () => {
   });
 
   it('should only have two top-level keys', () => {
-    expect(Object.keys(defaultConfig).length).toBe(2);
+    expect(Object.keys(defaultConfig)).toHaveLength(2);
   });
 
   it('should have a specific value for the window key', () => {

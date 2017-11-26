@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb",
-  "plugins": ["fp", "import", "jsx-a11y", "react"],
+  "extends": ["airbnb", "plugin:jest/recommended"],
+  "plugins": ["fp", "import", "jsx-a11y", "react", "jest"],
   "env": {
     "browser": true,
     "node": true,

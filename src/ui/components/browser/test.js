@@ -51,7 +51,7 @@ describe('Browser', () => {
     createTree({}, { select });
 
     setTimeout(() => {
-      expect(select.mock.calls.length).toBe(1);
+      expect(select.mock.calls).toHaveLength(1);
       done();
     });
   });
@@ -60,7 +60,7 @@ describe('Browser', () => {
     const addEventListener = jest.fn();
     createTree({}, { addEventListener });
 
-    expect(addEventListener.mock.calls.length).toBe(3);
+    expect(addEventListener.mock.calls).toHaveLength(3);
     expect(addEventListener.mock.calls[0][0]).toEqual('will-navigate');
     expect(addEventListener.mock.calls[1][0]).toEqual(
       'did-get-redirect-request',
@@ -90,15 +90,15 @@ describe('Browser', () => {
     tree.children[0].props.onChange({ target: { value: 'example.com' } });
     tree.children[0].props.onKeyDown({ key: 'Enter' });
     expect(component.toJSON()).toMatchSnapshot();
-    expect(reload.mock.calls.length).toBe(0);
+    expect(reload.mock.calls).toHaveLength(0);
 
     // Browser calls reload when the URL does not change on an enter keypress.
     tree.children[0].props.onKeyDown({ key: 'Enter' });
-    expect(reload.mock.calls.length).toBe(1);
+    expect(reload.mock.calls).toHaveLength(1);
 
     // Non-enter key presses don't do anything.
     tree.children[0].props.onKeyDown({ key: 'a' });
-    expect(reload.mock.calls.length).toBe(1);
+    expect(reload.mock.calls).toHaveLength(1);
   });
 
   it('should show an error on a webview load error', () => {

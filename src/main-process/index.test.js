@@ -42,7 +42,7 @@ describe('main-process entry', () => {
     app.isReady.mockImplementation(() => true);
     return main()
       .then(() => {
-        expect(app.once.mock.calls.length).toBe(1);
+        expect(app.once.mock.calls).toHaveLength(1);
         expect(app.once.mock.calls[0][0]).not.toBe('ready');
       })
       .then(() => {
