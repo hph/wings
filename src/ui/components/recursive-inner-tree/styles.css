@@ -17,10 +17,12 @@
 
 .down {
   border-width: 6px 3px 0 3px;
-  border-color: var(--directory-triangle-color) transparent transparent transparent;
+  border-color: var(--directory-triangle-color) transparent transparent
+    transparent;
 }
 
 .right {
   border-width: 3px 0 3px 6px;
-  border-color: transparent transparent transparent var(--directory-triangle-color);
+  border-color: transparent transparent transparent
+    var(--directory-triangle-color);
 }

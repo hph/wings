@@ -12,12 +12,9 @@
     "build:package":
       "electron-packager . Wings --asar --overwrite --icon=build/Wings.icns",
     "lint": "eslint -c=config/eslintrc.json --ignore-path=.gitignore .",
-    "prettier":
-      "prettier --single-quote --trailing-comma=all 'src/**/*.js' 'config/**/*.{js,json}' README.md package.json",
-    "format": "yarn prettier --write",
-    "test": "jest",
-    "test:ci":
-      "yarn prettier --list-different && yarn lint && yarn test --coverage && cat ./coverage/lcov.info | coveralls",
+    "format":
+      "yarn prettier --write 'src/**/*.{js,json,css}' 'config/**/*.{js,json}' README.md package.json",
+    "test": "jest --rootDir=./ --config=./config/jest/jest.config.js",
     "start": "electron build/main-process.js"
   },
   "dependencies": {
@@ -54,6 +51,7 @@
     "html-webpack-plugin": "^2.28.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.1",
+    "jest-runner-prettier": "^0.2.0",
     "lodash": "^4.17.4",
     "lodash-webpack-plugin": "^0.11.4",
     "prettier": "1.8.1",
@@ -95,14 +93,8 @@
       ]
     ]
   },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.css$": "identity-obj-proxy",
-      "webpack-environment-specific-relative-module": "./development"
-    },
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      "\\.svg$": "<rootDir>/config/jest-file-transformer.js"
-    }
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
   }
 }
