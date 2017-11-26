@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`default config should have a specific value for the editor key 1`] = `
+Object {
+  "commands": Object {
+    "b": "toggleBrowser",
+    "cd": "changeDirectory",
+    "o": "openFile",
+    "q": "exitCurrentFileOrApp",
+    "t": "toggleTreeView",
+    "w": "saveCurrentFile",
+    "x": "saveAndExit",
+  },
+  "keys": Object {
+    "ex": Object {
+      "Escape": "exitMode",
+    },
+    "insert": Object {
+      "Backspace": "remove",
+      "Enter": "splitLines",
+      "Escape": "exitMode",
+      "Tab": "indent",
+    },
+    "normal": Object {
+      "$": "moveToEnd",
+      "%": "goToMatchingBracket",
+      "0": "moveToStart",
+      ":": "enterExMode",
+      "A": Array [
+        "enterInsertMode",
+        "moveAfterEnd",
+      ],
+      "C": Array [
+        "enterInsertMode",
+        "removeFromCursor",
+      ],
+      "D": Array [
+        "removeFromCursor",
+        "moveLeft",
+      ],
+      "G": "goToLastLine",
+      "I": Array [
+        "enterInsertMode",
+        "moveToFirstNonWhitespace",
+      ],
+      "J": "joinLineBelow",
+      "O": Array [
+        "enterInsertMode",
+        "newLineAbove",
+      ],
+      "W": "nextWord",
+      "^": "moveToFirstNonWhitespace",
+      "a": Array [
+        "enterInsertMode",
+        "moveRightMaybeAfterEnd",
+      ],
+      "g": "goToFirstLine",
+      "h": "moveLeft",
+      "i": "enterInsertMode",
+      "j": "moveDown",
+      "k": "moveUp",
+      "l": "moveRight",
+      "o": Array [
+        "enterInsertMode",
+        "newLineBelow",
+      ],
+      "x": "removeAt",
+    },
+  },
+  "relativeLineNumbers": false,
+  "shiftWidth": 2,
+  "showLineNumbers": true,
+  "theme": Object {
+    "cursorColor": "#d33682",
+    "directoryTriangleColor": "#268bd2",
+    "fontFamily": "'SF Mono', Monaco, 'Andale Mono', 'Lucida Console', Courier, monospace",
+    "fontSize": "14px",
+    "lineHeight": "1.5em",
+    "negativeColor": "#dc322f",
+    "primaryBackgroundColor": "#002b36",
+    "primaryColor": "#93a1a1",
+    "secondaryBackgroundColor": "#073642",
+    "secondaryColor": "#586e75",
+    "syntaxComment": "#586e75",
+    "syntaxDeclaration": "#b58900",
+    "syntaxJsx": "#268bd2",
+    "syntaxKeyword": "#859900",
+    "syntaxModule": "#cb4b16",
+    "syntaxName": "#93a1a1",
+    "syntaxValue": "#2aa198",
+    "titleBarHeight": "23px",
+  },
+}
+`;
+
+exports[`default config should have a specific value for the window key 1`] = `
+Object {
+  "height": 600,
+  "minHeight": 320,
+  "minWidth": 320,
+  "showTimeoutMs": 1000,
+  "width": 800,
+}
+`;
