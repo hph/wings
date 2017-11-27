@@ -12,9 +12,14 @@
     "build:package":
       "electron-packager . Wings --asar --overwrite --icon=build/Wings.icns",
     "lint": "eslint -c=config/eslintrc.json --ignore-path=.gitignore .",
+    "prettier":
+      "prettier 'src/**/*.{js,json,css}' 'config/**/*.{js,json}' README.md package.json",
+    "format": "yarn prettier --write",
+    "prettier:ci": "yarn prettier --list-different",
     "format":
       "yarn prettier --write 'src/**/*.{js,json,css}' 'config/**/*.{js,json}' README.md package.json",
-    "test": "jest --rootDir=./ --config=./config/jest/jest.config.js",
+    "test": "jest --rootDir=./ --config=./config/jest/main-config.js",
+    "test:only": "jest --rootDir=./ --config=config/jest/test-config.js",
     "start": "electron build/main-process.js"
   },
   "dependencies": {
@@ -51,6 +56,7 @@
     "html-webpack-plugin": "^2.28.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.1",
+    "jest-runner-eslint": "^0.3.0",
     "jest-runner-prettier": "^0.2.0",
     "lodash": "^4.17.4",
     "lodash-webpack-plugin": "^0.11.4",
@@ -96,5 +102,12 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"
+  },
+  "jest-runner-eslint": {
+    "cliOptions": {
+      "config": "config/eslintrc.json",
+      "ignorePath": ".gitignore",
+      "parser": "babel-eslint"
+    }
   }
 }
