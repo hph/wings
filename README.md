@@ -51,19 +51,19 @@ You may optionally provide an argument to open a file, such as `package.json`:
 
 ### Development tools
 
-The project is set up with a comprehensive test suite, a linter and a formatter.
-You may run all of these as follows:
+The project is set up with a comprehensive test suite, a linter, and a
+formatter. You may run all of these as follows:
 
     yarn test
 
-If you wish to run the test suite, linter or formatter separately, run one of
+If you wish to run the test suite, linter, or formatter separately, run one of
 the following commands as appropriate:
 
-You may run the linter (ESLint with a custom config) as follows:
-
-    yarn lint       # Run ESLint directly
-    yarn format     # Run Prettier directly
-    yarn test:only  # Run the test suite
+```bash
+yarn lint      # Run ESLint directly
+yarn format    # Run Prettier directly
+yarn test:only # Run the test suite
+```
 
 You can see the results for the linter, formatter and tests for the master
 branch on [Travis CI](https://travis-ci.org/hph/wings) and code coverage
