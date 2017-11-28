@@ -6,6 +6,6 @@ module.exports = {
   },
   transform: {
     '^.+\\.js$': 'babel-jest',
-    '\\.svg$': '<rootDir>/config/jest/file-transformer.js',
+    '\\.svg$': 'jest-raw-loader',
   },
 };

@@ -16,8 +16,6 @@
       "prettier 'src/**/*.{js,json,css}' 'config/**/*.{js,json}' README.md package.json",
     "format": "yarn prettier --write",
     "prettier:ci": "yarn prettier --list-different",
-    "format":
-      "yarn prettier --write 'src/**/*.{js,json,css}' 'config/**/*.{js,json}' README.md package.json",
     "test": "jest --rootDir=./ --config=./config/jest/main-config.js",
     "test:only": "jest --rootDir=./ --config=config/jest/test-config.js",
     "start": "electron build/main-process.js"
@@ -56,6 +54,7 @@
     "html-webpack-plugin": "^2.28.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.1",
+    "jest-raw-loader": "^1.0.1",
     "jest-runner-eslint": "^0.3.0",
     "jest-runner-prettier": "^0.2.0",
     "lodash": "^4.17.4",
