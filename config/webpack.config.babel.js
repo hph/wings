@@ -28,6 +28,7 @@ const commonConfig = {
         exclude: /node_modules/,
         options: {
           presets: [
+            ...packageJson.babel.presets,
             [
               'env',
               {
@@ -36,10 +37,8 @@ const commonConfig = {
                 },
               },
             ],
-            'stage-0',
-            'react',
           ],
-          plugins: ['lodash'],
+          plugins: [...packageJson.babel.plugins, 'lodash'],
         },
       },
       {
