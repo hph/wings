@@ -1,7 +1,7 @@
-import fs from 'fs-extra';
 import path from 'path';
 import { remote } from 'electron';
 
+import { readFile, writeFile } from 'lib/io';
 import { expandPath } from 'ui/utils';
 import { currentPane } from 'ui/state/selectors';
 import {
@@ -16,7 +16,7 @@ export function saveCurrentFile({ args, state }) {
   const pane = currentPane(state);
   const filename = args.join(' ') || pane.filename;
   const text = `${pane.lines.join('\n')}\n`;
-  return fs.writeFile(filename, text);
+  return writeFile(filename, text);
 }
 
 export function exitCurrentFileOrApp({ dispatch, state }) {
@@ -37,8 +37,7 @@ export function saveAndExit({ args, dispatch, state }) {
 export function openFile({ args, dispatch }) {
   const file = args.join(' ').trim();
   if (file) {
-    return fs
-      .readFile(file, { encoding: 'utf-8' })
+    return readFile(file, { encoding: 'utf-8' })
       .then(contents => {
         dispatch(createPane(file, contents));
       })

@@ -1,6 +1,6 @@
 import { tmpdir } from 'os';
-import fs from 'fs-extra';
 
+import { mkdir, open, close, rimraf } from 'lib/io';
 import {
   computeFontDimensions,
   listContents,
@@ -20,19 +20,30 @@ const matchPaths = [
 const root = `${tmpdir()}/root`;
 
 beforeAll(() => {
-  fs.mkdirSync(root);
-  fs.mkdirSync(`${root}/foo`);
-  fs.mkdirSync(`${root}/bar`);
-  fs.mkdirSync(`${root}/bar/unlisted-directory`);
+  const chain = (fn, args) => {
+    if (args[0]) {
+      return fn(args[0]).then(() => chain(fn, args.slice(1)));
+    }
+    return Promise.resolve();
+  };
 
-  const touch = path => fs.closeSync(fs.openSync(path, 'w'));
-  touch(`${root}/file`);
-  touch(`${root}/foo/unlisted-file-1`);
-  touch(`${root}/bar/unlisted-directory/unlisted-file-2`);
+  return chain(mkdir, [
+    root,
+    `${root}/foo`,
+    `${root}/bar`,
+    `${root}/bar/unlisted-directory`,
+  ]).then(() => {
+    const touch = path => open(path, 'w').then(close);
+    return chain(touch, [
+      `${root}/file`,
+      `${root}/foo/unlisted-file-1`,
+      `${root}/bar/unlisted-directory/unlisted-file-2`,
+    ]);
+  });
 });
 
 afterAll(() => {
-  fs.removeSync(root);
+  return rimraf(root);
 });
 
 describe('collapsePath', () => {

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import { connect } from 'react-redux';
 import { join as joinPaths } from 'path';
-import fs from 'fs-extra';
 
+import { readFile } from 'lib/io';
 import { createPane } from 'ui/state/actions';
 import { listContents } from 'ui/utils';
 import css from './styles.css';
@@ -57,7 +57,7 @@ export class RecursiveInnerTree extends Component {
   openFile = file => event => {
     event.stopPropagation();
     const fileName = joinPaths(this.props.path, file);
-    return fs.readFile(fileName, { encoding: 'utf-8' }).then(text => {
+    return readFile(fileName, { encoding: 'utf-8' }).then(text => {
       this.props.createPane(fileName, text);
     });
   };

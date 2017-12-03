@@ -1,9 +1,14 @@
-import * as exCommands from 'ui/ex-commands';
+import { remote } from 'electron';
 
-jest.mock('fs-extra', () => ({
-  writeFile: jest.fn(() => Promise.resolve()),
-  readFile: jest.fn(() => Promise.resolve()),
-}));
+import { readFile, writeFile } from 'lib/io';
+import * as exCommands from 'ui/ex-commands';
+import {
+  createPane,
+  destroyPane,
+  toggleTreeView,
+  updateConfig,
+  userInputFocus,
+} from './state/actions';
 
 jest.mock('electron', () => {
   const close = jest.fn();
@@ -15,11 +20,16 @@ jest.mock('electron', () => {
   };
 });
 
+jest.mock('lib/io', () => ({
+  readFile: jest.fn(() => Promise.resolve()),
+  writeFile: jest.fn(() => Promise.resolve()),
+}));
+
 jest.mock('./state/actions', () => ({
-  destroyPane: jest.fn(),
   createPane: jest.fn(),
-  updateConfig: jest.fn(),
+  destroyPane: jest.fn(),
   toggleTreeView: jest.fn(),
+  updateConfig: jest.fn(),
   userInputFocus: jest.fn(),
 }));
 
@@ -40,15 +50,17 @@ describe('ex-commands', () => {
   };
 
   describe('saveCurrentFile', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('should save the current pane', () => {
-      const { writeFile } = require('fs-extra'); // eslint-disable-line global-require
       exCommands.saveCurrentFile({ state: defaultState, args: [] });
 
       expect(writeFile).toHaveBeenCalledWith('foo.txt', 'hello!\n');
     });
 
     it('should save the current pane to a new file', () => {
-      const { writeFile } = require('fs-extra'); // eslint-disable-line global-require
       exCommands.saveCurrentFile({
         state: defaultState,
         args: ['new-foo.txt'],
@@ -59,8 +71,11 @@ describe('ex-commands', () => {
   });
 
   describe('exitCurrentFileOrApp', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('should destroy the current pane if there is one', () => {
-      const { destroyPane } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       exCommands.exitCurrentFileOrApp({ dispatch, state: defaultState });
 
@@ -69,8 +84,6 @@ describe('ex-commands', () => {
     });
 
     it('should close the app if there is no pane', () => {
-      const { remote } = require('electron'); // eslint-disable-line global-require
-      const { destroyPane } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       exCommands.exitCurrentFileOrApp({
         dispatch,
@@ -88,8 +101,11 @@ describe('ex-commands', () => {
   });
 
   describe('saveAndExit', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('should save and then exit', () => {
-      const { writeFile } = require('fs-extra'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       return exCommands
         .saveAndExit({
@@ -107,9 +123,11 @@ describe('ex-commands', () => {
   });
 
   describe('openFile', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('should open the provided file', () => {
-      const { readFile } = require('fs-extra'); // eslint-disable-line global-require
-      const { createPane } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       return exCommands
         .openFile({
@@ -126,8 +144,6 @@ describe('ex-commands', () => {
     });
 
     it('should also open new files', () => {
-      const { readFile } = require('fs-extra'); // eslint-disable-line global-require
-      const { createPane } = require('./state/actions'); // eslint-disable-line global-require
       // Emulate an error being thrown by fs, the effect is the same.
       const dispatch = jest.fn(() => {
         throw new Error();
@@ -147,7 +163,6 @@ describe('ex-commands', () => {
     });
 
     it('should open a new unnamed file if no filename is provided', () => {
-      const { createPane } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       return exCommands
         .openFile({
@@ -172,7 +187,6 @@ describe('ex-commands', () => {
     });
 
     it('should change the directory if it exists', () => {
-      const { updateConfig } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       exCommands.changeDirectory({ args: ['.'], dispatch });
 
@@ -183,7 +197,6 @@ describe('ex-commands', () => {
 
   describe('toggleBrowser', () => {
     it('should dispatch an action to toggle the browser visibility', () => {
-      const { updateConfig } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       exCommands.toggleBrowser({ state: defaultState, dispatch });
       expect(dispatch).toHaveBeenCalled();
@@ -191,7 +204,6 @@ describe('ex-commands', () => {
     });
 
     it('should also dispatch an action to remove user focus when showing the browser', () => {
-      const { updateConfig, userInputFocus } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       exCommands.toggleBrowser({
         dispatch,
@@ -210,7 +222,6 @@ describe('ex-commands', () => {
 
   describe('toggleTreeView', () => {
     it('should dispatch an action to toggle the treeview visibility', () => {
-      const { toggleTreeView } = require('./state/actions'); // eslint-disable-line global-require
       const dispatch = jest.fn();
       exCommands.toggleTreeView({ dispatch });
 

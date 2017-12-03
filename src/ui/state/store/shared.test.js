@@ -1,5 +1,4 @@
-import { readFile } from 'fs-extra';
-
+import { readFile } from 'lib/io';
 import createConfigureStore from 'ui/state/store/configure-store';
 import configureStore, {
   getConfigDefaults,
@@ -7,7 +6,7 @@ import configureStore, {
   getText,
 } from 'ui/state/store/shared';
 
-jest.mock('fs-extra', () => ({
+jest.mock('lib/io', () => ({
   readFile: jest.fn(),
 }));
 

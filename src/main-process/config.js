@@ -2,7 +2,8 @@ import _ from 'lodash';
 import os from 'os';
 import path from 'path';
 import { props } from 'bluebird';
-import { readFile } from 'fs-extra';
+
+import { readFile } from 'lib/io';
 
 /**
  * Read and resolve the user's config file as JSON if there is one,

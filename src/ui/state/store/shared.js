@@ -1,5 +1,4 @@
-import { readFile } from 'fs-extra';
-
+import { readFile } from 'lib/io';
 import configureStore from 'ui/state/store/configure-store';
 
 export const getConfigDefaults = () => ({

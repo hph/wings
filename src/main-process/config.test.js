@@ -1,7 +1,7 @@
 import { homedir, tmpdir } from 'os';
 import path from 'path';
-import fs from 'fs-extra';
 
+import { rename, writeFile } from 'lib/io';
 import getConfig from './config';
 
 const tmp = tmpdir();
@@ -10,12 +10,12 @@ const tmpUserConfigPath = `${tmp}/wings-conf`;
 
 describe('getConfig', () => {
   if (!process.env.CI) {
-    beforeAll(done => {
-      fs.rename(userConfigPath, tmpUserConfigPath, done);
+    beforeAll(() => {
+      return rename(userConfigPath, tmpUserConfigPath);
     });
 
-    afterAll(done => {
-      fs.rename(tmpUserConfigPath, userConfigPath, done);
+    afterAll(() => {
+      return rename(tmpUserConfigPath, userConfigPath);
     });
   }
 
@@ -28,11 +28,10 @@ describe('getConfig', () => {
   });
 
   it('returns user-defined config values and falls back to defaults', () => {
-    return fs
-      .writeFile(
-        userConfigPath,
-        JSON.stringify({ window: { width: 'test-value' } }),
-      )
+    return writeFile(
+      userConfigPath,
+      JSON.stringify({ window: { width: 'test-value' } }),
+    )
       .then(getConfig)
       .then(config => {
         expect(config.isDefault).toBe(false);

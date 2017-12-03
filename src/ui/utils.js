@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import fs from 'fs-extra';
 import { join as joinPaths } from 'path';
+
+import { lstat, readdir } from 'lib/io';
 
 /**
  * Calculate the dimensions of characters in the monospaced font
@@ -60,10 +61,10 @@ export function listContents(path) {
     directories: [],
   };
 
-  return fs.readdir(path).then(subpaths => {
+  return readdir(path).then(subpaths => {
     return subpaths.reduce((accumulator, subpath) => {
       return accumulator.then(acc => {
-        return fs.lstat(joinPaths(path, subpath)).then(stats => {
+        return lstat(joinPaths(path, subpath)).then(stats => {
           if (stats.isDirectory()) {
             acc.directories = [...acc.directories, subpath];
           } else {

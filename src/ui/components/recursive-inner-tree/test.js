@@ -1,26 +1,29 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
+import { readFile } from 'lib/io';
+import { listContents } from 'ui/utils';
 import { RecursiveInnerTree } from './index';
 
-jest.mock('fs-extra', () => ({
+jest.mock('lib/io', () => ({
   readFile: jest.fn(() => Promise.resolve('text')),
 }));
 
-jest.mock('../../utils', () => ({
+jest.mock('ui/utils', () => ({
   listContents: jest.fn(() => Promise.resolve('<results>')),
 }));
 
 describe('RecursiveInnerTree', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const defaultProps = {
     path: '/',
     createPane: jest.fn(),
   };
 
   it('initially renders an empty container and starts loading content', () => {
-    // eslint-disable-next-line global-require
-    const { listContents } = require('../../utils');
-
     expect(
       renderer.create(<RecursiveInnerTree {...defaultProps} />).toJSON(),
     ).toMatchSnapshot();
@@ -79,9 +82,6 @@ describe('RecursiveInnerTree', () => {
   });
 
   it('should load directory contents when clicking on the name', () => {
-    // eslint-disable-next-line global-require
-    const { listContents } = require('../../utils');
-
     const recursiveInnerTree = new RecursiveInnerTree(defaultProps);
     const stopPropagation = jest.fn();
     recursiveInnerTree.setState = jest.fn();
@@ -98,9 +98,6 @@ describe('RecursiveInnerTree', () => {
   });
 
   it('opens a file with openFile', () => {
-    // eslint-disable-next-line global-require
-    const { readFile } = require('fs-extra');
-
     const createPane = jest.fn();
     const recursiveInnerTree = new RecursiveInnerTree({
       ...defaultProps,
