@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import fs from 'fs-extra';
 import { join as joinPaths } from 'path';
-import { reduce } from 'bluebird';
 
 /**
  * Calculate the dimensions of characters in the monospaced font
@@ -62,9 +61,8 @@ export function listContents(path) {
   };
 
   return fs.readdir(path).then(subpaths => {
-    return reduce(
-      subpaths,
-      (acc, subpath) => {
+    return subpaths.reduce((accumulator, subpath) => {
+      return accumulator.then(acc => {
         return fs.lstat(joinPaths(path, subpath)).then(stats => {
           if (stats.isDirectory()) {
             acc.directories = [...acc.directories, subpath];
@@ -73,9 +71,8 @@ export function listContents(path) {
           }
           return acc;
         });
-      },
-      defaults,
-    );
+      });
+    }, Promise.resolve(defaults));
   });
 }
 
