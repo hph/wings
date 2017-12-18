@@ -1,8 +1,8 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import debounce from 'lodash.debounce';
 
 import { Cursor, Line, LineNumbers } from 'ui/components';
 import { updateConfig, updatePane, userInputFocus } from 'ui/state/actions';
@@ -10,6 +10,13 @@ import { charSizes, paneById } from 'ui/state/selectors';
 import css from './styles.css';
 
 const cx = classnames.bind(css);
+
+const throttle = (fn, wait) =>
+  debounce(fn, wait, {
+    maxWait: wait,
+    leading: true,
+    trailing: true,
+  });
 
 export class Pane extends Component {
   componentDidMount() {
@@ -38,25 +45,25 @@ export class Pane extends Component {
       mode,
     } = this.props;
 
-    const clickX = _.floor(
-      _.max([0, clientX - currentTarget.offsetLeft]) / charWidth,
+    const clickX = Math.floor(
+      Math.max(0, clientX - currentTarget.offsetLeft) / charWidth,
     );
-    const clickY = _.floor(
-      _.max([0, clientY - currentTarget.offsetTop]) / charHeight,
+    const clickY = Math.floor(
+      Math.max(0, clientY - currentTarget.offsetTop) / charHeight,
     );
 
     // If the targets are the same then it means that the user
     // clicked below the last line in the pane.
     const row =
       currentTarget === target
-        ? _.max([0, lines.length - 1])
+        ? Math.max(0, lines.length - 1)
         : clickY + firstVisibleRow;
 
     const maxLengthOffset = mode === 'insert' ? 0 : -1;
-    const column = _.min([
-      _.max([0, lines[row].length + maxLengthOffset]),
+    const column = Math.min(
+      Math.max(0, lines[row].length + maxLengthOffset),
       clickX,
-    ]);
+    );
 
     this.props.updatePane(paneId, { column, row });
 
@@ -69,7 +76,7 @@ export class Pane extends Component {
     }
   };
 
-  onResize = _.throttle(() => {
+  onResize = throttle(() => {
     const numbersElWidth = this.numbersEl ? this.numbersEl.offsetWidth : 0;
     this.props.updatePane(this.props.paneId, {
       width: this.wrapperEl.offsetWidth - numbersElWidth,
@@ -91,9 +98,8 @@ export class Pane extends Component {
       width: `${100 / this.props.splits}%`,
     };
 
-    const numLines = _.ceil(this.props.height / this.props.charHeight);
-    const lines = _.slice(
-      this.props.lines,
+    const numLines = Math.ceil(this.props.height / this.props.charHeight);
+    const lines = this.props.lines.slice(
       this.props.firstVisibleRow,
       numLines + this.props.firstVisibleRow,
     );
@@ -113,7 +119,9 @@ export class Pane extends Component {
           onMouseDown={this.onTextClick}
           style={{ left: textLeft }}
         >
-          {_.map(lines, (line, index) => <Line key={index}>{line}</Line>)}
+          {lines.map((line, index) => (
+            <Line key={index.toString()}>{line}</Line>
+          ))}
           {this.props.currentPaneId === this.props.paneId && (
             <Cursor paneId={this.props.paneId} />
           )}

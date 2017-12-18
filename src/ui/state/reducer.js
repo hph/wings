@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { combineReducers } from 'redux';
 
 import fixedKeys from 'ui/fixed-keys';
@@ -27,38 +26,37 @@ export function configReducer(state = {}, action) {
 }
 
 export function panesReducer(state = [], action) {
-  const { type, ...values } = action;
+  const { type, text, ...values } = action;
   switch (type) {
     case types.CREATE_PANE: {
       const lines = (action.text || '').split('\n').slice(0, -1);
       return [
         ...state,
-        _.defaults(
-          { ..._.omit(values, ['text']) },
-          {
-            lines: _.isEmpty(lines) ? [''] : lines,
-            column: 0,
-            row: 0,
-            firstVisibleRow: 0,
-            firstVisibleColumn: 0,
-            width: window.screen.width,
-            height: window.screen.height,
-          },
-        ),
+        {
+          ...values,
+          lines: lines.length === 0 ? [''] : lines,
+          column: 0,
+          row: 0,
+          prevMaxColumn: 0,
+          firstVisibleRow: 0,
+          firstVisibleColumn: 0,
+          width: window.screen.width,
+          height: window.screen.height,
+        },
       ];
     }
 
     case types.UPDATE_PANE: {
-      return _.map(state, pane => {
+      return state.map(pane => {
         if (pane.id === action.id) {
-          return _.defaults({ ...values }, pane);
+          return { ...pane, ...values };
         }
         return pane;
       });
     }
 
     case types.DESTROY_PANE: {
-      return _.reject(state, ({ id }) => id === values.id);
+      return state.filter(({ id }) => id !== values.id);
     }
 
     default:

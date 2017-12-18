@@ -5,7 +5,6 @@ import CopyPlugin from 'copy-webpack-plugin';
 import BabelMinifyPlugin from 'babel-minify-webpack-plugin';
 import StatefulReactContainerPlugin from 'stateful-react-container-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 
 const packageJson = require('../package');
 
@@ -38,7 +37,7 @@ const commonConfig = {
               },
             ],
           ],
-          plugins: [...packageJson.babel.plugins, 'lodash'],
+          plugins: packageJson.babel.plugins,
         },
       },
       {
@@ -63,7 +62,6 @@ const commonConfig = {
       NODE_ENV: 'development',
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new LodashModuleReplacementPlugin(),
     ...devProd(
       [new webpack.NamedModulesPlugin(), new webpack.NoEmitOnErrorsPlugin()],
       [
@@ -100,11 +98,9 @@ const uiConfig = {
                 importLoaders: 1,
                 minimize: devProd(false, true),
                 modules: true,
-                getLocalIdent: (context, localIdentName, localName) => {
+                getLocalIdent: (context, ident, name) => {
                   const path = context.context;
-                  return `${path.slice(path.lastIndexOf('/') + 1)}-${
-                    localName
-                  }`;
+                  return `${path.slice(path.lastIndexOf('/') + 1)}-${name}`;
                 },
               },
             },

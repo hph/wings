@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import setCustomProperties from 'dynamic-css-properties';
-import _ from 'lodash';
 
 import {
   Browser,
@@ -76,10 +75,10 @@ export class App extends Component {
           <div className={css.main}>
             {this.props.isCommandBarVisible && <CommandBar />}
             {this.props.isTreeViewVisible && <TreeView />}
-            {_.isEmpty(this.props.panes) ? (
+            {this.props.panes.length === 0 ? (
               <Logo />
             ) : (
-              _.map(this.props.panes, ({ id }, index) => (
+              this.props.panes.map(({ id }, index) => (
                 <Pane paneId={id} key={id} isFirst={index === 0} />
               ))
             )}

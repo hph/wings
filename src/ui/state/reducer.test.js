@@ -58,6 +58,7 @@ describe('panesReducer', () => {
       expect(panesReducer([], action)[0]).toEqual({
         column: 0,
         row: 0,
+        prevMaxColumn: 0,
         firstVisibleColumn: 0,
         firstVisibleRow: 0,
         width: 0,
@@ -76,6 +77,7 @@ describe('panesReducer', () => {
       expect(panesReducer([], action)[0]).toEqual({
         column: 0,
         row: 0,
+        prevMaxColumn: 0,
         firstVisibleColumn: 0,
         firstVisibleRow: 0,
         width: 0,

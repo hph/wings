@@ -1,7 +1,7 @@
-import _ from 'lodash';
 import os from 'os';
 import path from 'path';
 import { props } from 'bluebird';
+import defaultsDeep from 'lodash.defaultsdeep';
 
 import { readFile } from 'lib/io';
 
@@ -35,7 +35,7 @@ export default function getConfig() {
     defaultConfig: getDefaultConfig(),
     userConfig: getUserConfig(),
   }).then(({ defaultConfig, userConfig }) => {
-    const target = { isDefault: _.isEmpty(userConfig) };
-    return _.defaultsDeep(target, userConfig, defaultConfig);
+    const target = { isDefault: Object.keys(userConfig).length === 0 };
+    return defaultsDeep(target, userConfig, defaultConfig);
   });
 }

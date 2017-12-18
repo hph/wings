@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { join as joinPaths } from 'path';
 
 import { lstat, readdir } from 'lib/io';
@@ -29,22 +28,26 @@ export function computeFontDimensions({ fontFamily, fontSize, lineHeight }) {
 }
 
 export function insertAt(original, value, index) {
-  if (_.isArray(original)) {
+  if (Array.isArray(original)) {
     const copy = [...original];
     copy[index] = value;
     return copy;
-  } else if (_.isString(original)) {
+  } else if (typeof original === 'string') {
     return original.substring(0, index) + value + original.substring(index);
   }
   return original;
 }
 
 export function updateFrom(original, value, start, end) {
-  if (_.isArray(original)) {
-    const toStart = _.slice(original, 0, start);
-    const fromEnd = _.slice(original, end);
-    return [...toStart, ..._.castArray(value), ...fromEnd];
-  } else if (_.isString(original)) {
+  if (Array.isArray(original)) {
+    const toStart = original.slice(0, start);
+    const fromEnd = original.slice(end);
+    return [
+      ...toStart,
+      ...(Array.isArray(value) ? value : [value]),
+      ...fromEnd,
+    ];
+  } else if (typeof original === 'string') {
     return original.substring(0, start) + value + original.substring(end);
   }
   return original;

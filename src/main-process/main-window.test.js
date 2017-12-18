@@ -32,10 +32,6 @@ jest.mock('electron', () => ({
   },
 }));
 
-jest.mock('lodash', () => ({
-  once: jest.fn(fn => fn),
-}));
-
 jest.mock('./menu', () => jest.fn());
 
 // Hack in order to re-establish the mainModule object, which disappeared in

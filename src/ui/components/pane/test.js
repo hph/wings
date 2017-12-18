@@ -1,6 +1,5 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import _ from 'lodash';
 
 import { Pane, mapStateToProps } from './index';
 
@@ -84,14 +83,14 @@ describe('Pane', () => {
     // Since the line height is set to 20, and the configured pane height is 100,
     // we will render 5 (100/20) lines, not the full 100.
     createSnapshot({
-      lines: _.range(100).map(n => n.toString()),
+      lines: [...new Array(100).keys()].map(n => n.toString()),
       height: 100,
     });
   });
 
   it('starts rendering lines from the first visible row as configured', () => {
     createSnapshot({
-      lines: _.range(100).map(n => n.toString()),
+      lines: [...new Array(100).keys()].map(n => n.toString()),
       height: 100,
       firstVisibleRow: 10,
     });
@@ -149,11 +148,15 @@ describe('Pane', () => {
       paneId: pane.id,
     };
 
-    expect(mapStateToProps(state, props)).toEqual({
-      ..._.omit(pane, 'id', 'width'),
-      ..._.omit(state.config, 'theme'),
+    const mappedState = mapStateToProps(state, props);
+    delete pane.id;
+    delete pane.width;
+    delete state.config.theme;
+    expect(mappedState).toEqual({
+      ...pane,
+      ...state.config,
       splits: state.panes.length,
-      paneId: pane.id,
+      paneId: 1,
       charHeight: 21,
       charWidth: 5,
     });

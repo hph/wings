@@ -748,11 +748,13 @@ describe('moveDown', () => {
   it('should not do anything on the last line', () => {
     expect(
       commands.moveDown({
+        column: 0,
         row: 0,
         lines: [''],
         prevMaxColumn: 0,
       }),
     ).toEqual({
+      column: 0,
       row: 0,
       lines: [''],
       prevMaxColumn: 0,
@@ -760,11 +762,13 @@ describe('moveDown', () => {
 
     expect(
       commands.moveDown({
+        column: 0,
         row: 2,
         lines: ['a', 'b', 'c'],
         prevMaxColumn: 0,
       }),
     ).toEqual({
+      column: 0,
       row: 2,
       lines: ['a', 'b', 'c'],
       prevMaxColumn: 0,
@@ -774,6 +778,7 @@ describe('moveDown', () => {
   it('should move down by one line', () => {
     expect(
       commands.moveDown({
+        column: 0,
         row: 0,
         lines: ['a', 'b', 'c'],
         prevMaxColumn: 0,
@@ -786,6 +791,7 @@ describe('moveDown', () => {
 
     expect(
       commands.moveDown({
+        column: 0,
         row: 1,
         lines: ['a', 'b', 'c'],
         prevMaxColumn: 0,
@@ -1100,6 +1106,7 @@ describe('moveUp', () => {
   it('should move up by one line', () => {
     expect(
       commands.moveUp({
+        column: 0,
         row: 1,
         lines: ['a', 'b', 'c'],
         prevMaxColumn: 0,
@@ -1112,6 +1119,7 @@ describe('moveUp', () => {
 
     expect(
       commands.moveUp({
+        column: 0,
         row: 2,
         lines: ['a', 'b', 'c'],
         prevMaxColumn: 0,

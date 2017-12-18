@@ -1,15 +1,13 @@
-import _ from 'lodash';
-
 import { insertAt, updateFrom } from 'ui/utils';
 
 function upOrDown({ column, row, lines, prevMaxColumn }, direction) {
-  const nextMaxColumn = _.max([0, lines[row + direction].length - 1]);
+  const nextMaxColumn = Math.max(0, lines[row + direction].length - 1);
   let nextColumn = nextMaxColumn;
   let nextPrevMaxColumn = prevMaxColumn;
   if (nextMaxColumn < column) {
-    nextPrevMaxColumn = _.max([column, prevMaxColumn]);
+    nextPrevMaxColumn = Math.max(column, prevMaxColumn);
   } else {
-    nextColumn = _.min([_.max([column, prevMaxColumn]), nextMaxColumn]);
+    nextColumn = Math.min(Math.max(column, prevMaxColumn), nextMaxColumn);
   }
   return {
     column: nextColumn,
@@ -19,12 +17,12 @@ function upOrDown({ column, row, lines, prevMaxColumn }, direction) {
 }
 
 export function insert({ column, row, lines, value }) {
-  if (_.isArray(value)) {
+  if (Array.isArray(value)) {
     const line = lines[row];
     const before = line.substring(0, column);
     const after = line.substring(column);
     const valueCopy = [...value];
-    const lastIndex = _.max([0, valueCopy.length - 1]);
+    const lastIndex = Math.max(0, valueCopy.length - 1);
 
     // Any text in the current line in front of the cursor must be prepended to
     // the first pasted line and any text in the current line under and after
@@ -33,15 +31,15 @@ export function insert({ column, row, lines, value }) {
     valueCopy[lastIndex] = `${valueCopy[lastIndex] || ''}${after}`;
 
     const newLines = [
-      ..._.slice(lines, 0, row), // Spread anything before the current line.
+      ...lines.slice(0, row), // Spread anything before the current line.
       ...valueCopy,
-      ..._.slice(lines, row + 1), // Spread anything after the current line.
+      ...lines.slice(row + 1), // Spread anything after the current line.
     ];
     const newColumn =
       lastIndex === 0
         ? column + value[lastIndex].length
         : value[lastIndex].length;
-    const newRow = row + _.max([0, valueCopy.length - 1]);
+    const newRow = row + Math.max(0, valueCopy.length - 1);
 
     return {
       lines: newLines,
@@ -63,7 +61,7 @@ export function replace({ column, row, lines, value }) {
 }
 
 export function indent({ column, row, lines, shiftWidth }) {
-  const spaces = _.pad(' ', shiftWidth);
+  const spaces = ''.padStart(shiftWidth, ' ');
   return {
     lines: insertAt(lines, insertAt(lines[row], spaces, column), row),
     column: column + shiftWidth,
@@ -98,9 +96,9 @@ export function joinLineBelow({ row, column, lines }) {
   const nextLine = lines[row + 1];
   const delimiter =
     line === '' ||
-    _.last(line) === ' ' ||
+    line[line.length - 1] === ' ' ||
     nextLine === '' ||
-    _.first(nextLine) === ' '
+    nextLine[0] === ' '
       ? ''
       : ' ';
   const joinedLine = line + delimiter + nextLine;
@@ -132,7 +130,7 @@ export function removeAt({ column, row, lines }) {
   const newLine = updateFrom(lines[row], '', column, column + 1);
   return {
     row,
-    column: _.min([_.max([0, newLine.length - 1]), column]),
+    column: Math.min(Math.max(0, newLine.length - 1), column),
     lines: insertAt(lines, newLine, row),
   };
 }
@@ -212,7 +210,7 @@ export function moveToStart(options) {
 
 export function moveToEnd({ row, lines }) {
   return {
-    column: _.max([0, lines[row].length - 1]),
+    column: Math.max(0, lines[row].length - 1),
     prevMaxColumn: 0,
   };
 }
@@ -254,7 +252,7 @@ export function goToLastLine({ lines }) {
 
 export function nextWord({ column, row, lines }) {
   const getNext = (col, offset, newLine = false) => {
-    if (!_.isString(lines[row + offset])) {
+    if (typeof lines[row + offset] !== 'string') {
       return { column, row };
     }
     const string = lines[row + offset].substring(col);
@@ -262,10 +260,10 @@ export function nextWord({ column, row, lines }) {
     const nextWordIndex = string.search(pattern);
     if (nextWordIndex > -1) {
       return {
-        column: _.max([
+        column: Math.max(
           0,
           newLine ? nextWordIndex - 1 : nextWordIndex + col + 1,
-        ]),
+        ),
         row: row + offset,
         prevMaxColumn: 0,
       };

@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 import createStore from 'ui/state/store';
 
 export default function configureStore({
@@ -20,7 +18,7 @@ export default function configureStore({
     })
     .then(text => {
       const panes = [];
-      if (_.isString(text)) {
+      if (typeof text === 'string') {
         const lines = text === '' ? [''] : text.split('\n').slice(0, -1);
         panes[0] = {
           filename,
@@ -28,6 +26,7 @@ export default function configureStore({
           id: 0,
           column: 0,
           row: 0,
+          prevMaxColumn: 0,
           firstVisibleRow: 0,
           firstVisibleColumn: 0,
           width: window.screen.width,

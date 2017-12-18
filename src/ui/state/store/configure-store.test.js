@@ -50,6 +50,7 @@ describe('configureStore', () => {
       expect(store.getState().panes[0]).toEqual({
         filename,
         column: 0,
+        prevMaxColumn: 0,
         firstVisibleColumn: 0,
         firstVisibleRow: 0,
         height: 0,

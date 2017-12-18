@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import url from 'url';
 import path from 'path';
 import { BrowserWindow, ipcMain } from 'electron';
@@ -31,13 +30,13 @@ export const loadApplication = (mainWindow, config) => {
   );
 };
 
-export const showWindow = _.once(mainWindow => {
+export const showWindow = mainWindow => {
   mainWindow.show();
   setApplicationMenu();
   if (process.env.NODE_ENV === 'development') {
     mainWindow.webContents.openDevTools({ detach: true });
   }
-});
+};
 
 export const attachEventListeners = (mainWindow, config) => {
   let readyCount = 0;

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
-import _ from 'lodash';
 
 import { charSizes, paneById } from 'ui/state/selectors';
 import { updateConfig, updatePane } from 'ui/state/actions';
@@ -21,23 +20,23 @@ export class LineNumbers extends Component {
     const classes = cx('root', this.props.className, { overlay });
 
     // We want to render at least one line and at most as many as are visible.
-    const linesLeft = _.max([
+    const linesLeft = Math.max(
       1,
       this.props.totalLines - this.props.firstVisibleLine,
-    ]);
-    const count = _.min([linesLeft, this.props.visibleLines]);
-
-    const range = _.range(
-      this.props.firstVisibleLine,
-      count + this.props.firstVisibleLine,
     );
+    const count = Math.min(linesLeft, this.props.visibleLines);
+    const range = [];
+    for (let i = 0; i < count; i++) {
+      range[i] = this.props.firstVisibleLine + i;
+    }
+
     // Relative line numbers are zero-indexed (starting from the current line)
     // but are set to negative integers for columns above the current line.
     // This allows for unique keys but also means that, when used, we must
     // compute the absolute value (see return value).
     const numbers = this.props.relative
-      ? _.map(range, n => [n, n - this.props.currentLine])
-      : _.map(range, n => [n, n + 1]);
+      ? range.map(n => [n, n - this.props.currentLine])
+      : range.map(n => [n, n + 1]);
 
     return (
       <div
@@ -45,7 +44,7 @@ export class LineNumbers extends Component {
         ref={this.props.innerRef}
         onMouseDown={this.onClickLine}
       >
-        {_.map(numbers, ([actualLine, displayedLine]) => (
+        {numbers.map(([actualLine, displayedLine]) => (
           <div key={displayedLine} data-line={actualLine}>
             {Math.abs(displayedLine)}
           </div>
@@ -78,7 +77,7 @@ export function mapStateToProps(state, props) {
     innerRef: props.innerRef,
     relative: state.config.relativeLineNumbers,
     totalLines: pane.lines.length,
-    visibleLines: _.ceil(pane.height / charHeight),
+    visibleLines: Math.ceil(pane.height / charHeight),
   };
 }
 
