@@ -11,7 +11,7 @@ export const getConfigDefaults = () => ({
 });
 
 export function getPreloadedState() {
-  return JSON.parse(window.location.hash.slice(1));
+  return JSON.parse(unescape(window.location.hash).slice(1));
 }
 
 export function getText(filename) {

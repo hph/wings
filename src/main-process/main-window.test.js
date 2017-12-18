@@ -38,6 +38,10 @@ jest.mock('lodash', () => ({
 
 jest.mock('./menu', () => jest.fn());
 
+// Hack in order to re-establish the mainModule object, which disappeared in
+// Jest v22 and Node v9 as part of using experimental modules.
+process.mainModule = {};
+
 describe('main-window', () => {
   const config = {
     window: {

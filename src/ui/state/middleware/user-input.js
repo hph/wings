@@ -23,8 +23,12 @@ export function createElement() {
  * actions as appropriate.
  */
 export function attachEventListeners(element, dispatch) {
-  element.focus();
-  element.addEventListener('blur', element.focus);
+  /* istanbul ignore next */
+  if (process.env.NODE_ENV !== 'test') {
+    // There appears to be a bug in jsdom causing a maximum call stack error.
+    element.focus();
+    element.addEventListener('blur', element.focus);
+  }
 
   const defaults = {
     type: USER_INPUT,
