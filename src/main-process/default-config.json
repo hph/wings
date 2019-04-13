@@ -38,7 +38,8 @@
       "o": "openFile",
       "cd": "changeDirectory",
       "t": "toggleTreeView",
-      "b": "toggleBrowser"
+      "b": "toggleBrowser",
+      "f": "toggleFullScreen"
     },
     "keys": {
       "ex": {

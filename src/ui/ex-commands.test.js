@@ -12,10 +12,16 @@ import {
 
 jest.mock('electron', () => {
   const close = jest.fn();
+  const isFullScreen = jest.fn();
+  const setFullScreen = jest.fn();
   return {
     remote: {
       close,
-      getCurrentWindow: jest.fn(() => ({ close })),
+      getCurrentWindow: jest.fn(() => ({
+        close,
+        isFullScreen,
+        setFullScreen,
+      })),
     },
   };
 });
@@ -227,6 +233,25 @@ describe('ex-commands', () => {
 
       expect(dispatch).toHaveBeenCalled();
       expect(toggleTreeView).toHaveBeenCalled();
+    });
+  });
+
+  describe('toggleFullScreen', () => {
+    jest.useFakeTimers();
+
+    it('should go into normal mode and toggle full screen state', () => {
+      const dispatch = jest.fn();
+      exCommands.toggleFullScreen({ dispatch });
+
+      expect(dispatch).toHaveBeenCalled();
+      expect(updateConfig).toHaveBeenCalledWith({ mode: 'normal' });
+
+      jest.runAllTimers();
+
+      expect(remote.getCurrentWindow).toHaveBeenCalled();
+
+      const { setFullScreen } = remote.getCurrentWindow();
+      expect(setFullScreen).toHaveBeenCalled();
     });
   });
 });

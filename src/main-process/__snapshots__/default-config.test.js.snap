@@ -5,6 +5,7 @@ Object {
   "commands": Object {
     "b": "toggleBrowser",
     "cd": "changeDirectory",
+    "f": "toggleFullScreen",
     "o": "openFile",
     "q": "exitCurrentFileOrApp",
     "t": "toggleTreeView",

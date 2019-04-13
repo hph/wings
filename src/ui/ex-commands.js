@@ -73,3 +73,13 @@ export function toggleBrowser({ state, dispatch }) {
 export function toggleTreeView({ dispatch }) {
   dispatch(toggleTreeViewAction());
 }
+
+export function toggleFullScreen({ dispatch }) {
+  dispatch(updateConfig({ mode: 'normal' }));
+
+  // Delay in order to hide the ex mode element before changing window size.
+  setTimeout(() => {
+    const win = remote.getCurrentWindow();
+    win.setFullScreen(!win.isFullScreen());
+  }, 20);
+}
