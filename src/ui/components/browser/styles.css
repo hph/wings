@@ -6,6 +6,7 @@
 
 .webview,
 .error-container {
+  display: flex;
   height: calc(100% - 32px);
   width: 100%;
   background-color: #fff;

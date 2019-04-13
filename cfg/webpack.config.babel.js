@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 import { resolve } from 'path';
 import HtmlPlugin from 'html-webpack-plugin';
+import CspHtmlPlugin from 'csp-html-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import BabelMinifyPlugin from 'babel-minify-webpack-plugin';
 import StatefulReactContainerPlugin from 'stateful-react-container-webpack-plugin';
@@ -117,6 +118,12 @@ const uiConfig = {
     }),
     new HtmlPlugin({
       title: 'Wings',
+    }),
+    new CspHtmlPlugin({
+      'base-uri': "'self'",
+      'object-src': "'none'",
+      'script-src': ["'self'"],
+      'style-src': ["'self'"],
     }),
     new StatefulReactContainerPlugin({
       noState: true,

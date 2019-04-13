@@ -91,6 +91,7 @@ export class Browser extends Component {
           className={css.webview}
           ref={node => (this.webview = node)}
           src={this.state.location}
+          autosize="true"
         />
       </div>
     );

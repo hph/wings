@@ -65,6 +65,9 @@ describe('main-window', () => {
       createBrowserWindow(config);
       expect(BrowserWindow).toHaveBeenCalledWith({
         ...config.window,
+        webPreferences: {
+          nodeIntegration: true,
+        },
         backgroundColor: config.editor.theme.primaryBackgroundColor,
         titleBarStyle: 'hidden',
         show: false,
@@ -140,7 +143,7 @@ describe('main-window', () => {
       process.env.NODE_ENV = 'development';
       showWindow(mainWindow);
       expect(mainWindow.webContents.openDevTools).toHaveBeenCalledWith({
-        detach: true,
+        mode: 'detach',
       });
     });
   });

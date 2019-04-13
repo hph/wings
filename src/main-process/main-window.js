@@ -10,6 +10,9 @@ export const isAsar = () =>
 export const createBrowserWindow = config => {
   return new BrowserWindow({
     ...config.window,
+    webPreferences: {
+      nodeIntegration: true,
+    },
     backgroundColor: config.editor.theme.primaryBackgroundColor,
     titleBarStyle: 'hidden',
     show: false,
@@ -34,7 +37,7 @@ export const showWindow = mainWindow => {
   mainWindow.show();
   setApplicationMenu();
   if (process.env.NODE_ENV === 'development') {
-    mainWindow.webContents.openDevTools({ detach: true });
+    mainWindow.webContents.openDevTools({ mode: 'detach' });
   }
 };
 
