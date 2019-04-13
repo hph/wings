@@ -14,6 +14,7 @@ function devProd(inDevelopment, inProduction) {
 }
 
 const commonConfig = {
+  devtool: 'source-map',
   context: resolve('./src/'),
   target: 'electron-renderer',
   output: {
