@@ -1,6 +1,11 @@
 import fixedKeys from 'ui/fixed-keys';
 import * as commands from 'ui/commands';
-import { updateConfig, updateCommand, updatePane } from 'ui/state/actions';
+import {
+  updateConfig,
+  updateCommand,
+  createPane,
+  updatePane,
+} from 'ui/state/actions';
 import { currentPane } from 'ui/state/selectors';
 
 let stoppedTypingTimer;
@@ -43,6 +48,12 @@ export default function handleUserInput({ action, getState, dispatch }) {
     } else if (configHandlers[handler]) {
       // Changing modes.
       const newMode = configHandlers[handler];
+
+      // Create a new pane if the user goes into edit mode and no panes exist.
+      if (newMode === 'insert' && !pane) {
+        dispatch(createPane('unnamed', ''));
+      }
+
       dispatch(updateConfig({ mode: newMode }));
       if (config.mode === 'insert' && newMode === 'normal') {
         const column = Math.max(0, pane.column - 1);

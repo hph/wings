@@ -43,6 +43,26 @@ describe('handleUserInput', () => {
     });
   });
 
+  it('creates a new pane when entering insert mode if there is none', () => {
+    const { dispatch } = callFunction(
+      { value: 'i' },
+      {
+        config: defaultState.config,
+        panes: [],
+      },
+    );
+    expect(dispatch).toHaveBeenCalledWith({
+      type: types.UPDATE_CONFIG,
+      mode: 'insert',
+    });
+    expect(dispatch).toHaveBeenCalledWith({
+      type: types.CREATE_PANE,
+      filename: 'unnamed',
+      id: 1,
+      text: '',
+    });
+  });
+
   it('updates the pane with entered characters and specifies that the user started typing', () => {
     const { dispatch } = callFunction(
       { value: 'a' },
