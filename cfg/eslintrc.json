@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
   "extends": ["airbnb", "plugin:jest/recommended"],
-  "plugins": ["fp", "import", "jsx-a11y", "react", "jest"],
+  "plugins": ["fp", "import", "jsx-a11y", "react", "jest", "react-hooks"],
   "env": {
     "browser": true,
     "node": true,
@@ -33,6 +33,8 @@
     "no-mixed-operators": [2, { "allowSamePrecedence": true }],
     "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
     "no-return-assign": 0,
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": [1, { "extensions": ["js"] }],
     "react/jsx-indent": 0,
