@@ -20,7 +20,7 @@
     "test:only": "jest --rootDir=./ --config=cfg/jest/test-config.js",
     "start": "electron build/main-process.js"
   },
-  "dependencies": {
+  "devDependencies": {
     "acorn-jsx": "^4.0.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
@@ -41,7 +41,7 @@
     "css-loader": "^0.28.4",
     "dynamic-css-properties": "^0.1.2",
     "electron": "4.1.4",
-    "electron-packager": "^9.0.1",
+    "electron-packager": "^13.1.1",
     "eslint": "^4.6.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-import-resolver-babel-module": "^3.0.0",

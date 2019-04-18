@@ -14,7 +14,7 @@ function devProd(inDevelopment, inProduction) {
 }
 
 const commonConfig = {
-  devtool: 'source-map',
+  devtool: process.env.NODE_ENV !== 'production' ? 'source-map' : false,
   context: resolve('./src/'),
   target: 'electron-renderer',
   output: {
@@ -34,7 +34,7 @@ const commonConfig = {
               'env',
               {
                 targets: {
-                  electron: packageJson.dependencies.electron,
+                  electron: packageJson.devDependencies.electron,
                 },
               },
             ],
