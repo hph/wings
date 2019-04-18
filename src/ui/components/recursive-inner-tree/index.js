@@ -108,4 +108,7 @@ RecursiveInnerTree.propTypes = {
   path: PropTypes.string.isRequired,
 };
 
-export default connect(null, { createPane })(RecursiveInnerTree);
+export default connect(
+  null,
+  { createPane },
+)(RecursiveInnerTree);

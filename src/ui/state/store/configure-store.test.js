@@ -9,6 +9,20 @@ describe('configureStore', () => {
     ),
   };
 
+  beforeAll(() => {
+    // Override the writability of the screen size values.
+    // eslint-disable-next-line fp/no-mutating-methods
+    Object.defineProperty(window.screen, 'height', {
+      value: 1080,
+      writable: true,
+    });
+    // eslint-disable-next-line fp/no-mutating-methods
+    Object.defineProperty(window.screen, 'width', {
+      value: 1920,
+      writable: true,
+    });
+  });
+
   it('should return a promise resolving to a newly created store', () => {
     return configureStore(args).then(store => {
       expect(store.getState).toBeDefined();
@@ -53,11 +67,11 @@ describe('configureStore', () => {
         prevMaxColumn: 0,
         firstVisibleColumn: 0,
         firstVisibleRow: 0,
-        height: 0,
+        height: 1080,
         id: 0,
         lines: [filename],
         row: 0,
-        width: 0,
+        width: 1920,
       });
     });
   });

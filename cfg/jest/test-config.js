@@ -8,4 +8,8 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
     '\\.svg$': 'jest-raw-loader',
   },
+
+  // Workaround for a jsdom issue, see here:
+  // https://github.com/facebook/jest/issues/6766
+  testURL: 'http://localhost',
 };

@@ -21,11 +21,6 @@ const main = () => {
     });
 };
 
-/* istanbul ignore next */
-if (require.main === module) {
-  // Initialize the application if called directly (as opposed to only
-  // having been imported).
-  main();
-}
+main();
 
 export default main;

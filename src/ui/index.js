@@ -3,4 +3,4 @@ import { render } from 'react-dom';
 
 import { Root } from 'ui/components';
 
-render(<Root />, document.getElementById('container'));
+render(<Root />, document.body.appendChild(document.createElement('div')));

@@ -13,9 +13,7 @@ exports[`Line should render tokens if provided 1`] = `
   >
     const
   </Token>
-  <Token
-    type={undefined}
-  >
+  <Token>
      
   </Token>
   <Token

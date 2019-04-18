@@ -102,4 +102,7 @@ Browser.propTypes = {
   userInputFocus: PropTypes.func.isRequired,
 };
 
-export default connect(null, { userInputFocus })(Browser);
+export default connect(
+  null,
+  { userInputFocus },
+)(Browser);

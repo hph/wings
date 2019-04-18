@@ -106,4 +106,7 @@ export const mapTokens = props => ({
   tokens: collectTokens(props.children),
 });
 
-export default compose(pure, mapProps(mapTokens))(Line);
+export default compose(
+  pure,
+  mapProps(mapTokens),
+)(Line);

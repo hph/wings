@@ -92,4 +92,7 @@ export const mapDispatchToProps = (dispatch, { paneId }) => ({
   setActiveLine: row => dispatch(setActiveLine(row, paneId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LineNumbers);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LineNumbers);

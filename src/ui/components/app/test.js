@@ -43,6 +43,18 @@ const defaultProps = {
 describe('App', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+
+    // Override the writability of the screen size values.
+    // eslint-disable-next-line fp/no-mutating-methods
+    Object.defineProperty(window.screen, 'height', {
+      value: 1080,
+      writable: true,
+    });
+    // eslint-disable-next-line fp/no-mutating-methods
+    Object.defineProperty(window.screen, 'width', {
+      value: 1920,
+      writable: true,
+    });
   });
 
   const createSnapshot = passedProps => {

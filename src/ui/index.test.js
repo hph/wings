@@ -11,7 +11,6 @@ jest.mock('ui/components/root', () => 'Root');
 
 describe('ui entry point', () => {
   const container = document.createElement('div');
-  container.id = 'container';
   document.body.appendChild(container);
 
   it('should render the app as a side effect of importing the module', () => {

@@ -168,8 +168,11 @@ export function mapStateToProps(state, props) {
   };
 }
 
-export default connect(mapStateToProps, {
-  updateConfig,
-  updatePane,
-  userInputFocus,
-})(Pane);
+export default connect(
+  mapStateToProps,
+  {
+    updateConfig,
+    updatePane,
+    userInputFocus,
+  },
+)(Pane);

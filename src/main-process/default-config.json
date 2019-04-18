@@ -11,8 +11,7 @@
     "showLineNumbers": true,
     "relativeLineNumbers": false,
     "theme": {
-      "fontFamily":
-        "'SF Mono', Monaco, 'Andale Mono', 'Lucida Console', Courier, monospace",
+      "fontFamily": "'SF Mono', Monaco, 'Andale Mono', 'Lucida Console', Courier, monospace",
       "fontSize": "14px",
       "lineHeight": "1.5em",
       "primaryColor": "#93a1a1",
